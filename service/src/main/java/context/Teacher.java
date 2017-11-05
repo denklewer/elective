@@ -9,7 +9,8 @@ public class Teacher {
     private Collection<Course> courses;
 
     /**
-     * Teacher constructor
+     * Teacher constructor.
+     *
      * @param id teacher's id
      * @param firstName teacher's first name
      * @param lastName teacher's last name
@@ -54,11 +55,11 @@ public class Teacher {
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", courses=" + courses +
-                '}';
+        return "Teacher{"
+                + "id=" + id
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", courses=" + courses
+                + '}';
     }
 }

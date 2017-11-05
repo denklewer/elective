@@ -55,11 +55,11 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", teacher=" + teacher +
-                ", students=" + students +
-                '}';
+        return "Course{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", teacher=" + teacher
+                + ", students=" + students
+                + '}';
     }
 }

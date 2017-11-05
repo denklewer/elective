@@ -19,7 +19,7 @@ public interface Dao<T, PK extends Serializable> {
     void update(T t);
 
     /**
-     * Insert object in data source
+     * Insert object in data source.
      * @param t object for insertion
      * @return data source object id
      */
