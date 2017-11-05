@@ -2,7 +2,7 @@ package dao;
 
 import context.Teacher;
 
-public class TeacherJdbcDaoImpl implements JdbcDao<Teacher> {
+public class TeacherJdbcDao implements JdbcDao<Teacher> {
 
     @Override
     public Teacher read(int id) {

@@ -1,12 +1,13 @@
 package context;
 
 import dao.Dao;
+import dao.JdbcDao;
 
 public class CourseFactory implements Factory<Course> {
 
     @Override
-    public Course getById(int id, Dao<Course> dao) {
-        return dao.loadById(id);
+    public Course getById(int id, Dao<Course,Integer> dao) {
+        return dao.read(id);
     }
 
     /**

@@ -1,13 +1,15 @@
 package dao;
 
-public interface Dao<T> {
+import java.io.Serializable;
+
+public interface Dao<T, PK extends Serializable> {
     /**
-     * Load object from source by id.
+     * get object from source by id.
      *
      * @param id object id
      * @return object what was read
      */
-    T loadById(int id);
+    T read(int id);
 
     /**
      * Update object in source.
@@ -17,16 +19,16 @@ public interface Dao<T> {
     void update(T t);
 
     /**
-     * Put object on a table :).
-     *
-     * @param t object for put
+     * Insert object in data source
+     * @param t object for insertion
+     * @return data source object id
      */
-    void put(T t);
+    PK create(T t);
 
     /**
      * remove object from table by id.
      *
      * @param id object id
      */
-    void removeById(int id);
+    void delete(int id);
 }

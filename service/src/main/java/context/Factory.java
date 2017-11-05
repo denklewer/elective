@@ -1,6 +1,7 @@
 package context;
 
 import dao.Dao;
+import dao.JdbcDao;
 
 public interface Factory<T> {
 
@@ -10,5 +11,5 @@ public interface Factory<T> {
      * @param id instance id
      * @return instance
      */
-    T getById(int id, Dao<T> dao);
+    T getById(int id, Dao<T,Integer> dao);
 }
