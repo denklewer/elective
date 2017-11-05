@@ -2,10 +2,10 @@ package dao;
 
 import context.Course;
 
-public class CourseJdbcDaoImpl implements Dao<Course> {
+public class CourseJdbcDao implements JdbcDao<Course> {
 
     @Override
-    public Course loadById(int id) {
+    public Course read(int id) {
         return null;
     }
 
@@ -15,12 +15,12 @@ public class CourseJdbcDaoImpl implements Dao<Course> {
     }
 
     @Override
-    public void put(Course course) {
-
+    public Integer create(Course course) {
+        return null;
     }
 
     @Override
-    public void removeById(int id) {
+    public void delete(int id) {
 
     }
 }
