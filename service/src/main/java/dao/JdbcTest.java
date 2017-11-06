@@ -39,8 +39,8 @@ public class JdbcTest {
         // Usage of jdbcTemplate
         // ...
         // or Dao usage
-        TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao(dataSource);
-        System.out.println(teacherJdbcDao.list());
+        //TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao(dataSource);
+        //System.out.println(teacherJdbcDao.list());
 
 
     }
