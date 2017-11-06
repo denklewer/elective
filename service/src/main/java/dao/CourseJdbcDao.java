@@ -17,7 +17,7 @@ public class CourseJdbcDao implements JdbcDao<Course> {
 
     @Override
     public Course read(int id) {
-        String sql = "select * from Course where id = ?";
+        String sql = "select * from Course where course_id = ?";
         Course course = jdbcTemplate.queryForObject(sql,
                 new Object[]{id}, new CourseMapper());
 
@@ -26,19 +26,19 @@ public class CourseJdbcDao implements JdbcDao<Course> {
 
     @Override
     public void update(Course course) {
-        String sql = "update Course set name = ? where id = ?)";
+        String sql = "update Course set course_name = ? where course_id = ?)";
         jdbcTemplate.update(sql, course.getName(), course.getId());
     }
 
     @Override
     public Integer create(Course course) {
-        String sql = "insert into Course (name) values (?)";
-        return jdbcTemplate.update(sql, course.getName());
+        String sql = "insert into Course (course_id, course_name) values (?,?)";
+        return jdbcTemplate.update(sql,course.getId(), course.getName());
     }
 
     @Override
     public void delete(int id) {
-        String sql = "delete from Course where id = ?";
+        String sql = "delete from Course where course_id = ?";
         jdbcTemplate.update(sql, id);
     }
 

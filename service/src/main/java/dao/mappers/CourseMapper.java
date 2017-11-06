@@ -13,8 +13,9 @@ public class CourseMapper implements RowMapper<Course> {
     public Course mapRow(ResultSet rs, int rowNum) throws SQLException {
         CourseFactory factory = new CourseFactory();
 
-        Course course = factory.newInstance(rs.getInt("id"),
-                rs.getString("name"),
+        Course course = factory.newInstance(rs.getInt("course_id"),
+                rs.getString("course_name"),
+                null,
                 null);
 
         return course;
