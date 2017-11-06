@@ -20,7 +20,7 @@ public class JdbcDaoFactoryImplTest {
     @Before
     public void setUp() throws Exception {
         Properties properties = new Properties();
-        properties.load(JdbcTemplate.class.getResourceAsStream("/database.properties"));
+        properties.load(JdbcTemplate.class.getResourceAsStream("/databaseTest.properties"));
 
         // create data source
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
