@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Example class of database connection. Only fro testing.
@@ -39,8 +40,24 @@ public class JdbcTest {
         // Usage of jdbcTemplate
         // ...
         // or Dao usage
-        //TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao(dataSource);
-        //System.out.println(teacherJdbcDao.list());
+
+        TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao();
+        teacherJdbcDao.setJdbcTemplate(jdbcTemplate);
+        System.out.println(teacherJdbcDao.list());
+        Teacher teacher = teacherJdbcDao.read(1);
+        System.out.println("readed1: " + teacher);
+        teacher.setLastName("updated" +new Random().nextInt(10));
+        teacherJdbcDao.update(teacher);
+        System.out.println("updated");
+        teacher = teacherJdbcDao.read(1);
+        System.out.println("readed2: " + teacher);
+       int id = teacherJdbcDao.create(teacher);
+        Teacher teacher1 = teacherJdbcDao.read(id);
+        System.out.println("inserted:" + teacher1);
+        teacherJdbcDao.delete(id);
+        System.out.println("deleted:" + id);
+
+
 
 
     }
