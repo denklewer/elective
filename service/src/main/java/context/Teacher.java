@@ -8,6 +8,9 @@ public class Teacher {
     private String lastName;
     private Collection<Course> courses;
 
+    public Teacher() {
+    }
+
     /**
      * Teacher constructor.
      *

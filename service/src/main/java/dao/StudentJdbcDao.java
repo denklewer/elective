@@ -1,11 +1,22 @@
 package dao;
 
 import context.Student;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
 
 /**
  * Created by Вера on 06.11.2017.
  */
 public class StudentJdbcDao implements JdbcDao<Student> {
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public Student read(int id) {
         return null;
@@ -24,5 +35,10 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public ArrayList<Student> list() {
+        return null;
     }
 }

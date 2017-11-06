@@ -11,14 +11,10 @@ public class Course {
     /**
      * Course constructor.
      *
-     * @param id Course id
      * @param name Course name
-     * @param teacher Course teacher
      */
-    public Course(int id, String name, Teacher teacher) {
-        this.id = id;
+    public Course(String name) {
         this.name = name;
-        this.teacher = teacher;
     }
 
     public int getId() {
@@ -51,6 +47,26 @@ public class Course {
 
     public void setStudents(Collection<Student> students) {
         this.students = students;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (id != course.id) {
+            return false;
+        }
+        return name.equals(course.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
     }
 
     @Override
