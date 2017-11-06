@@ -1,14 +1,16 @@
 package dao;
 
 import context.StudentScore;
+import dao.support.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Вера on 06.11.2017.
  */
-public class StudentScoreJdbcDao implements JdbcDao<StudentScore> {
+public class StudentScoreJdbcDao implements JdbcDao<StudentScore,Pair> {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -18,7 +20,7 @@ public class StudentScoreJdbcDao implements JdbcDao<StudentScore> {
     }
 
     @Override
-    public StudentScore read(int id) {
+    public StudentScore read(Pair id) {
         return null;
     }
 
@@ -28,17 +30,17 @@ public class StudentScoreJdbcDao implements JdbcDao<StudentScore> {
     }
 
     @Override
-    public Integer create(StudentScore studentScore) {
+    public Pair create(StudentScore studentScore) {
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Pair id) {
 
     }
 
     @Override
-    public ArrayList<StudentScore> list() {
+    public List<StudentScore> list() {
         return null;
     }
 }

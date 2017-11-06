@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Вера on 06.11.2017.
  */
-public class StudentJdbcDao implements JdbcDao<Student> {
+public class StudentJdbcDao implements JdbcDao<Student,Integer> {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -19,7 +19,7 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     }
 
     @Override
-    public Student read(int id) {
+    public Student read(Integer id) {
         return null;
     }
 
@@ -34,7 +34,7 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
 
     }
 

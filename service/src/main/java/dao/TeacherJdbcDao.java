@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
-public class TeacherJdbcDao implements JdbcDao<Teacher> {
+public class TeacherJdbcDao implements JdbcDao<Teacher,Integer> {
 
     private JdbcTemplate jdbcTemplate;
     private JdbcDaoFactory  daoFactory;
@@ -25,7 +25,7 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
     }
 
     @Override
-    public Teacher read(int id) {
+    public Teacher read(Integer id) {
         String sql = "SELECT * FROM Teacher WHERE  teacher_id= ? ";
         Teacher teacher = jdbcTemplate.queryForObject(sql, new TeacherMapper(), id);
         CourseJdbcDao courseDao = daoFactory.getCourseDao();
@@ -61,7 +61,7 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         String sql = "DELETE FROM Teacher WHERE teacher_id = ?";
         jdbcTemplate.update(sql, id);
     }
