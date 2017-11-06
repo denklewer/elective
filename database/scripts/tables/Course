@@ -1,0 +1,8 @@
+CREATE TABLE `Course` (
+  `course_id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_name` varchar(20) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`course_id`),
+  KEY `teacher_id_idx` (`teacher_id`),
+  CONSTRAINT `teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
