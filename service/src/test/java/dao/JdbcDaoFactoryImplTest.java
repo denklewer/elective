@@ -26,6 +26,7 @@ public class JdbcDaoFactoryImplTest {
         dataSource.setDriverClassName(className);
         dataSource.setUrl(properties.getProperty("url"));
         dataSource.setConnectionProperties(properties);
+
         jdbcDaoFactory = new JdbcDaoFactoryImpl(dataSource);
 
     }
@@ -44,7 +45,7 @@ public class JdbcDaoFactoryImplTest {
         CourseJdbcDao courseJdbcDao = jdbcDaoFactory.getCourseDao();
         CourseFactory courseFactory = new CourseFactory();
 
-        Course target = courseFactory.newInstance(1,"JavaCore", null, null);
+        Course target = courseFactory.newInstance(0,"JavaCore", null, null);
         int id = courseJdbcDao.create(target);
         List<Course> courses = courseJdbcDao.list();
         Course course = courseJdbcDao.read(id);
