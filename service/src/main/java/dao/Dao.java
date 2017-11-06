@@ -1,6 +1,7 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public interface Dao<T, PK extends Serializable> {
     /**
@@ -31,4 +32,10 @@ public interface Dao<T, PK extends Serializable> {
      * @param id object id
      */
     void delete(int id);
+
+    /**
+     * Get list of available objects from dao.
+     * @return list of objects
+     */
+    ArrayList<T> list();
 }

@@ -1,0 +1,12 @@
+<Resource
+        name="jdbc/epamDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="100"
+        maxIdle="30"
+        maxWait="10000"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://138.68.75.40:3306"
+        username="epam-admin"
+        password="secretservice"
+/>
