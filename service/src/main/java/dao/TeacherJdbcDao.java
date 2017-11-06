@@ -2,25 +2,17 @@ package dao;
 
 import context.Teacher;
 import dao.mappers.TeacherMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jndi.JndiTemplate;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TeacherJdbcDao implements JdbcDao<Teacher> {
-    private DataSource dataSource;
 
+    private JdbcTemplate jdbcTemplate;
 
-
-    public TeacherJdbcDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    @Override
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -45,7 +37,6 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
 
     @Override
     public ArrayList<Teacher> list() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String sql = "SELECT * from Teacher";
         ArrayList<Teacher> listUser =(ArrayList) jdbcTemplate.query(sql, new TeacherMapper());
         return listUser;
