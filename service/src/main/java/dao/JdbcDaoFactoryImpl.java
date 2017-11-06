@@ -1,13 +1,18 @@
 package dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
 public class JdbcDaoFactoryImpl implements JdbcDaoFactory {
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcDaoFactoryImpl(SimpleDriverDataSource dataSource) {
+    /**
+     * Constructor for factory.
+     *
+     * @param dataSource you're DataSource for use.
+     */
+    public JdbcDaoFactoryImpl(DriverManagerDataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
