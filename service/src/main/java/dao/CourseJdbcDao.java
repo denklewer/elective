@@ -59,7 +59,7 @@ public class CourseJdbcDao implements JdbcDao<Course> {
     }
 
     @Override
-    public ArrayList<Course> list() {
+    public List<Course> list() {
         String sql = "SELECT * from Course";
         ArrayList<Course> courses =
                 (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());

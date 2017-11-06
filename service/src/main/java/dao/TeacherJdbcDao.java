@@ -11,7 +11,6 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherJdbcDao implements JdbcDao<Teacher> {
