@@ -1,6 +1,7 @@
 package dao;
 
 import context.Course;
+import dao.mappers.CourseMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -16,26 +17,36 @@ public class CourseJdbcDao implements JdbcDao<Course> {
 
     @Override
     public Course read(int id) {
-        return null;
+        String sql = "select * from Course where id = ?";
+        Course course = jdbcTemplate.queryForObject(sql,
+                new Object[]{id}, new CourseMapper());
+
+        return course;
     }
 
     @Override
     public void update(Course course) {
-
+        String sql = "update Course set name = ? where id = ?)";
+        jdbcTemplate.update(sql, course.getName(), course.getId());
     }
 
     @Override
     public Integer create(Course course) {
-        return null;
+        String sql = "insert into Course (name) values (?)";
+        return jdbcTemplate.update(sql, course.getName());
     }
 
     @Override
     public void delete(int id) {
-
+        String sql = "delete from Course where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
     public ArrayList<Course> list() {
-        return null;
+        String sql = "SELECT * from Course";
+        ArrayList<Course> listUser =
+                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());
+        return listUser;
     }
 }
