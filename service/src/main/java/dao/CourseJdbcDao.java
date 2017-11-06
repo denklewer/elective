@@ -1,8 +1,16 @@
 package dao;
 
 import context.Course;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class CourseJdbcDao implements JdbcDao<Course> {
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Course read(int id) {
