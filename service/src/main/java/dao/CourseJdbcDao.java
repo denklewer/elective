@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseJdbcDao implements JdbcDao<Course> {
 
@@ -60,8 +61,15 @@ public class CourseJdbcDao implements JdbcDao<Course> {
     @Override
     public ArrayList<Course> list() {
         String sql = "SELECT * from Course";
-        ArrayList<Course> listUser =
+        ArrayList<Course> courses =
                 (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());
-        return listUser;
+        return courses;
+    }
+
+    public List<Course> getByTeacherId(int id){
+        String sql = "select * from Course where teacher_id = ?";
+        ArrayList<Course> courses =
+                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());
+        return courses;
     }
 }
