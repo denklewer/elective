@@ -56,7 +56,9 @@ public class Course {
 
         Course course = (Course) o;
 
-        if (id != course.id) return false;
+        if (id != course.id) {
+            return false;
+        }
         return name.equals(course.name);
     }
 

@@ -3,7 +3,12 @@ package dao;
 import context.Course;
 import dao.mappers.CourseMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CourseJdbcDao implements JdbcDao<Course> {
@@ -32,8 +37,18 @@ public class CourseJdbcDao implements JdbcDao<Course> {
 
     @Override
     public Integer create(Course course) {
-        String sql = "insert into Course (course_id, course_name) values (?,?)";
-        return jdbcTemplate.update(sql,course.getId(), course.getName());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        PreparedStatementCreator creator = con -> {
+            PreparedStatement statement = con.prepareStatement(
+                    "INSERT INTO Course(course_name) VALUES (?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, course.getName());
+            return statement;
+        };
+        jdbcTemplate.update(creator, keyHolder);
+        int id = keyHolder.getKey().intValue();
+        course.setId(id);
+        return id;
     }
 
     @Override

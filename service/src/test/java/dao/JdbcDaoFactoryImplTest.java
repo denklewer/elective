@@ -28,7 +28,6 @@ public class JdbcDaoFactoryImplTest {
         dataSource.setConnectionProperties(properties);
         jdbcDaoFactory = new JdbcDaoFactoryImpl(dataSource);
 
-
     }
 
     @Test
@@ -46,11 +45,11 @@ public class JdbcDaoFactoryImplTest {
         CourseFactory courseFactory = new CourseFactory();
 
         Course target = courseFactory.newInstance(1,"JavaCore", null, null);
-        target.setId(
-                courseJdbcDao.create(target)
-        );
+        int id = courseJdbcDao.create(target);
         List<Course> courses = courseJdbcDao.list();
+        Course course = courseJdbcDao.read(id);
 
+        assertTrue(target.equals(course));
         assertTrue(courses.contains(target));
 
     }

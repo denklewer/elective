@@ -45,8 +45,8 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
             statement.setString(2,  teacher.getLastName());
             return statement;
         };
-       jdbcTemplate.update(creator, keyHolder);
-       int id = keyHolder.getKey().intValue();
+        jdbcTemplate.update(creator, keyHolder);
+        int id = keyHolder.getKey().intValue();
         teacher.setId(id);
         return id;
     }
