@@ -5,27 +5,35 @@ import context.Teacher;
 import dao.mappers.TeacherMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherJdbcDao implements JdbcDao<Teacher> {
 
     private JdbcTemplate jdbcTemplate;
+    private JdbcDaoFactory  daoFactory;
 
     @Override
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        daoFactory = new JdbcDaoFactoryImpl((DriverManagerDataSource)jdbcTemplate.getDataSource());
     }
 
     @Override
     public Teacher read(int id) {
         String sql = "SELECT * FROM Teacher WHERE  teacher_id= ? ";
         Teacher teacher = jdbcTemplate.queryForObject(sql, new TeacherMapper(), id);
-        //TODO: Get cource list
+        CourseJdbcDao courseDao = daoFactory.getCourseDao();
+        List<Course> courseList = courseDao.getByTeacherId(teacher.getId());
+        teacher.setCourses(courseList);
+
+
         return teacher;
     }
 
@@ -33,12 +41,7 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
     public void update(Teacher teacher) {
         String sql = "UPDATE Teacher SET first_name = ?, last_name = ? WHERE  teacher_id= ?";
         jdbcTemplate.update(sql, teacher.getFirstName(), teacher.getLastName(), teacher.getId());
-        // TODO: Update cources
-
-        for (Course course : teacher.getCourses()) {
-
-        }
-
+        CourseJdbcDao courseDao = daoFactory.getCourseDao();
     }
 
     @Override
@@ -66,10 +69,9 @@ public class TeacherJdbcDao implements JdbcDao<Teacher> {
 
 
     @Override
-    public ArrayList<Teacher> list() {
+    public List<Teacher> list() {
         String sql = "SELECT * from Teacher";
-        ArrayList<Teacher> listUser = (ArrayList) jdbcTemplate.query(sql, new TeacherMapper());
-        return listUser;
+        return  jdbcTemplate.query(sql, new TeacherMapper());
     }
 
 

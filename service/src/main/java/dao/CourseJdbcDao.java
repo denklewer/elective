@@ -68,8 +68,6 @@ public class CourseJdbcDao implements JdbcDao<Course> {
 
     public List<Course> getByTeacherId(int id){
         String sql = "select * from Course where teacher_id = ?";
-        ArrayList<Course> courses =
-                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());
-        return courses;
+        return jdbcTemplate.query(sql, new CourseMapper());
     }
 }

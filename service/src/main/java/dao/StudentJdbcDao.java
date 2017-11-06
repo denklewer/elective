@@ -4,6 +4,7 @@ import context.Student;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Вера on 06.11.2017.
@@ -38,7 +39,7 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     }
 
     @Override
-    public ArrayList<Student> list() {
+    public List<Student> list() {
         return null;
     }
 }

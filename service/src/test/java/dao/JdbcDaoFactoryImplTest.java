@@ -2,6 +2,8 @@ package dao;
 
 import context.Course;
 import context.CourseFactory;
+import context.Teacher;
+import context.TeacherFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +35,16 @@ public class JdbcDaoFactoryImplTest {
 
     @Test
     public void getTeacherDao() throws Exception {
+        TeacherJdbcDao teacherJdbcDao = jdbcDaoFactory.getTeacherDao();
+        TeacherFactory teacherFactory = new TeacherFactory();
 
+        Teacher target = teacherFactory.newInstance(0,"John", "Smith");
+        int id = teacherJdbcDao.create(target);
+        List<Teacher> teachers = teacherJdbcDao.list();
+        Teacher teacher = teacherJdbcDao.read(id);
+
+        assertTrue(target.equals(teacher));
+        assertTrue(teachers.contains(target));
     }
 
     @Test
