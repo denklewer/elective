@@ -18,12 +18,16 @@ public class JdbcDaoFactoryImpl implements JdbcDaoFactory {
 
     @Override
     public TeacherJdbcDao getTeacherDao() {
-        return null;
+        TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao();
+        teacherJdbcDao.setJdbcTemplate(jdbcTemplate);
+        return teacherJdbcDao;
     }
 
     @Override
     public StudentJdbcDao getStudentDao() {
-        return null;
+        StudentJdbcDao studentJdbcDao = new StudentJdbcDao();
+        studentJdbcDao.setJdbcTemplate(jdbcTemplate);
+        return studentJdbcDao;
     }
 
     @Override

@@ -2,6 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Dao<T, PK extends Serializable> {
     /**
@@ -21,6 +22,7 @@ public interface Dao<T, PK extends Serializable> {
 
     /**
      * Insert object in data source.
+     *
      * @param t object for insertion
      * @return data source object id
      */
@@ -35,7 +37,8 @@ public interface Dao<T, PK extends Serializable> {
 
     /**
      * Get list of available objects from dao.
+     *
      * @return list of objects
      */
-    ArrayList<T> list();
+    List<T> list();
 }

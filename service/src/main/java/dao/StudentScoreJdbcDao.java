@@ -10,7 +10,6 @@ import java.util.ArrayList;
  */
 public class StudentScoreJdbcDao implements JdbcDao<StudentScore> {
 
-
     private JdbcTemplate jdbcTemplate;
 
     @Override
