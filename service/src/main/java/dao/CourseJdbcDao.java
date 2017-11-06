@@ -66,8 +66,8 @@ public class CourseJdbcDao implements JdbcDao<Course> {
         return courses;
     }
 
-    public List<Course> getByTeacherId(int id){
+    public List<Course> getByTeacherId(int id) {
         String sql = "select * from Course where teacher_id = ?";
-        return jdbcTemplate.query(sql, new CourseMapper());
+        return jdbcTemplate.query(sql, new CourseMapper(), id);
     }
 }

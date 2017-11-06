@@ -21,7 +21,13 @@ import java.util.Random;
  */
 public class JdbcTest {
 
-
+    /**
+     * Example method.
+     *
+     * @param args testing
+     * @throws IOException            testing
+     * @throws ClassNotFoundException testing
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // load properties from file
         Properties properties = new Properties();
@@ -46,18 +52,16 @@ public class JdbcTest {
         System.out.println(teacherJdbcDao.list());
         Teacher teacher = teacherJdbcDao.read(1);
         System.out.println("readed1: " + teacher);
-        teacher.setLastName("updated" +new Random().nextInt(10));
+        teacher.setLastName("updated" + new Random().nextInt(10));
         teacherJdbcDao.update(teacher);
         System.out.println("updated");
         teacher = teacherJdbcDao.read(1);
         System.out.println("readed2: " + teacher);
-       int id = teacherJdbcDao.create(teacher);
+        int id = teacherJdbcDao.create(teacher);
         Teacher teacher1 = teacherJdbcDao.read(id);
         System.out.println("inserted:" + teacher1);
         teacherJdbcDao.delete(id);
         System.out.println("deleted:" + id);
-
-
 
 
     }

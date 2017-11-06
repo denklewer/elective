@@ -42,7 +42,7 @@ public class JdbcDaoFactoryImplTest {
         int id = teacherJdbcDao.create(target);
         List<Teacher> teachers = teacherJdbcDao.list();
         Teacher teacher = teacherJdbcDao.read(id);
-
+        target.setId(teacher.getId());
         assertTrue(target.equals(teacher));
         assertTrue(teachers.contains(target));
     }

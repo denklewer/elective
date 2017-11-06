@@ -1,11 +1,11 @@
 package dao.mappers;
 
-        import context.Teacher;
-        import context.TeacherFactory;
-        import org.springframework.jdbc.core.RowMapper;
+import context.Teacher;
+import context.TeacherFactory;
+import org.springframework.jdbc.core.RowMapper;
 
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class TeacherMapper implements RowMapper<Teacher> {
     @Override
