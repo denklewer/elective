@@ -13,10 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
-public class TeacherJdbcDao implements JdbcDao<Teacher,Integer> {
+public class TeacherJdbcDao implements JdbcDao<Teacher, Integer> {
 
     private JdbcTemplate jdbcTemplate;
-    private JdbcDaoFactory  daoFactory;
+    private JdbcDaoFactory daoFactory;
 
     @Override
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
@@ -26,7 +26,7 @@ public class TeacherJdbcDao implements JdbcDao<Teacher,Integer> {
 
     @Override
     public Teacher read(Integer id) {
-        String sql = "SELECT * FROM Teacher WHERE  teacher_id= ? ";
+        String sql = "SELECT * FROM Teacher WHERE  teacher_id = ? ";
         Teacher teacher = jdbcTemplate.queryForObject(sql, new TeacherMapper(), id);
         CourseJdbcDao courseDao = daoFactory.getCourseDao();
         List<Course> courseList = courseDao.getByTeacherId(teacher.getId());

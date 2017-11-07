@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseJdbcDao implements JdbcDao<Course,Integer> {
+public class CourseJdbcDao implements JdbcDao<Course, Integer> {
 
     private JdbcTemplate jdbcTemplate;
     private JdbcDaoFactory factory;

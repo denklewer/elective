@@ -1,16 +1,15 @@
 package dao;
 
 import context.StudentScore;
+import context.Teacher;
+import dao.mappers.StudentScoreMapper;
+import dao.mappers.TeacherMapper;
 import dao.support.Pair;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by Вера on 06.11.2017.
- */
-public class StudentScoreJdbcDao implements JdbcDao<StudentScore,Pair> {
+public class StudentScoreJdbcDao implements JdbcDao<StudentScore, Pair> {
 
     private JdbcTemplate jdbcTemplate;
     private JdbcDaoFactory factory;
@@ -22,17 +21,28 @@ public class StudentScoreJdbcDao implements JdbcDao<StudentScore,Pair> {
     }
 
     @Override
-    public StudentScore read(Pair id) {
-        return null;
+    public StudentScore read(Pair pair) {
+        String sql = "SELECT * FROM Course_participation student_id = ?," +
+                "course_id = ?";
+
+        StudentScore studentScore = jdbcTemplate.queryForObject(sql, new StudentScoreMapper(),
+                pair.getStudentId(), pair.getCourseId());
+
+        return studentScore;
     }
 
     @Override
     public void update(StudentScore studentScore) {
+        String sql = "UPDATE Course_participation assesment_grade = ?, teacher_feedback = ?" +
+                "WHERE student_id = ?, course_id = ?";
+
+        jdbcTemplate.update(sql, studentScore.getScore(), studentScore.getFeedback());
 
     }
 
     @Override
     public Pair create(StudentScore studentScore) {
+
         return null;
     }
 
@@ -42,7 +52,7 @@ public class StudentScoreJdbcDao implements JdbcDao<StudentScore,Pair> {
     }
 
     @Override
-    public List<StudentScore> list() {
+    public ArrayList<StudentScore> list() {
         return null;
     }
 }

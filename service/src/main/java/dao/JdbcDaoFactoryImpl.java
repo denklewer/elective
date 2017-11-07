@@ -40,6 +40,8 @@ public class JdbcDaoFactoryImpl implements JdbcDaoFactory {
 
     @Override
     public StudentScoreJdbcDao getStudentScoreDao() {
-        return null;
+        StudentScoreJdbcDao studentScoreJdbcDao = new StudentScoreJdbcDao();
+        studentScoreJdbcDao.setJdbcTemplate(jdbcTemplate, this);
+        return studentScoreJdbcDao;
     }
 }

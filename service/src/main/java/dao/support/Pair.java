@@ -2,7 +2,7 @@ package dao.support;
 
 import java.io.Serializable;
 
-public class Pair  implements Serializable{
+public class Pair implements Serializable {
     private int studentId;
     private int courseId;
 
