@@ -10,6 +10,7 @@ public interface JdbcDao<T,PK extends Serializable> extends Dao<T,PK> {
      * Set JDBCTemplate for dataBase.
      *
      * @param jdbcTemplate JDBCTemplate for use
+     * @param factory JdbcDaoFactory for use
      */
-    void setJdbcTemplate(JdbcTemplate jdbcTemplate);
+    void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory);
 }

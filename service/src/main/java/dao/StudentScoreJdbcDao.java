@@ -13,10 +13,12 @@ import java.util.List;
 public class StudentScoreJdbcDao implements JdbcDao<StudentScore,Pair> {
 
     private JdbcTemplate jdbcTemplate;
+    private JdbcDaoFactory factory;
 
     @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
         this.jdbcTemplate = jdbcTemplate;
+        this.factory = factory;
     }
 
     @Override

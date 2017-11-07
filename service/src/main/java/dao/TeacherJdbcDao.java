@@ -19,9 +19,9 @@ public class TeacherJdbcDao implements JdbcDao<Teacher,Integer> {
     private JdbcDaoFactory  daoFactory;
 
     @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
         this.jdbcTemplate = jdbcTemplate;
-        daoFactory = new JdbcDaoFactoryImpl((DriverManagerDataSource)jdbcTemplate.getDataSource());
+        this.daoFactory = factory;
     }
 
     @Override

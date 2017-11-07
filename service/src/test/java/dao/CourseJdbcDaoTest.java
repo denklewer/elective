@@ -2,6 +2,8 @@ package dao;
 
 import context.Course;
 import context.CourseFactory;
+import context.Teacher;
+import context.TeacherFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,41 +36,57 @@ public class CourseJdbcDaoTest {
     }
 
     @Test
-    public void setJdbcTemplate() throws Exception {
-    }
-
-    @Test
-    public void read() throws Exception {
-    }
-
-    @Test
     public void update() throws Exception {
     }
 
     @Test
-    public void create() throws Exception {
-        CourseJdbcDao courseJdbcDao = jdbcDaoFactory.getCourseDao();
+    public void createAndRead() throws Exception {
         CourseFactory courseFactory = new CourseFactory();
+        TeacherJdbcDao teacherDao = jdbcDaoFactory.getTeacherDao();
 
-        Course target = courseFactory.newInstance(0,"JavaCore", null, null);
+        Teacher teacher = new TeacherFactory().newInstance(0, "Ronald", "McDonald");
+        int teacher_id = teacherDao.create(teacher);
+
+        Course target = courseFactory.newInstance(0,"JavaExpert", teacher, null);
         int id = courseJdbcDao.create(target);
-        List<Course> courses = courseJdbcDao.list();
         Course course = courseJdbcDao.read(id);
 
         assertTrue(target.equals(course));
-        assertTrue(courses.contains(target));
     }
 
     @Test
     public void delete() throws Exception {
+        CourseFactory courseFactory = new CourseFactory();
+        TeacherJdbcDao teacherDao = jdbcDaoFactory.getTeacherDao();
+
+        Teacher teacher = new TeacherFactory().newInstance(0, "Ronald", "McDonald");
+        int teacher_id = teacherDao.create(teacher);
+
+        Course target = courseFactory.newInstance(0,"JavaExpert", teacher, null);
+        int id = courseJdbcDao.create(target);
+        List<Course> courses = courseJdbcDao.list();
+
+        assertTrue(courses.contains(target));
     }
 
     @Test
     public void list() throws Exception {
+        CourseFactory courseFactory = new CourseFactory();
+        TeacherJdbcDao teacherDao = jdbcDaoFactory.getTeacherDao();
+
+        Teacher teacher = new TeacherFactory().newInstance(0, "Ronald", "McDonald");
+        int teacher_id = teacherDao.create(teacher);
+
+        Course target = courseFactory.newInstance(0,"JavaExpert", teacher, null);
+        int id = courseJdbcDao.create(target);
+        List<Course> courses = courseJdbcDao.list();
+
+        assertTrue(courses.contains(target));
     }
 
     @Test
     public void getByTeacherId() throws Exception {
+
     }
 
 }

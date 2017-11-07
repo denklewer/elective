@@ -48,7 +48,7 @@ public class JdbcTest {
         // or Dao usage
 
         TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao();
-        teacherJdbcDao.setJdbcTemplate(jdbcTemplate);
+        teacherJdbcDao.setJdbcTemplate(jdbcTemplate, new JdbcDaoFactoryImpl(dataSource));
         System.out.println(teacherJdbcDao.list());
         Teacher teacher = teacherJdbcDao.read(1);
         System.out.println("readed1: " + teacher);

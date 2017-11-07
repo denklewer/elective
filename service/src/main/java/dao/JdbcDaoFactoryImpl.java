@@ -19,21 +19,22 @@ public class JdbcDaoFactoryImpl implements JdbcDaoFactory {
     @Override
     public TeacherJdbcDao getTeacherDao() {
         TeacherJdbcDao teacherJdbcDao = new TeacherJdbcDao();
-        teacherJdbcDao.setJdbcTemplate(jdbcTemplate);
+        teacherJdbcDao.setJdbcTemplate(jdbcTemplate, this);
         return teacherJdbcDao;
     }
 
     @Override
     public StudentJdbcDao getStudentDao() {
         StudentJdbcDao studentJdbcDao = new StudentJdbcDao();
-        studentJdbcDao.setJdbcTemplate(jdbcTemplate);
+        studentJdbcDao.setJdbcTemplate(jdbcTemplate, this);
         return studentJdbcDao;
     }
 
     @Override
     public CourseJdbcDao getCourseDao() {
         CourseJdbcDao courseJdbcDao = new CourseJdbcDao();
-        courseJdbcDao.setJdbcTemplate(jdbcTemplate);
+        courseJdbcDao.setJdbcTemplate(jdbcTemplate, this);
+
         return courseJdbcDao;
     }
 

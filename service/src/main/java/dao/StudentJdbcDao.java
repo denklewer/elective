@@ -12,10 +12,12 @@ import java.util.List;
 public class StudentJdbcDao implements JdbcDao<Student,Integer> {
 
     private JdbcTemplate jdbcTemplate;
+    private JdbcDaoFactory factory;
 
     @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
         this.jdbcTemplate = jdbcTemplate;
+        this.factory = factory;
     }
 
     @Override
