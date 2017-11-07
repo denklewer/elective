@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentJdbcDao implements JdbcDao<Student> {
+public class StudentJdbcDao implements JdbcDao<Student, Integer> {
 
     private JdbcTemplate jdbcTemplate;
     private JdbcDaoFactory daoFactory;
@@ -22,15 +22,10 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     }
 
     @Override
-    public Student read(int id) {
+    public Student read(Integer id) {
         String sql = "SELECT * FROM Student WHERE student_id = ?";
 
         Student student = jdbcTemplate.queryForObject(sql, new StudentMapper(), id);
-
-        StudentScoreJdbcDao courseDao = daoFactory.getCourseDao();
-        List<Course> courseList = courseDao.getByTeacherId(teacher.getId());
-        teacher.setCourses(courseList);
-
 
 
         return null;
@@ -47,7 +42,7 @@ public class StudentJdbcDao implements JdbcDao<Student> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
 
     }
 
