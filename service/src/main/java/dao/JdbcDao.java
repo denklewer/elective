@@ -2,7 +2,9 @@ package dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public interface JdbcDao<T> extends Dao<T,Integer> {
+import java.io.Serializable;
+
+public interface JdbcDao<T, PK extends Serializable> extends Dao<T,PK> {
 
     /**
      * Set JDBCTemplate for dataBase.

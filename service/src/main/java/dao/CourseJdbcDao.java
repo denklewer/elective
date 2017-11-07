@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseJdbcDao implements JdbcDao<Course> {
+public class CourseJdbcDao implements JdbcDao<Course, Integer> {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -22,7 +22,7 @@ public class CourseJdbcDao implements JdbcDao<Course> {
     }
 
     @Override
-    public Course read(int id) {
+    public Course read(Integer id) {
         String sql = "select * from Course where course_id = ?";
         Course course = jdbcTemplate.queryForObject(sql,
                 new Object[]{id}, new CourseMapper());
@@ -53,7 +53,7 @@ public class CourseJdbcDao implements JdbcDao<Course> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         String sql = "delete from Course where course_id = ?";
         jdbcTemplate.update(sql, id);
     }

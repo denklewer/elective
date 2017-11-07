@@ -11,7 +11,7 @@ public interface Dao<T, PK extends Serializable> {
      * @param id object id
      * @return object what was read
      */
-    T read(int id);
+    T read(PK id);
 
     /**
      * Update object in source.
@@ -33,7 +33,7 @@ public interface Dao<T, PK extends Serializable> {
      *
      * @param id object id
      */
-    void delete(int id);
+    void delete(PK id);
 
     /**
      * Get list of available objects from dao.
