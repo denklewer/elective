@@ -1,60 +1,65 @@
 package dao;
 
-import context.Course;
-import context.Teacher;
-import dao.mappers.CourseMapper;
+import model.Course;
+import dao.mappers.CourseRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseJdbcDao implements JdbcDao<Course, Integer> {
-
+@Repository
+public class CourseJdbcDao {
+    @Autowired
     private JdbcTemplate jdbcTemplate;
-    private JdbcDaoFactory factory;
-    private TeacherJdbcDao teacherJdbcDao;
+    @Autowired
+    private CourseRowMapper courseRowMapper;
 
-    @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.factory = factory;
-        this.teacherJdbcDao = factory.getTeacherDao();
-    }
-
-    @Override
-    public Course read(Integer id) {
-        String sql = "select * from Course where course_id = ?";
+    public Course read(long id) {
+        String sql = "select * from " +
+                "User join Course " +
+                "on user_id = instructor_id " +
+                "where course_id = ?";
         Course course = jdbcTemplate.queryForObject(sql,
-                new Object[]{id}, new CourseMapper());
-        getTeacher(course);
-
+                new Object[]{id}, courseRowMapper);
         return course;
     }
 
-    @Override
-    public void update(Course course) {
-        String sql = "update Course set course_name, teacher_id = ?, ? where course_id = ?)";
-        jdbcTemplate.update(sql, course.getName(), course.getId());
+    public Course update(Course course) {
+        String sql = "update Course set " +
+                "course_name = ?, " +
+                "instructor_id = ? " +
+                "instructor_id = ? " +
+                "instructor_id = ? " +
+                "where course_id = ?";
+        jdbcTemplate.update(sql, course.getName(), course.getInstructor().getId(), course.getId());
+        return course;
     }
 
-    @Override
     public Integer create(Course course) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator creator = con -> {
             PreparedStatement statement = con.prepareStatement(
-                    "INSERT INTO Course(course_name, teacher_id) VALUES (?, ?)",
+                    "INSERT INTO" +
+                            " Course(" +
+                            " course_name," +
+                            " instructor_id," +
+                            " start_date," +
+                            " end_date)" +
+                            " VALUES (?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, course.getName());
-            if(course.getTeacher() != null) {
-                statement.setInt(2, course.getTeacher().getId());
-            }else{
-                statement.setInt(2, 0);
-            }
+            statement.setLong(2, course.getInstructor().getId());
+            statement.setDate(3, Date.valueOf(course.getStart()));
+            statement.setDate(4, Date.valueOf(course.getEnd()));
+
             return statement;
         };
         jdbcTemplate.update(creator, keyHolder);
@@ -63,28 +68,21 @@ public class CourseJdbcDao implements JdbcDao<Course, Integer> {
         return id;
     }
 
-    @Override
-    public void delete(Integer id) {
+    public Course delete(long id) {
+        Course course = read(id);
         String sql = "delete from Course where course_id = ?";
         jdbcTemplate.update(sql, id);
+        return course;
     }
 
-    @Override
     public List<Course> list() {
-        String sql = "SELECT * from Course";
+        String sql = "select * from " +
+                "User join Course " +
+                "on user_id = instructor_id";
         ArrayList<Course> courses =
-                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseMapper());
-        courses.forEach(this::getTeacher);
+                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseRowMapper());
+
         return courses;
     }
 
-    public List<Course> getByTeacherId(int id) {
-        String sql = "select * from Course where teacher_id = ?";
-        return jdbcTemplate.query(sql, new CourseMapper(), id);
-    }
-
-    private void getTeacher(Course course) {
-        Teacher teacher = teacherJdbcDao.read(course.getTeacher().getId());
-        course.setTeacher(teacher);
-    }
 }

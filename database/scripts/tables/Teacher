@@ -1,6 +1,0 @@
-CREATE TABLE `Teacher` (
-  `teacher_id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(40) DEFAULT NULL,
-  `last_name` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`teacher_id`)
-)

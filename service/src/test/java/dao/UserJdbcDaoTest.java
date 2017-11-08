@@ -1,25 +1,22 @@
 package dao;
 
 import appconfig.AppConfig;
-import model.Course;
 import model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CourseJdbcDaoTest {
+public class UserJdbcDaoTest {
+
     private List<User> users;
-    private List<Course> courses;
     private UserJdbcDao userJdbcDao;
-    private CourseJdbcDao courseJdbcDao;
 
     @Before
     public void setUp() throws Exception {
@@ -28,7 +25,6 @@ public class CourseJdbcDaoTest {
         configApplicationContext.refresh();
 
         userJdbcDao = configApplicationContext.getBean(UserJdbcDao.class);
-        courseJdbcDao = configApplicationContext.getBean(CourseJdbcDao.class);
 
         users = new ArrayList<>();
         Collections.addAll(users,
@@ -58,50 +54,33 @@ public class CourseJdbcDaoTest {
                         .build()
         );
         users.forEach(userJdbcDao::create);
-        courses = new ArrayList<>();
-        Collections.addAll(courses,
-                Course.newBuilder()
-                        .setId(0)
-                        .setStart(LocalDate.of(2017, 8, 16))
-                        .setEnd(LocalDate.of(2017, 10, 22))
-                        .setName("JavaCore")
-                        .setInstructor(users.get(0))
-                        .build(),
-                Course.newBuilder()
-                        .setId(0)
-                        .setStart(LocalDate.of(2017, 9, 16))
-                        .setEnd(LocalDate.of(2017, 11, 22))
-                        .setName("JavaAdvanced")
-                        .setInstructor(users.get(1))
-                        .build()
-                );
+    }
 
-        courses.forEach(courseJdbcDao::create);
+    @Test
+    public void updateTest() throws Exception{
+        User user = users.get(0);
+        user.setPassword("new");
+        user.setLogin("ikiselevnew");
+        user.setLastName("KiselevNew");
+        user.setFirstName("IlyaNew");
+        user.setEmail("ikiselevnew@gmail.com");
 
+        userJdbcDao.update(user);
+        User user1 = userJdbcDao.read(user.getId());
+
+        assertEquals(user, user1);
+    }
+
+    @Test
+    public void listTest(){
+        List<User> list = userJdbcDao.list();
+
+        assertTrue(list.size() == users.size());
     }
 
     @After
     public void tearDown() throws Exception {
         users.forEach(user -> userJdbcDao.delete(user.getId()));
-        courses.forEach(course -> courseJdbcDao.delete(course.getId()));
-    }
-
-    @Test
-    public void update() throws Exception {
-        Course course = courses.get(0);
-        course.setName("JavaBabyDeveloper");
-        course.setStart(LocalDate.of(2017, 2, 10));
-        course.setEnd(LocalDate.of(2017, 10, 22));
-        course.setInstructor(users.get(2));
-
-        courseJdbcDao.update(course);
-        Course course1 = courseJdbcDao.read(course.getId());
-
-        assertEquals(course, course1);
-    }
-
-    @Test
-    public void list() throws Exception {
     }
 
 }

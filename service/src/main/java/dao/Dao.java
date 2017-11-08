@@ -18,7 +18,7 @@ public interface Dao<T, PK extends Serializable> {
      *
      * @param t object for update
      */
-    void update(T t);
+    void update(T t);// T
 
     /**
      * Insert object in data source.
@@ -26,7 +26,7 @@ public interface Dao<T, PK extends Serializable> {
      * @param t object for insertion
      * @return data source object id
      */
-    PK create(T t);
+    PK create(T t);// T
 
     /**
      * remove object from table by id.

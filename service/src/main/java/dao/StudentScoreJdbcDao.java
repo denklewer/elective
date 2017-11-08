@@ -1,57 +1,83 @@
 package dao;
 
-import context.StudentScore;
-import context.Teacher;
+import model.StudentScore;
 import dao.mappers.StudentScoreMapper;
-import dao.mappers.TeacherMapper;
-import dao.support.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class StudentScoreJdbcDao implements JdbcDao<StudentScore, Pair> {
+@Repository
+public class StudentScoreJdbcDao {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
-    private JdbcDaoFactory factory;
+    @Autowired
+    private StudentScoreMapper studentScoreMapper;
 
-    @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate, JdbcDaoFactory factory) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.factory = factory;
-    }
-
-    @Override
-    public StudentScore read(Pair pair) {
-        String sql = "SELECT * FROM Course_participation student_id = ?," +
-                "course_id = ?";
-
-        StudentScore studentScore = jdbcTemplate.queryForObject(sql, new StudentScoreMapper(),
-                pair.getStudentId(), pair.getCourseId());
+    public StudentScore read(long userId, long courseId) {
+        String sql = "SELECT * FROM" +
+                " Course_participation" +
+                " student_id = ?," +
+                " course_id = ?";
+        StudentScore studentScore = jdbcTemplate.queryForObject(sql,
+                studentScoreMapper,
+                userId,
+                courseId
+        );
 
         return studentScore;
     }
 
-    @Override
-    public void update(StudentScore studentScore) {
-        String sql = "UPDATE Course_participation assesment_grade = ?, teacher_feedback = ?" +
-                "WHERE student_id = ?, course_id = ?";
+    public StudentScore update(StudentScore studentScore) {
+        String sql = "UPDATE Course_participation" +
+                " grade = ?," +
+                " feedback = ?" +
+                "WHERE student_id = ?," +
+                " course_id = ?";
 
-        jdbcTemplate.update(sql, studentScore.getScore(), studentScore.getFeedback());
-
+        jdbcTemplate.update(sql,
+                studentScore.getScore(),
+                studentScore.getFeedback(),
+                studentScore.getStudent().getId(),
+                studentScore.getCourse().getId());
+        return studentScore;
     }
 
-    @Override
-    public Pair create(StudentScore studentScore) {
-
-        return null;
+    public StudentScore create(StudentScore studentScore) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        PreparedStatementCreator creator = con -> {
+            PreparedStatement statement =
+                    con.prepareStatement("INSERT INTO " +
+                                    "Course_participation(student_id, " +
+                                    "course_id, " +
+                                    "grade, " +
+                                    "feedback, " +
+                                    "VALUES (?,?,?,?)",
+                            Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, studentScore.getCourse().getId());
+            statement.setLong(2, studentScore.getStudent().getId());
+            statement.setInt(3, studentScore.getScore());
+            statement.setString(4, studentScore.getFeedback());
+            return statement;
+        };
+        jdbcTemplate.update(creator, keyHolder);
+        return studentScore;
     }
 
-    @Override
-    public void delete(Pair id) {
-
+    public StudentScore delete(long userId, long courseId) {
+        StudentScore studentScore = read(userId, courseId);
+        String sql = "DELETE FROM Course_participation WHERE student_id = ? and course_id = ?";
+        jdbcTemplate.update(sql, userId, courseId);
+        return studentScore;
     }
 
-    @Override
     public ArrayList<StudentScore> list() {
         return null;
     }
