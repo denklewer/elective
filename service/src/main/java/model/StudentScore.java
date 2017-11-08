@@ -2,24 +2,15 @@ package model;
 
 public class StudentScore {
 
-    private User student;
-    private Course course;
-    private int score;
-    private String feedback;
+    private final User student;
+    private final Course course;
+    private final int score;
+    private final String feedback;
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
+    public StudentScore(User student, Course course, int score, String feedback) {
+        this.student = student;
+        this.course = course;
         this.score = score;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
         this.feedback = feedback;
     }
 
@@ -27,49 +18,54 @@ public class StudentScore {
         return student;
     }
 
-    public void setStudent(User student) {
-        this.student = student;
-    }
-
     public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public int getScore() {
+        return score;
+    }
+
+    public String getFeedback() {
+        return feedback;
     }
 
     public static Builder newBuilder(){
-        return new StudentScore().new Builder();
+        return new Builder();
     }
 
-    public class Builder{
+    public static class Builder{
+
+        private User student;
+        private Course course;
+        private int score;
+        private String feedback;
 
         private Builder() {
         }
 
         public Builder setScore(int score) {
-            StudentScore.this.score = score;
+            this.score = score;
             return this;
         }
 
         public Builder setFeedback(String feedback) {
-            StudentScore.this.feedback = feedback;
+            this.feedback = feedback;
             return this;
         }
 
         public Builder setStudent(User student) {
-            StudentScore.this.student = student;
+            this.student = student;
             return this;
         }
 
         public Builder setCourse(Course course) {
-            StudentScore.this.course = course;
+            this.course = course;
             return this;
         }
 
         public StudentScore build(){
-            return StudentScore.this;
+            return new StudentScore(student, course, score, feedback);
         }
     }
 }

@@ -3,54 +3,42 @@ package model;
 import java.time.LocalDate;
 
 public class Course {
-    private long id;
-    private String name;
-    private User instructor;
-    private LocalDate start;
-    private LocalDate end;
+    private final long id;
+    private final String name;
+    private final User instructor;
+    private final LocalDate start;
+    private final LocalDate end;
+
+    public Course(long id, String name, User instructor, LocalDate start, LocalDate end) {
+        this.id = id;
+        this.name = name;
+        this.instructor = instructor;
+        this.start = start;
+        this.end = end;
+    }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public User getInstructor() {
         return instructor;
-    }
-
-    public void setInstructor(User instructor) {
-        this.instructor = instructor;
     }
 
     public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
     public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
-
     public static Builder newBuilder(){
-        return new Course().new Builder();
+        return new Builder();
     }
 
     @Override
@@ -88,39 +76,45 @@ public class Course {
         return result;
     }
 
-    public class Builder {
+    public static class Builder {
+
+        private long id;
+        private String name;
+        private User instructor;
+        private LocalDate start;
+        private LocalDate end;
 
         private Builder() {
 
         }
 
         public Builder setId(long id) {
-            Course.this.id = id;
+            this.id = id;
             return this;
         }
 
         public Builder setName(String name) {
-            Course.this.name = name;
+            this.name = name;
             return this;
         }
 
         public Builder setInstructor(User instructor) {
-            Course.this.instructor = instructor;
+            this.instructor = instructor;
             return this;
         }
 
         public Builder setStart(LocalDate start) {
-            Course.this.start = start;
+            this.start = start;
             return this;
         }
 
         public Builder setEnd(LocalDate end) {
-            Course.this.end = end;
+            this.end = end;
             return this;
         }
 
         public Course build(){
-            return Course.this;
+            return new Course(id, name, instructor, start, end);
         }
     }
 }

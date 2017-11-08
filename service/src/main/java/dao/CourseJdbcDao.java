@@ -19,8 +19,6 @@ import java.util.List;
 public class CourseJdbcDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private CourseRowMapper courseRowMapper;
 
     public Course read(long id) {
         String sql = "select * from " +
@@ -28,7 +26,7 @@ public class CourseJdbcDao {
                 "on user_id = instructor_id " +
                 "where course_id = ?";
         Course course = jdbcTemplate.queryForObject(sql,
-                new Object[]{id}, courseRowMapper);
+                new Object[]{id}, new CourseRowMapper());
         return course;
     }
 
@@ -50,7 +48,7 @@ public class CourseJdbcDao {
         return course;
     }
 
-    public Integer create(Course course) {
+    public Course create(final Course course) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator creator = con -> {
             PreparedStatement statement = con.prepareStatement(
@@ -71,8 +69,14 @@ public class CourseJdbcDao {
         };
         jdbcTemplate.update(creator, keyHolder);
         int id = keyHolder.getKey().intValue();
-        course.setId(id);
-        return id;
+        Course returnCourse = Course.newBuilder()
+                .setInstructor(course.getInstructor())
+                .setStart(course.getStart())
+                .setEnd(course.getEnd())
+                .setName(course.getName())
+                .setId(id)
+                .build();
+        return returnCourse;
     }
 
     public Course delete(long id) {
@@ -87,7 +91,7 @@ public class CourseJdbcDao {
                 "Course join User " +
                 "on user_id = instructor_id";
         ArrayList<Course> courses =
-                (ArrayList<Course>) jdbcTemplate.query(sql, courseRowMapper);
+                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseRowMapper());
 
         return courses;
     }

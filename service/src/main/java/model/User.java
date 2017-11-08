@@ -1,59 +1,46 @@
 package model;
 
+import java.util.List;
+
 public class User {
-    private long id;
-    private String firstName;
-    private String lastName;
-    private String login;
-    private String password;
-    private String email;
+    private final long id;
+    private final String firstName;
+    private final String lastName;
+    private final String login;
+    private final String password;
+    private final String email;
+
+    public User(long id, String firstName, String lastName, String login, String password, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
@@ -69,7 +56,7 @@ public class User {
     }
 
     public static Builder newBuilder(){
-        return new User().new Builder();
+        return new Builder();
     }
 
     @Override
@@ -98,43 +85,50 @@ public class User {
         return result;
     }
 
-    public class Builder{
+    public static class Builder{
+
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String login;
+        private String password;
+        private String email;
 
         private Builder() {
         }
 
         public Builder setId(long id) {
-            User.this.id = id;
+            this.id = id;
             return this;
         }
 
         public Builder setFirstName(String firstName) {
-            User.this.firstName = firstName;
+            this.firstName = firstName;
             return this;
         }
 
         public Builder setLastName(String lastName) {
-            User.this.lastName = lastName;
+            this.lastName = lastName;
             return this;
         }
 
         public Builder setLogin(String login) {
-            User.this.login = login;
+            this.login = login;
             return this;
         }
 
         public Builder setPassword(String password) {
-            User.this.password = password;
+            this.password = password;
             return this;
         }
 
         public Builder setEmail(String email) {
-            User.this.email = email;
+            this.email = email;
             return this;
         }
 
         public User build(){
-            return User.this;
+            return new User(id, firstName, lastName, login, password, email);
         }
     }
 }

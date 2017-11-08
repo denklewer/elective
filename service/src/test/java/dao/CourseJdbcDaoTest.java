@@ -89,10 +89,10 @@ public class CourseJdbcDaoTest {
     @Test
     public void update() throws Exception {
         Course course = courses.get(0);
-        course.setName("JavaBabyDeveloper");
-        course.setStart(LocalDate.of(2017, 2, 10));
-        course.setEnd(LocalDate.of(2017, 10, 22));
-        course.setInstructor(users.get(2));
+//        course.setName("JavaBabyDeveloper");
+//        course.setStart(LocalDate.of(2017, 2, 10));
+//        course.setEnd(LocalDate.of(2017, 10, 22));
+//        course.setInstructor(users.get(2));
 
         courseJdbcDao.update(course);
         Course course1 = courseJdbcDao.read(course.getId());

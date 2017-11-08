@@ -19,13 +19,11 @@ public class UserJdbcDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private UserRowMapper userRowMapper;
 
     public User read(long id) {
         String sql = "SELECT * FROM User WHERE user_id = ? ";
         User user = jdbcTemplate.queryForObject(sql,
-                userRowMapper,
+                new UserRowMapper(),
                 id
         );
 
@@ -72,8 +70,15 @@ public class UserJdbcDao {
         };
         jdbcTemplate.update(creator, keyHolder);
         int id = keyHolder.getKey().intValue();
-        user.setId(id);
-        return user;
+        User returnUser = User.newBuilder()
+                .setEmail(user.getEmail())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setLogin(user.getLogin())
+                .setPassword(user.getPassword())
+                .setId(id)
+                .build();
+        return returnUser;
     }
 
     public User delete(long id) {
@@ -86,7 +91,7 @@ public class UserJdbcDao {
 
     public List<User> list() {
         String sql = "SELECT * from User";
-        return  jdbcTemplate.query(sql, userRowMapper);
+        return  jdbcTemplate.query(sql, new UserRowMapper());
     }
 
     public List<User> getStudents(){

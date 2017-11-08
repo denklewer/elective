@@ -18,8 +18,7 @@ public class StudentScoreJdbcDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private StudentScoreMapper studentScoreMapper;
+
 
     public StudentScore read(long userId, long courseId) {
         String sql = "SELECT * FROM" +
@@ -27,7 +26,7 @@ public class StudentScoreJdbcDao {
                 " student_id = ?," +
                 " course_id = ?";
         StudentScore studentScore = jdbcTemplate.queryForObject(sql,
-                studentScoreMapper,
+                new StudentScoreMapper(),
                 userId,
                 courseId
         );

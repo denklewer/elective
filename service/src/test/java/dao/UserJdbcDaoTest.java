@@ -59,11 +59,11 @@ public class UserJdbcDaoTest {
     @Test
     public void updateTest() throws Exception{
         User user = users.get(0);
-        user.setPassword("new");
-        user.setLogin("ikiselevnew");
-        user.setLastName("KiselevNew");
-        user.setFirstName("IlyaNew");
-        user.setEmail("ikiselevnew@gmail.com");
+//        user.setPassword("new");
+//        user.setLogin("ikiselevnew");
+//        user.setLastName("KiselevNew");
+//        user.setFirstName("IlyaNew");
+//        user.setEmail("ikiselevnew@gmail.com");
 
         userJdbcDao.update(user);
         User user1 = userJdbcDao.read(user.getId());
