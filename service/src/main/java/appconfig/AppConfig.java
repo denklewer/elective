@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:database.properties")
-@ComponentScan
+@ComponentScan(basePackageClasses = CourseJdbcDao.class)
 public class AppConfig {
 
     @Autowired
@@ -35,36 +35,6 @@ public class AppConfig {
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
-    }
-
-    @Bean
-    public UserJdbcDao userJdbcDao() {
-        return new UserJdbcDao();
-    }
-
-    @Bean
-    public CourseJdbcDao courseJdbcDao(){
-        return new CourseJdbcDao();
-    }
-
-    @Bean
-    public StudentScoreJdbcDao studentScoreJdbcDao(){
-        return new StudentScoreJdbcDao();
-    }
-
-    @Bean
-    public CourseRowMapper courseRowMapper(){
-        return new CourseRowMapper();
-    }
-
-    @Bean
-    public StudentScoreMapper studentScoreMapper(){
-        return new StudentScoreMapper();
-    }
-
-    @Bean
-    public UserRowMapper userRowMapper(){
-        return new UserRowMapper();
     }
 
     @Bean

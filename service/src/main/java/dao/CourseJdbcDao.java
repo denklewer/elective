@@ -36,10 +36,17 @@ public class CourseJdbcDao {
         String sql = "update Course set " +
                 "course_name = ?, " +
                 "instructor_id = ? " +
-                "instructor_id = ? " +
-                "instructor_id = ? " +
+                "start_date = ? " +
+                "end_date = ? " +
                 "where course_id = ?";
-        jdbcTemplate.update(sql, course.getName(), course.getInstructor().getId(), course.getId());
+        jdbcTemplate.update(sql, ps -> {
+            int i = 1;
+            ps.setString(i++, course.getName());
+            ps.setLong(i++, course.getInstructor().getId());
+            ps.setDate(i++, Date.valueOf(course.getStart()));
+            ps.setDate(i++, Date.valueOf(course.getEnd()));
+            ps.setLong(i++, course.getId());
+        });
         return course;
     }
 
@@ -77,10 +84,10 @@ public class CourseJdbcDao {
 
     public List<Course> list() {
         String sql = "select * from " +
-                "User join Course " +
+                "Course join User " +
                 "on user_id = instructor_id";
         ArrayList<Course> courses =
-                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseRowMapper());
+                (ArrayList<Course>) jdbcTemplate.query(sql, courseRowMapper);
 
         return courses;
     }

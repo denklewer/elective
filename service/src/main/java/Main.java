@@ -1,5 +1,7 @@
 import appconfig.AppConfig;
+import dao.CourseJdbcDao;
 import dao.UserJdbcDao;
+import model.Course;
 import model.User;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,10 +14,15 @@ public class Main {
         configApplicationContext.refresh();
 
         UserJdbcDao userJdbcDao = configApplicationContext.getBean(UserJdbcDao.class);
+        CourseJdbcDao courseJdbcDao = configApplicationContext.getBean(CourseJdbcDao.class);
+        //List<User> users = userJdbcDao.list();
+        List<Course> courses = courseJdbcDao.list();
+        courses.forEach(System.out::println);
+        Course course = courseJdbcDao.read(20);
+        System.out.println(course);
 
-        List<User> users = userJdbcDao.list();
 
-        users.forEach(user -> userJdbcDao.delete(user.getId()));
-
+        //users.forEach(user -> userJdbcDao.delete(user.getId()));
+        courses.forEach(course1 -> courseJdbcDao.delete(course1.getId()));
     }
 }
