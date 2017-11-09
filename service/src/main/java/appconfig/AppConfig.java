@@ -7,6 +7,7 @@ import dao.UserJdbcDao;
 import dao.mappers.CourseRowMapper;
 import dao.mappers.StudentScoreMapper;
 import dao.mappers.UserRowMapper;
+import org.apache.commons.dbcp.managed.BasicManagedDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
