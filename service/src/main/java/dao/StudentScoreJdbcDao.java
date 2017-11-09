@@ -1,8 +1,11 @@
 package dao;
 
 import model.StudentScore;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 
+@Transactional("transactionManager")
 public interface StudentScoreJdbcDao {
 
     /**
