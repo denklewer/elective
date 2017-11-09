@@ -18,8 +18,8 @@ import static org.junit.Assert.*;
 public class CourseJdbcDaoTest {
     private List<User> users;
     private List<Course> courses;
-    private UserJdbcDao userJdbcDao;
-    private CourseJdbcDao courseJdbcDao;
+    private UserJdbcDaoImpl userJdbcDao;
+    private CourseJdbcDaoImpl courseJdbcDao;
 
     @Before
     public void setUp() throws Exception {
@@ -27,8 +27,8 @@ public class CourseJdbcDaoTest {
         configApplicationContext.register(AppConfig.class);
         configApplicationContext.refresh();
 
-        userJdbcDao = configApplicationContext.getBean(UserJdbcDao.class);
-        courseJdbcDao = configApplicationContext.getBean(CourseJdbcDao.class);
+        userJdbcDao = configApplicationContext.getBean(UserJdbcDaoImpl.class);
+        courseJdbcDao = configApplicationContext.getBean(CourseJdbcDaoImpl.class);
 
         users = new ArrayList<>();
         Collections.addAll(users,

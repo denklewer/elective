@@ -1,8 +1,7 @@
 import appconfig.AppConfig;
-import dao.CourseJdbcDao;
-import dao.UserJdbcDao;
+import dao.CourseJdbcDaoImpl;
+import dao.UserJdbcDaoImpl;
 import model.Course;
-import model.User;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
@@ -13,16 +12,16 @@ public class Main {
         configApplicationContext.register(AppConfig.class);
         configApplicationContext.refresh();
 
-        UserJdbcDao userJdbcDao = configApplicationContext.getBean(UserJdbcDao.class);
-        CourseJdbcDao courseJdbcDao = configApplicationContext.getBean(CourseJdbcDao.class);
-        //List<User> users = userJdbcDao.list();
-        List<Course> courses = courseJdbcDao.list();
+        UserJdbcDaoImpl userJdbcDaoImpl = configApplicationContext.getBean(UserJdbcDaoImpl.class);
+        CourseJdbcDaoImpl courseJdbcDaoImpl = configApplicationContext.getBean(CourseJdbcDaoImpl.class);
+        //List<User> users = userJdbcDaoImpl.list();
+        List<Course> courses = courseJdbcDaoImpl.list();
         courses.forEach(System.out::println);
-        Course course = courseJdbcDao.read(20);
+        Course course = courseJdbcDaoImpl.read(20);
         System.out.println(course);
 
 
-        //users.forEach(user -> userJdbcDao.delete(user.getId()));
-        courses.forEach(course1 -> courseJdbcDao.delete(course1.getId()));
+        //users.forEach(user -> userJdbcDaoImpl.delete(user.getId()));
+        courses.forEach(course1 -> courseJdbcDaoImpl.delete(course1.getId()));
     }
 }

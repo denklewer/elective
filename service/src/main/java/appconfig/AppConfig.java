@@ -1,13 +1,7 @@
 package appconfig;
 
 
-import dao.CourseJdbcDao;
-import dao.StudentScoreJdbcDao;
-import dao.UserJdbcDao;
-import dao.mappers.CourseRowMapper;
-import dao.mappers.StudentScoreMapper;
-import dao.mappers.UserRowMapper;
-import org.apache.commons.dbcp.managed.BasicManagedDataSource;
+import dao.CourseJdbcDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:database.properties")
-@ComponentScan(basePackageClasses = CourseJdbcDao.class)
+@ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
 public class AppConfig {
 
     @Autowired

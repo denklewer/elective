@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class UserJdbcDaoTest {
 
     private List<User> users;
-    private UserJdbcDao userJdbcDao;
+    private UserJdbcDaoImpl userJdbcDao;
 
     @Before
     public void setUp() throws Exception {
@@ -24,7 +24,7 @@ public class UserJdbcDaoTest {
         configApplicationContext.register(AppConfig.class);
         configApplicationContext.refresh();
 
-        userJdbcDao = configApplicationContext.getBean(UserJdbcDao.class);
+        userJdbcDao = configApplicationContext.getBean(UserJdbcDaoImpl.class);
 
         users = new ArrayList<>();
         Collections.addAll(users,
