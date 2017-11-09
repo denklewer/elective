@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class UserJdbcDaoImpl implements UserJdbcDao {
+public class UserJdbcDaoImpl implements UserDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -86,11 +85,10 @@ public class UserJdbcDaoImpl implements UserJdbcDao {
     }
 
     @Override
-    public User delete(long id) {
+    public void delete(long id) {
         User user = read(id);
         String sql = "DELETE FROM User WHERE user_id = ?";
         jdbcTemplate.update(sql, id);
-        return user;
     }
 
 

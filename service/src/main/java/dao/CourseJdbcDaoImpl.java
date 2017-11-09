@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CourseJdbcDaoImpl implements CourseJdbcDao {
+public class CourseJdbcDaoImpl implements CourseDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -83,11 +83,10 @@ public class CourseJdbcDaoImpl implements CourseJdbcDao {
     }
 
     @Override
-    public Course delete(long id) {
+    public void delete(long id) {
         Course course = read(id);
         String sql = "delete from Course where course_id = ?";
         jdbcTemplate.update(sql, id);
-        return course;
     }
 
     @Override
