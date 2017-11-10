@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -34,6 +35,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
     public StudentScore update(StudentScore studentScore) {
         String sql = "UPDATE Course_participation" +
@@ -50,6 +52,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
     public StudentScore create(StudentScore studentScore) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -72,6 +75,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
     public void delete(long userId, long courseId) {
         StudentScore studentScore = read(userId, courseId);

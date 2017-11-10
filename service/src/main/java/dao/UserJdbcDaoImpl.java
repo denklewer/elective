@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.PreparedStatement;
@@ -31,6 +32,7 @@ public class UserJdbcDaoImpl implements UserDao {
         return user;
     }
 
+    @Transactional("transactionManager")
     @Override
     public User update(User user) {
         String sql = "UPDATE User" +
@@ -51,6 +53,7 @@ public class UserJdbcDaoImpl implements UserDao {
         return user;
     }
 
+    @Transactional("transactionManager")
     @Override
     public User create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -85,6 +88,7 @@ public class UserJdbcDaoImpl implements UserDao {
         return returnUser;
     }
 
+    @Transactional("transactionManager")
     @Override
     public void delete(long id) {
         User user = read(id);

@@ -1,11 +1,9 @@
 package dao;
 
 import model.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional("transactionManager")
 public interface UserDao {
 
     /**
