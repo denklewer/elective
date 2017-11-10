@@ -2,7 +2,7 @@ package dao;
 
 import model.StudentScore;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface StudentScoreDao {
 
@@ -42,7 +42,7 @@ public interface StudentScoreDao {
     /**
      * Get list of available StudentScore from database.
      *
-     * @return ArrayList of available StudentScore
+     * @return List of available StudentScore
      */
-    ArrayList<StudentScore> list();
+    List<StudentScore> list();
 }
