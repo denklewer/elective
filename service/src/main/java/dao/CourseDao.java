@@ -1,11 +1,9 @@
 package dao;
 
 import model.Course;
+
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
-@Transactional("transactionManager")
 public interface CourseDao {
     /**
      * Get Course from source by id.

@@ -1,17 +1,15 @@
 package dao;
 
 import model.StudentScore;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-@Transactional("transactionManager")
 public interface StudentScoreDao {
 
     /**
      * Get StudentScore from source by key : userId and courseId.
      *
-     * @param userId StudentScore userId in database
+     * @param userId   StudentScore userId in database
      * @param courseId StudentScore courseId in database
      * @return StudentScore from database
      */
@@ -36,7 +34,7 @@ public interface StudentScoreDao {
     /**
      * Remove StudentScore from table by id.
      *
-     * @param userId StudentScore userId
+     * @param userId   StudentScore userId
      * @param courseId StudentScore courseId
      */
     void delete(long userId, long courseId);
