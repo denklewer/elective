@@ -42,7 +42,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     private final String SQL_DELETE = "DELETE FROM Course WHERE course_id = :courseId";
 
-    private final String SQL_LIST_BY_INSTRUCTOR_ID = "SELECT * FROM Course JOIN User " +
+    private final String SQL_LIST = "SELECT * FROM Course JOIN User " +
             "ON (user_id = instructor_id)";
 
 
@@ -95,23 +95,18 @@ public class CourseJdbcDaoImpl implements CourseDao {
         return returnCourse;
     }
 
-   /* @Transactional("transactionManager")
+    @Transactional("transactionManager")
     @Override
     public void delete(long id) {
-        Course course = read(id);
-        String sql = "delete from Course where course_id = ?";
-        jdbcTemplate.update(sql, id);
-    }*/
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("courseId", id);
+        long result = namedParameterJdbcTemplate.update(SQL_DELETE,parameters);
 
-   /* @Override
+    }
+
+    @Override
     public List<Course> list() {
-        String sql = "select * from " +
-                "Course join User " +
-                "on user_id = instructor_id";
-        ArrayList<Course> courses =
-                (ArrayList<Course>) jdbcTemplate.query(sql, new CourseRowMapper());
-
-        return courses;
-    }*/
+      return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
+    }
 
 }
