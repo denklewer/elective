@@ -5,6 +5,7 @@ import dao.mappers.StudentScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
@@ -19,17 +22,30 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+
+    String sqlRead = "SELECT * FROM" +
+            " Course_participation" +
+            " student_id : studentId," +
+            " course_id : courseId";
+
     @Override
     public StudentScore read(long userId, long courseId) {
-        String sql = "SELECT * FROM" +
-                " Course_participation" +
-                " student_id = ?," +
-                " course_id = ?";
-        StudentScore studentScore = jdbcTemplate.queryForObject(sql,
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("studentId", userId);
+        parameters.put("courseId", courseId);
+
+        StudentScore studentScore = jdbcTemplate.queryForObject(sqlRead,
                 new StudentScoreMapper(),
                 userId,
                 courseId
         );
+
+        StudentScore studentScore1 = namedParameterJdbcTemplate.query(sqlRead,
+                parameters, new StudentScoreMapper());
 
         return studentScore;
     }
