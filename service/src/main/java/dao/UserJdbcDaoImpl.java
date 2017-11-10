@@ -82,6 +82,7 @@ public class UserJdbcDaoImpl implements UserJdbcDao {
                 .setPassword(user.getPassword())
                 .setId(id)
                 .build();
+
         return returnUser;
     }
 
