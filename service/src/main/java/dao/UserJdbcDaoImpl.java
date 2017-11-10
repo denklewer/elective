@@ -1,10 +1,15 @@
 package dao;
 
+import dao.mappers.StudentScoreMapper;
+import model.StudentScore;
 import model.User;
 import dao.mappers.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -19,15 +24,38 @@ import java.util.List;
 public class UserJdbcDaoImpl implements UserDao {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+
+    private final String SQL_READ = "SELECT * FROM" +
+            " User" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_UPDATE = "UPDATE User SET" +
+            " first_name = :firstName," +
+            " last_name = :lastName," +
+            " Login = :login," +
+            " email = :email," +
+            " password = :password" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_CREATE = "INSERT INTO User" +
+            " (first_name, last_name, Login, Password, email)" +
+            " VALUES (:firstName, :lastName, :login, :password, :email)";
+
+    private final String SQL_DELETE = "DELETE FROM User" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_LIST = "SELECT * FROM User";
+
 
     @Override
     public User read(long id) {
-        String sql = "SELECT * FROM User WHERE user_id = ? ";
-        User user = jdbcTemplate.queryForObject(sql,
-                new UserRowMapper(),
-                id
-        );
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", id);
+
+        User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                parameters, new UserRowMapper());
 
         return user;
     }
@@ -35,21 +63,16 @@ public class UserJdbcDaoImpl implements UserDao {
     @Transactional("transactionManager")
     @Override
     public User update(User user) {
-        String sql = "UPDATE User" +
-                " SET" +
-                " first_name = ?," +
-                " last_name = ?," +
-                " login = ?," +
-                " email = ?," +
-                " password = ?" +
-                " WHERE  user_id= ?";
-        jdbcTemplate.update(sql,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getLogin(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getId());
+
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("login", user.getLogin())
+                .addValue("password", user.getPassword())
+                .addValue("email", user.getEmail())
+                .addValue("userId", user.getId());
+
+        namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
         return user;
     }
 
@@ -57,25 +80,18 @@ public class UserJdbcDaoImpl implements UserDao {
     @Override
     public User create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        PreparedStatementCreator creator = con -> {
-            PreparedStatement statement =
-                    con.prepareStatement("INSERT INTO " +
-                                    "User(first_name, " +
-                                    "last_name, " +
-                                    "email, " +
-                                    "login, " +
-                                    "password) " +
-                                    "VALUES (?,?,?,?,?)",
-                            Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPassword());
-            return statement;
-        };
-        jdbcTemplate.update(creator, keyHolder);
-        int id = keyHolder.getKey().intValue();
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("login", user.getLogin())
+                .addValue("password", user.getPassword())
+                .addValue("email", user.getEmail());
+        long result = namedParameterJdbcTemplate.update(SQL_CREATE,
+                parameters,
+                keyHolder,
+                new String[]{"user_id"});
+        long id = keyHolder.getKey().longValue();
+
         User returnUser = User.newBuilder()
                 .setEmail(user.getEmail())
                 .setFirstName(user.getFirstName())
@@ -91,16 +107,15 @@ public class UserJdbcDaoImpl implements UserDao {
     @Transactional("transactionManager")
     @Override
     public void delete(long id) {
-        User user = read(id);
-        String sql = "DELETE FROM User WHERE user_id = ?";
-        jdbcTemplate.update(sql, id);
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", id);
+        namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
     }
 
 
     @Override
     public List<User> list() {
-        String sql = "SELECT * from User";
-        return  jdbcTemplate.query(sql, new UserRowMapper());
+        return  namedParameterJdbcTemplate.query(SQL_LIST, new UserRowMapper());
     }
 
     @Override

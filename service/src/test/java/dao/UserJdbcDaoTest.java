@@ -11,7 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,13 +27,10 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestConfig.class)
-public class UserJdbcDaoTest {
+public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private UserJdbcDaoImpl userJdbcDao;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Test
     public void createAndReadTest(){
