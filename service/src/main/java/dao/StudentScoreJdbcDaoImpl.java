@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 @Repository
-public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
+public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -73,11 +73,10 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
     }
 
     @Override
-    public StudentScore delete(long userId, long courseId) {
+    public void delete(long userId, long courseId) {
         StudentScore studentScore = read(userId, courseId);
         String sql = "DELETE FROM Course_participation WHERE student_id = ? and course_id = ?";
         jdbcTemplate.update(sql, userId, courseId);
-        return studentScore;
     }
 
     @Override
