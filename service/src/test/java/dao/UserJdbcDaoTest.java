@@ -26,18 +26,11 @@ import static org.junit.Assert.*;
 @SpringBootTest(classes = TestConfig.class)
 public class UserJdbcDaoTest {
 
-    private static final String DROP_USER_TABLE_SCRIPT = "scripts/drop/user";
-
     @Autowired
     private UserJdbcDaoImpl userJdbcDao;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     public void createAndReadTest(){
@@ -85,7 +78,7 @@ public class UserJdbcDaoTest {
     public void listTest(){
         List<User> list = userJdbcDao.list();
 
-        assertTrue(list.size() == 3);
+        assertTrue(!list.isEmpty());
     }
 
     @Test
@@ -95,15 +88,6 @@ public class UserJdbcDaoTest {
         List<User> usersAfterDelete = userJdbcDao.list();
 
         assertTrue(usersAfterDelete.size() + 1 == usersBeforeDelete.size());
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        ScriptUtils.executeSqlScript(
-                jdbcTemplate.getDataSource().getConnection(),
-                new ClassPathResource(DROP_USER_TABLE_SCRIPT)
-        );
-
     }
 
 }
