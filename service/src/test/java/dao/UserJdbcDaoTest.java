@@ -103,6 +103,7 @@ public class UserJdbcDaoTest {
                 jdbcTemplate.getDataSource().getConnection(),
                 new ClassPathResource(DROP_USER_TABLE_SCRIPT)
         );
+
     }
 
 }
