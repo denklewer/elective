@@ -28,10 +28,6 @@ public class AppConfig {
     @Autowired
     private Environment environment;
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {

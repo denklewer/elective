@@ -9,7 +9,7 @@ public class Course {
     private final LocalDate start;
     private final LocalDate end;
 
-    public Course(long id, String name, User instructor, LocalDate start, LocalDate end) {
+    private Course(long id, String name, User instructor, LocalDate start, LocalDate end) {
         this.id = id;
         this.name = name;
         this.instructor = instructor;
