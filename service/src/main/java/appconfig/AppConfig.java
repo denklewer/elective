@@ -28,7 +28,6 @@ public class AppConfig {
     @Autowired
     private Environment environment;
 
-
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);

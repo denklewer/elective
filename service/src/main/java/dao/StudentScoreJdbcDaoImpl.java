@@ -8,13 +8,14 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 @Repository
-public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
+public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -34,6 +35,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
     public StudentScore update(StudentScore studentScore) {
         String sql = "UPDATE Course_participation" +
@@ -50,6 +52,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
     public StudentScore create(StudentScore studentScore) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -72,12 +75,12 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreJdbcDao {
         return studentScore;
     }
 
+    @Transactional("transactionManager")
     @Override
-    public StudentScore delete(long userId, long courseId) {
+    public void delete(long userId, long courseId) {
         StudentScore studentScore = read(userId, courseId);
         String sql = "DELETE FROM Course_participation WHERE student_id = ? and course_id = ?";
         jdbcTemplate.update(sql, userId, courseId);
-        return studentScore;
     }
 
     @Override

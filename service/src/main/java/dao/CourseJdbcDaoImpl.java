@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CourseJdbcDaoImpl implements CourseJdbcDao {
+public class CourseJdbcDaoImpl implements CourseDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -31,6 +32,7 @@ public class CourseJdbcDaoImpl implements CourseJdbcDao {
         return course;
     }
 
+    @Transactional("transactionManager")
     @Override
     public Course update(Course course) {
         String sql = "update Course set " +
@@ -50,6 +52,7 @@ public class CourseJdbcDaoImpl implements CourseJdbcDao {
         return course;
     }
 
+    @Transactional("transactionManager")
     @Override
     public Course create(final Course course) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -82,12 +85,12 @@ public class CourseJdbcDaoImpl implements CourseJdbcDao {
         return returnCourse;
     }
 
+    @Transactional("transactionManager")
     @Override
-    public Course delete(long id) {
+    public void delete(long id) {
         Course course = read(id);
         String sql = "delete from Course where course_id = ?";
         jdbcTemplate.update(sql, id);
-        return course;
     }
 
     @Override

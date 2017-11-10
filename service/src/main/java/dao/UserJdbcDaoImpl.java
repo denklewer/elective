@@ -16,7 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class UserJdbcDaoImpl implements UserJdbcDao {
+public class UserJdbcDaoImpl implements UserDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -32,6 +32,7 @@ public class UserJdbcDaoImpl implements UserJdbcDao {
         return user;
     }
 
+    @Transactional("transactionManager")
     @Override
     public User update(User user) {
         String sql = "UPDATE User" +
@@ -52,6 +53,7 @@ public class UserJdbcDaoImpl implements UserJdbcDao {
         return user;
     }
 
+    @Transactional("transactionManager")
     @Override
     public User create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -82,15 +84,16 @@ public class UserJdbcDaoImpl implements UserJdbcDao {
                 .setPassword(user.getPassword())
                 .setId(id)
                 .build();
+
         return returnUser;
     }
 
+    @Transactional("transactionManager")
     @Override
-    public User delete(long id) {
+    public void delete(long id) {
         User user = read(id);
         String sql = "DELETE FROM User WHERE user_id = ?";
         jdbcTemplate.update(sql, id);
-        return user;
     }
 
 
