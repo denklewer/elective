@@ -35,7 +35,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
             " VALUES (:studentId, :courseId, :grade, feedback)";
 
     private final String SQL_DELETE = "DELETE FROM Course_participation" +
-            " WHERE student_id = ? and course_id = ?";
+            " WHERE student_id = :studentId and course_id = :courseId";
 
     private final String SQL_LIST = "SELECT * FROM StudentScore";
 
