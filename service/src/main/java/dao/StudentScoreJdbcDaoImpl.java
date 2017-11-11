@@ -1,5 +1,10 @@
 package dao;
 
+import com.sun.org.apache.regexp.internal.RE;
+import dao.exceptions.CreateException;
+import dao.exceptions.DeleteException;
+import dao.exceptions.ReadException;
+import dao.exceptions.UpdateException;
 import model.StudentScore;
 import dao.mappers.StudentScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +26,13 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     private final String SQL_READ = "SELECT * FROM" +
             " Course_participation" +
-            " student_id = :studentId," +
-            " course_id = :courseId";
+            " WHERE (student_id = :studentId AND" +
+            " course_id = :courseId)";
 
-    private final String SQL_UPDATE = "UPDATE Course_participation" +
-            " grade = :grade" +
+    private final String SQL_UPDATE = "UPDATE Course_participation SET" +
+            " grade = :grade," +
             " feedback = :feedback" +
-            "WHERE student_id = :studentId," +
+            " WHERE student_id = :studentId AND" +
             " course_id = :courseId";
 
     private final String SQL_CREATE = "INSERT INTO Course_participation" +
@@ -35,7 +40,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
             " VALUES (:studentId, :courseId, :grade, feedback)";
 
     private final String SQL_DELETE = "DELETE FROM Course_participation" +
-            " WHERE student_id = :studentId and course_id = :courseId";
+            " WHERE student_id = :studentId AND course_id = :courseId";
 
     private final String SQL_LIST = "SELECT * FROM StudentScore";
 
@@ -45,11 +50,14 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", courseId)
                 .addValue("studentId", userId);
+        try {
+            StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new StudentScoreMapper());
 
-        StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
-                parameters, new StudentScoreMapper());
-
-        return studentScore;
+            return studentScore;
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 
     @Transactional("transactionManager")
@@ -61,10 +69,12 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
-
-        namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
-
-        return studentScore;
+        try {
+            namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
+            return studentScore;
+        } catch (Exception ex) {
+            throw new UpdateException(ex);
+        }
     }
 
     @Transactional("transactionManager")
@@ -76,25 +86,34 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
-
-        namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
-
-        return studentScore;
+        try {
+            namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
+            return studentScore;
+        } catch (Exception ex) {
+            throw new CreateException(ex);
+        }
     }
 
     @Transactional("transactionManager")
     @Override
     public void delete(long userId, long courseId) {
-        StudentScore studentScore = read(userId, courseId);
+        //StudentScore studentScore = read(userId, courseId);
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("studentId", studentScore.getStudent().getId())
-                .addValue("courseId", studentScore.getCourse().getId());
-
-        namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+                .addValue("studentId", userId)
+                .addValue("courseId", courseId);
+        try {
+            namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+        } catch (Exception ex) {
+            throw new DeleteException(ex);
+        }
     }
 
     @Override
     public List<StudentScore> list() {
-       return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 }
