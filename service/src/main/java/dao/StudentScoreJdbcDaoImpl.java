@@ -21,7 +21,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     private final String SQL_READ = "SELECT * FROM" +
             " Course_participation" +
-            " student_id = :studentId," +
+            " WHERE student_id = :studentId," +
             " course_id = :courseId";
 
     private final String SQL_UPDATE = "UPDATE Course_participation" +
