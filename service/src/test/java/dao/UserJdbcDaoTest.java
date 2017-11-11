@@ -33,7 +33,22 @@ public class UserJdbcDaoTest/* extends AbstractTransactionalJUnit4SpringContextT
     private UserDao userJdbcDao;
 
     @Test
-    public void createAndReadTest(){
+    public void readTest() {
+        User user = User.newBuilder()
+                .setFirstName("Ilya")
+                .setLastName("Kiselev")
+                .setLogin("ikiselev7")
+                .setId(1)
+                .setEmail("ikisele7@gmail.com")
+                .setPassword("SuPeRsEcReTaSsWoRd")
+                .build();
+        User read = userJdbcDao.read(user.getId());
+
+        assertEquals(user, read);
+    }
+
+    @Test
+    public void createTest(){
         int countRowsInTableBefore = countRowsInTable("User");
 
         User user = User.newBuilder()
