@@ -30,10 +30,27 @@ import static org.junit.Assert.*;
 public class UserJdbcDaoTest  {
 
     @Autowired
-    private UserJdbcDaoImpl userJdbcDao;
+    private UserDao userJdbcDao;
 
     @Test
-    public void createAndReadTest(){
+    public void readTest() {
+        User user = User.newBuilder()
+                .setFirstName("Ilya")
+                .setLastName("Kiselev")
+                .setLogin("ikiselev7")
+                .setId(1)
+                .setEmail("ikisele7@gmail.com")
+                .setPassword("SuPeRsEcReTaSsWoRd")
+                .build();
+        User read = userJdbcDao.read(user.getId());
+
+        assertEquals(user, read);
+    }
+
+    @Test
+    public void createTest(){
+        int countRowsInTableBefore = countRowsInTable("User");
+
         User user = User.newBuilder()
                 .setFirstName("Leonardo")
                 .setLastName("DiCaprio")
@@ -44,28 +61,18 @@ public class UserJdbcDaoTest  {
                 .build();
         User userWithId = userJdbcDao.create(user);
 
-        User readedUser = userJdbcDao.read(userWithId.getId());
+        int countRowsInTableAfter = countRowsInTable("User");
 
-        assertEquals(userWithId, readedUser);
-
+        assertTrue(countRowsInTableAfter == countRowsInTableBefore + 1);
     }
 
     @Test
     public void updateTest() throws Exception{
-        User user = User.newBuilder()
-                .setFirstName("Laurence")
-                .setLastName("Wachowski")
-                .setLogin("larry")
-                .setId(0)
-                .setEmail("wehaveoneinterestingfilm@matrix.com")
-                .setPassword("trytochangemyself42")
-                .build();
-        User userWithId = userJdbcDao.create(user);
         User updatedUser = User.newBuilder()
                 .setFirstName("Lana")
                 .setLastName("Wachowski")
                 .setLogin("notLarryNow")
-                .setId(userWithId.getId())
+                .setId(4)
                 .setEmail("wehaveoneinterestingfilm@matrix.com")
                 .setPassword("ichangedmyself42")
                 .build();
@@ -76,18 +83,22 @@ public class UserJdbcDaoTest  {
 
     @Test
     public void listTest(){
+        int countRowsInTable = countRowsInTable("User");
         List<User> list = userJdbcDao.list();
 
-        assertTrue(!list.isEmpty());
+        assertTrue(list.size() == countRowsInTable);
     }
 
     @Test
     public void deleteTest(){
-        List<User> usersBeforeDelete = userJdbcDao.list();
-        userJdbcDao.delete(usersBeforeDelete.get(0).getId());
-        List<User> usersAfterDelete = userJdbcDao.list();
+        int countRowsInTableBefore = countRowsInTable("User");
 
-        assertTrue(usersAfterDelete.size() + 1 == usersBeforeDelete.size());
+        userJdbcDao.delete(1);
+
+        int countRowsInTableAfter = countRowsInTable("User");
+
+        assertTrue(countRowsInTableAfter == countRowsInTableBefore - 1);
+
     }
 
 }
