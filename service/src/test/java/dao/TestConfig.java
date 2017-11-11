@@ -10,25 +10,23 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @SpringBootConfiguration
 @TestConfiguration
-@PropertySource("classpath:databaseTest.properties")
+@EnableTransactionManagement
 @ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
 public class TestConfig {
 
     @Autowired
     private Environment environment;
-
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
 
     @Bean
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
@@ -44,5 +42,10 @@ public class TestConfig {
                 .addScript("scripts/create/userinserts") // insert values into user table
                 .build();
         return db;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(h2DataSource());
     }
 }
