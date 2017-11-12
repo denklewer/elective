@@ -8,6 +8,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 checkstyle {
@@ -29,6 +30,8 @@ tasks.withType(Checkstyle) {
 }
 
 dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
+    compile 'epam_team1:service:1.0'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

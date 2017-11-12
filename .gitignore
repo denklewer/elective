@@ -3,3 +3,6 @@
 build
 *.class
 *.iml
+
+out/
+build/
