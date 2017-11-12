@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class TestServiceLogger {
-    public static final Logger logger = LoggerFactory.getLogger( UserJdbcDaoImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(TestServiceLogger.class);
 
 
     @Around("@annotation(logger.EnableLogging)")
