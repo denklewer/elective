@@ -147,6 +147,4 @@ public class UserJdbcDaoImpl implements UserDao {
     public List<User> getStudents() {
         throw new NotImplementedException();
     }
-
-
 }
