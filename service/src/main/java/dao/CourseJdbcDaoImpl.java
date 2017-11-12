@@ -3,8 +3,11 @@ package dao;
 import dao.exceptions.DeleteException;
 import dao.exceptions.ReadException;
 import dao.exceptions.UpdateException;
+import logger.EnableLogging;
 import model.Course;
 import dao.mappers.CourseRowMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,6 +25,7 @@ import java.util.List;
 public class CourseJdbcDaoImpl implements CourseDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 
     private final String SQL_READ = "select * " +
             "from User join Course " +
@@ -46,6 +50,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
 
     @Override
+    @EnableLogging
     public Course read(long id) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", id);
@@ -62,6 +67,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public Course update(Course course) {
         try {
             SqlParameterSource parameters = new MapSqlParameterSource()
@@ -80,6 +86,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public Course create(final Course course) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -113,6 +120,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public void delete(long id) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", id);
@@ -125,6 +133,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
 
     @Override
+    @EnableLogging
     public List<Course> list() {
         try {
             List<Course> list = namedParameterJdbcTemplate.query(SQL_LIST, new CourseRowMapper());

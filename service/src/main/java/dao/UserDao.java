@@ -1,5 +1,6 @@
 package dao;
 
+import logger.EnableLogging;
 import model.User;
 
 import java.util.List;

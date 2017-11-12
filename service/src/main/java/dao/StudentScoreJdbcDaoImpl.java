@@ -5,6 +5,7 @@ import dao.exceptions.CreateException;
 import dao.exceptions.DeleteException;
 import dao.exceptions.ReadException;
 import dao.exceptions.UpdateException;
+import logger.EnableLogging;
 import model.StudentScore;
 import dao.mappers.StudentScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,16 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
-    private final String SQL_READ = "SELECT * FROM" +
-            " Course_participation" +
-            " WHERE (student_id = :studentId AND" +
-            " course_id = :courseId)";
+    private final String SQL_READ = "CREATE TABLE Course_participation (\n" +
+            "  student_id BIGINT NOT NULL,\n" +
+            "  course_id BIGINT NOT NULL,\n" +
+            "  grade INT DEFAULT NULL,\n" +
+            "  feedback varchar(200) DEFAULT NULL,\n" +
+            "  KEY student_id_idx (student_id),\n" +
+            "  KEY course_id_idx (course_id),\n" +
+            "  CONSTRAINT course_id FOREIGN KEY (course_id) REFERENCES Course (course_id) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
+            "  CONSTRAINT student_id FOREIGN KEY (student_id) REFERENCES User (user_id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
+            ");";
 
     private final String SQL_UPDATE = "UPDATE Course_participation SET" +
             " grade = :grade," +
@@ -45,6 +52,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     private final String SQL_LIST = "SELECT * FROM StudentScore";
 
     @Override
+    @EnableLogging
     public StudentScore read(long userId, long courseId) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -62,6 +70,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public StudentScore update(StudentScore studentScore) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -79,6 +88,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public StudentScore create(StudentScore studentScore) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -96,6 +106,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public void delete(long userId, long courseId) {
         //StudentScore studentScore = read(userId, courseId);
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -109,6 +120,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     }
 
     @Override
+    @EnableLogging
     public List<StudentScore> list() {
         try {
             return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());

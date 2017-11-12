@@ -1,14 +1,15 @@
 package dao;
 
 
+import logger.TestServiceLogger;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 @TestConfiguration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
+@EnableAspectJAutoProxy
 public class TestConfig {
 
     @Autowired
@@ -31,6 +33,10 @@ public class TestConfig {
     @Bean
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
+    }
+    @Bean
+    public TestServiceLogger serviceLogger () {
+        return new TestServiceLogger();
     }
 
     @Bean
