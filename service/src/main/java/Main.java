@@ -14,14 +14,16 @@ public class Main {
 
         UserJdbcDaoImpl userJdbcDaoImpl = configApplicationContext.getBean(UserJdbcDaoImpl.class);
         CourseJdbcDaoImpl courseJdbcDaoImpl = configApplicationContext.getBean(CourseJdbcDaoImpl.class);
+        courseJdbcDaoImpl.read(111111);
+
         //List<User> users = userJdbcDaoImpl.list();
-        List<Course> courses = courseJdbcDaoImpl.list();
-        courses.forEach(System.out::println);
-        Course course = courseJdbcDaoImpl.read(20);
-        System.out.println(course);
+        //List<Course> courses = courseJdbcDaoImpl.list();
+       // courses.forEach(System.out::println);
+       // Course course = courseJdbcDaoImpl.read(20);
+       // System.out.println(course);
 
 
         //users.forEach(user -> userJdbcDaoImpl.delete(user.getId()));
-        courses.forEach(course1 -> courseJdbcDaoImpl.delete(course1.getId()));
+      //  courses.forEach(course1 -> courseJdbcDaoImpl.delete(course1.getId()));
     }
 }

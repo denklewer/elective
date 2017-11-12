@@ -1,12 +1,12 @@
 package dao;
 
-import dao.mappers.StudentScoreMapper;
-import model.StudentScore;
+import logger.EnableLogging;
+import dao.exceptions.ReadException;
+import dao.exceptions.UpdateException;
 import model.User;
 import dao.mappers.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -16,8 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+
 import java.util.List;
 
 @Repository
@@ -25,6 +24,8 @@ public class UserJdbcDaoImpl implements UserDao {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+
 
 
     private final String SQL_READ = "SELECT * FROM" +
@@ -50,18 +51,25 @@ public class UserJdbcDaoImpl implements UserDao {
 
 
     @Override
+    @EnableLogging
     public User read(long id) {
+
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("userId", id);
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new UserRowMapper());
+            return user;
 
-        User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
-                parameters, new UserRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
 
-        return user;
     }
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public User update(User user) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -71,13 +79,17 @@ public class UserJdbcDaoImpl implements UserDao {
                 .addValue("password", user.getPassword())
                 .addValue("email", user.getEmail())
                 .addValue("userId", user.getId());
-
-        namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
-        return user;
+        try {
+            namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
+            return user;
+        } catch (Exception ex) {
+            throw new UpdateException(ex);
+        }
     }
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public User create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -86,26 +98,33 @@ public class UserJdbcDaoImpl implements UserDao {
                 .addValue("login", user.getLogin())
                 .addValue("password", user.getPassword())
                 .addValue("email", user.getEmail());
-        long result = namedParameterJdbcTemplate.update(SQL_CREATE,
-                parameters,
-                keyHolder,
-                new String[]{"user_id"});
-        long id = keyHolder.getKey().longValue();
+        try {
+            long result = namedParameterJdbcTemplate.update(SQL_CREATE,
+                    parameters,
+                    keyHolder,
+                    new String[]{"user_id"});
+            long id = keyHolder.getKey().longValue();
 
-        User returnUser = User.newBuilder()
-                .setEmail(user.getEmail())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setLogin(user.getLogin())
-                .setPassword(user.getPassword())
-                .setId(id)
-                .build();
-
-        return returnUser;
+            User returnUser = User.newBuilder()
+                    .setEmail(user.getEmail())
+                    .setFirstName(user.getFirstName())
+                    .setLastName(user.getLastName())
+                    .setLogin(user.getLogin())
+                    .setPassword(user.getPassword())
+                    .setId(id)
+                    .build();
+            return returnUser;
+        } catch (DataAccessException ex){
+            throw  new UpdateException(ex);
+        }
+        catch (Exception ex) {
+            throw  new RuntimeException("ID extraction error", ex);
+        }
     }
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public void delete(long id) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("userId", id);
@@ -114,13 +133,19 @@ public class UserJdbcDaoImpl implements UserDao {
 
 
     @Override
+    @EnableLogging
     public List<User> list() {
-        return  namedParameterJdbcTemplate.query(SQL_LIST, new UserRowMapper());
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST, new UserRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+
     }
 
     @Override
-    public List<User> getStudents(){
-        throw  new NotImplementedException();
+    public List<User> getStudents() {
+        throw new NotImplementedException();
     }
 
 
