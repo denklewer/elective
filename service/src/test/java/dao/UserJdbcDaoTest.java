@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestConfig.class)
-public class UserJdbcDaoTest  {
+public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private UserDao userJdbcDao;

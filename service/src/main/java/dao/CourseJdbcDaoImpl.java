@@ -38,7 +38,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     private final String SQL_CREATE = "INSERT INTO" +
             " Course(course_name, instructor_id, start_date, end_date)" +
-            " VALUES (:courseName, :instructorId, :startDate, :endDate)";
+            " VALUES (:courseName, :instructorId, :startDate, :endDate);";
 
     private final String SQL_DELETE = "DELETE FROM Course WHERE course_id = :courseId";
 
@@ -65,8 +65,8 @@ public class CourseJdbcDaoImpl implements CourseDao {
                 .addValue("courseId", course.getId())
                 .addValue("courseName",course.getName())
                 .addValue("instructorId", course.getInstructor().getId())
-                .addValue("startDate",Date.valueOf(course.getStart()))
-                .addValue("endDate",Date.valueOf(course.getEnd()));
+                .addValue("startDate", course.getStart())
+                .addValue("endDate", course.getEnd());
        long result = namedParameterJdbcTemplate.update(SQL_UPDATE,parameters);
         return course;
     }
@@ -78,8 +78,8 @@ public class CourseJdbcDaoImpl implements CourseDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseName",course.getName())
                 .addValue("instructorId", course.getInstructor().getId())
-                .addValue("startDate",Date.valueOf(course.getStart()))
-                .addValue("endDate",Date.valueOf(course.getEnd()));
+                .addValue("startDate",course.getStart())
+                .addValue("endDate",course.getEnd());
         long result = namedParameterJdbcTemplate.update(SQL_CREATE,
                 parameters,
                 keyHolder,

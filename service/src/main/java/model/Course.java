@@ -1,15 +1,18 @@
 package model;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.Date;
 
 public class Course {
     private final long id;
     private final String name;
     private final User instructor;
-    private final LocalDate start;
-    private final LocalDate end;
+    private final Date start;
+    private final Date end;
 
-    private Course(long id, String name, User instructor, LocalDate start, LocalDate end) {
+    //SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+
+    private Course(long id, String name, User instructor, Date start, Date end) {
         this.id = id;
         this.name = name;
         this.instructor = instructor;
@@ -29,11 +32,11 @@ public class Course {
         return instructor;
     }
 
-    public LocalDate getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public LocalDate getEnd() {
+    public Date getEnd() {
         return end;
     }
 
@@ -81,8 +84,8 @@ public class Course {
         private long id;
         private String name;
         private User instructor;
-        private LocalDate start;
-        private LocalDate end;
+        private Date start;
+        private Date end;
 
         private Builder() {
 
@@ -103,12 +106,12 @@ public class Course {
             return this;
         }
 
-        public Builder setStart(LocalDate start) {
+        public Builder setStart(Date start) {
             this.start = start;
             return this;
         }
 
-        public Builder setEnd(LocalDate end) {
+        public Builder setEnd(Date end) {
             this.end = end;
             return this;
         }

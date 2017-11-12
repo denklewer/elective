@@ -16,9 +16,9 @@ public class CourseRowMapper implements RowMapper<Course> {
         Course course = Course.newBuilder()
                 .setId(rs.getLong("course_id"))
                 .setName(rs.getString("course_name"))
-                .setEnd(rs.getDate("end_date").toLocalDate())
-                .setStart(rs.getDate("start_date").toLocalDate())
-                .setInstructor(new UserRowMapper().mapRow(rs, rowNum))
+                .setEnd(rs.getDate("end_date"))
+                .setStart(rs.getDate("start_date"))
+                .setInstructor(new InstructorRowMapper().mapRow(rs, rowNum))
                 .build();
         return course;
     }

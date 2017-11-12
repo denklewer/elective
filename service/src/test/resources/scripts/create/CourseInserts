@@ -1,0 +1,10 @@
+INSERT INTO Course
+(course_id, course_name, instructor_id, start_date, end_date)
+VALUES
+(4,'course1',1, '2016-02-07', '2016-05-15' ),
+(5,'course2',1, '2016-02-12', '2016-05-18' ),
+(6,'course3',2, '2016-02-19', '2016-05-28' ),
+(7,'course4',2, '2016-02-28', '2016-05-30' ),
+(14, 'Phylosophia', 67, '2016-02-07', '2016-05-15' ),
+(32, 'Analitic dynamic', 45, '2016-01-07', '2016-04-11' ),
+(13, 'Integrals', 65, '2016-09-04', '2017-04-28');

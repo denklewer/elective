@@ -39,7 +39,9 @@ public class TestConfig {
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2) // set data base type
                 .addScript("scripts/create/user") // set create table script
+                .addScript("scripts/create/course")
                 .addScript("scripts/create/userinserts") // insert values into user table
+                .addScript("scripts/create/courseinserts")
                 .addScript("scripts/create/course_participation")
                 .addScript("scripts/create/studentScoreInserts")
                 .build();
