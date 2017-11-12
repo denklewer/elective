@@ -1,5 +1,6 @@
 package dao;
 
+import logger.EnableLogging;
 import model.StudentScore;
 import dao.mappers.StudentScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     private final String SQL_LIST = "SELECT * FROM StudentScore";
 
     @Override
+    @EnableLogging
     public StudentScore read(long userId, long courseId) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -78,6 +80,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public StudentScore update(StudentScore studentScore) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -93,6 +96,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public StudentScore create(StudentScore studentScore) {
 
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -108,6 +112,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public void delete(long userId, long courseId) {
         StudentScore studentScore = read(userId, courseId);
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -118,6 +123,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     }
 
     @Override
+    @EnableLogging
     public List<StudentScore> list() {
         return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
     }

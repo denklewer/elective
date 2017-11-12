@@ -1,5 +1,6 @@
 package dao;
 
+import logger.EnableLogging;
 import model.Course;
 import dao.mappers.CourseRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,25 @@ public class CourseJdbcDaoImpl implements CourseDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final String SQL_READ = "select * from " +
-            "User join Course " +
-            "on (user_id = instructor_id) " +
-            "where course_id = :courseId";
+    private final String SQL_READ = "select " +
+            " instructor_id," +
+            " first_name instructor_first_name, " +
+            " last_name  instructor_last_name, " +
+            " login instructor_login, " +
+            " password instructor_password, " +
+            " email instructor_email, " +
+            " course_id," +
+            " course_name," +
+            " start_date," +
+            " end_date from " +
+            " User join Course " +
+            " on (user_id = instructor_id) " +
+            " where course_id = :courseId;";
 
     private final String SQL_UPDATE = "update Course set " +
             "course_name = :courseName, " +
-            "instructor_id = :instructorId " +
-            "start_date = :startDate " +
+            "instructor_id = :instructorId, " +
+            "start_date = :startDate, " +
             "end_date = :endDate " +
             "where course_id = :courseId";
 
@@ -42,13 +53,25 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     private final String SQL_DELETE = "DELETE FROM Course WHERE course_id = :courseId";
 
-    private final String SQL_LIST = "SELECT * FROM Course JOIN User " +
-            "ON (user_id = instructor_id)";
+    private final String SQL_LIST = "select " +
+            " instructor_id," +
+            " first_name instructor_first_name, " +
+            " last_name  instructor_last_name, " +
+            " login instructor_login, " +
+            " password instructor_password, " +
+            " email instructor_email, " +
+            " course_id," +
+            " course_name," +
+            " start_date," +
+            " end_date from " +
+            " User join Course " +
+            " on (user_id = instructor_id); ";
 
 
 
 
     @Override
+    @EnableLogging
     public Course read(long id) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", id);
@@ -60,6 +83,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public Course update(Course course) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", course.getId())
@@ -73,6 +97,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public Course create(final Course course) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
@@ -97,6 +122,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public void delete(long id) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", id);
@@ -105,6 +131,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
 
     @Override
+    @EnableLogging
     public List<Course> list() {
       return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
     }
