@@ -1,8 +1,7 @@
 package dao;
 
 
-import logger.TestServiceLogger;
-import org.aspectj.lang.annotation.Aspect;
+import logger.ServiceLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -35,8 +34,8 @@ public class TestConfig {
         return new NamedParameterJdbcTemplate(dataSource);
     }
     @Bean
-    public TestServiceLogger serviceLogger () {
-        return new TestServiceLogger();
+    public ServiceLogger serviceLogger () {
+        return new ServiceLogger();
     }
 
     @Bean
