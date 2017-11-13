@@ -1,6 +1,6 @@
-package epam_team1.service.dao.mappers;
+package dao.mappers;
 
-import epam_team1.service.model.User;
+import model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

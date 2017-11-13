@@ -1,7 +1,7 @@
-package epam_team1.service.dao;
+package dao;
 
-import epam_team1.service.model.User;
-import epam_team1.service.dao.mappers.UserRowMapper;
+import dao.mappers.UserRowMapper;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

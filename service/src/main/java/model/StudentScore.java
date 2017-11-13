@@ -1,4 +1,4 @@
-package epam_team1.service.model;
+package model;
 
 public class StudentScore {
 

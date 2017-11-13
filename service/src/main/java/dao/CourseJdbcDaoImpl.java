@@ -1,7 +1,7 @@
-package epam_team1.service.dao;
+package dao;
 
-import epam_team1.service.model.Course;
-import epam_team1.service.dao.mappers.CourseRowMapper;
+import model.Course;
+import dao.mappers.CourseRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

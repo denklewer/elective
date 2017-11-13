@@ -1,7 +1,7 @@
 package epam_team1.web.controllers;
 
-import epam_team1.service.model.Course;
-import epam_team1.service.model.User;
+import model.Course;
+import model.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

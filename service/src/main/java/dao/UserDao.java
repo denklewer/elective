@@ -1,6 +1,6 @@
-package epam_team1.service.dao;
+package dao;
 
-import epam_team1.service.model.User;
+import model.User;
 
 import java.util.List;
 

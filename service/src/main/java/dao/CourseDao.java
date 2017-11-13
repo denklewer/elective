@@ -1,6 +1,6 @@
-package epam_team1.service.dao;
+package dao;
 
-import epam_team1.service.model.Course;
+import model.Course;
 
 import java.util.List;
 

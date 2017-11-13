@@ -1,6 +1,6 @@
-package epam_team1.service.dao;
+package dao;
 
-import epam_team1.service.model.StudentScore;
+import model.StudentScore;
 
 import java.util.List;
 
