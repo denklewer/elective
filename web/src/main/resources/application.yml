@@ -1,9 +1,0 @@
-server:
-  port: 8080
-  host: localhost
-
-spring:
-logging:
-  level:
-    org.springframework.web: DEBUG
-    guru.springframework.controllers: DEBUG
