@@ -12,6 +12,9 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -45,13 +48,13 @@ public class AppConfig {
     @Bean
     public DataSource mySqlDataSource() {
         System.out.println("mySql");
-        String className = environment.getProperty("spring.datasource.driver-class-name");
+        String className = environment.getProperty("datasource.driver-class-name");
         BasicManagedDataSource dataSource = new BasicManagedDataSource();
 
         dataSource.setDriverClassName(className);
-        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
-        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
+        dataSource.setUrl(environment.getProperty("datasource.url"));
+        dataSource.setUsername(environment.getProperty("datasource.username"));
+        dataSource.setPassword(environment.getProperty("datasource.password"));
         System.out.println("End");
         return dataSource;
     }

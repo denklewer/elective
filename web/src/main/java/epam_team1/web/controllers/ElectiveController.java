@@ -18,13 +18,11 @@ import java.util.List;
 public class ElectiveController {
 
     @Autowired
-    @Qualifier("userManager")
     private UserManager userManager;
     @Autowired
-    @Qualifier("courseManager")
     private CourseManager courseManager;
     @Autowired
-    @Qualifier("studentScoreManager")
+
     private StudentScoreManager studentScoreManager;
 
     @GetMapping("/users")

@@ -37,9 +37,9 @@ ext{
 }
 
 dependencies {
-    compile 'org.springframework:spring-context:' + springVersion
-    compile 'org.springframework:spring-core:' + springVersion
-    compile 'org.springframework:spring-webmvc:' + springVersion
+//    compile 'org.springframework:spring-context:' + springVersion
+//    compile 'org.springframework:spring-core:' + springVersion
+//    compile 'org.springframework:spring-webmvc:' + springVersion
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
     compile 'epam_team1:service:1.0'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
