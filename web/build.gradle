@@ -1,8 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+    }
+}
+
 group 'epam_team1'
 version '1.0'
 
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: 'org.springframework.boot'
+
+//plugins {
+//    id 'org.springframework.boot' version '1.5.8.RELEASE'
+//}
 
 sourceCompatibility = 1.8
 
@@ -40,8 +54,10 @@ dependencies {
 //    compile 'org.springframework:spring-context:' + springVersion
 //    compile 'org.springframework:spring-core:' + springVersion
 //    compile 'org.springframework:spring-webmvc:' + springVersion
-    compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
-    compile 'epam_team1:service:1.0'
-    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+//    compile 'epam_team1:service:1.0'
+    compile project(':service')
+
+    //testCompile group: 'org.mockito', name: 'mockito-all'
+    testCompile group: 'junit', name: 'junit'
 }
