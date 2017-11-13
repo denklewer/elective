@@ -1,6 +1,7 @@
 package dao;
 
-import model.User;
+import epam_team1.service.dao.UserDao;
+import epam_team1.service.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 
     @Test
     public void updateTest() throws Exception{
+
         User updatedUser = User.newBuilder()
                 .setFirstName("Lana")
                 .setLastName("Wachowski")
