@@ -64,25 +64,37 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " User join Course " +
             " on (user_id = instructor_id); ";
 
-    private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT * FROM " +
-            " Course c JOIN " +
-            " first_name instructor_first_name, " +
-            " last_name  instructor_last_name, " +
-            " login instructor_login, " +
-            " password instructor_password, " +
-            " email instructor_email, " +
-            " Course_participation cp ON c.course_id = cp.course_id " +
-            " WHERE student_id = :studentId;";
+//    private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT * FROM " +
+//            " Course c JOIN " +
+//            " first_name instructor_first_name, " +
+//            " last_name  instructor_last_name, " +
+//            " login instructor_login, " +
+//            " password instructor_password, " +
+//            " email instructor_email, " +
+//            " Course_participation cp ON c.course_id = cp.course_id " +
+//            " WHERE student_id = :studentId;";
+
+    private final String SQL_COURSE_LIST_BY_STUDENT_ID =  "SELECT c.course_id, " +
+            " c.course_name, " +
+            " c.start_date, " +
+            " c.end_date , " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM Course c JOIN Course_participation cp " +
+            " ON (c.course_id = cp.course_id AND cp.student_id = :studentId) " +
+            " JOIN User u ON (u.user_id = c.instructor_id);";
+
+
     private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
-            "course_name, " +
-            "start_date, " +
-            "end_date , " +
-            "u.last_name instructor_last_name, " +
-            "u.first_name instructor_first_name " +
-            "FROM Course c LEFT JOIN Course_participation cp " +
-            "ON (c.course_id = cp.course_id and cp.student_id = :userId) " +
-            "JOIN User u ON (u.user_id = c.instructor_id) " +
-            "WHERE  cp.course_id IS NULL);";
+            " course_name, " +
+            " start_date, " +
+            " end_date , " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM Course c LEFT JOIN Course_participation cp " +
+            " ON (c.course_id = cp.course_id and cp.student_id = :userId) " +
+            " JOIN User u ON (u.user_id = c.instructor_id) " +
+            " WHERE  cp.course_id IS NULL);";
 
 
     @Override
@@ -157,7 +169,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
                 .addValue("studentId", studentId);
 
         List<Course> courseList = namedParameterJdbcTemplate
-                .query(SQL_COURSE_LIST_BY_STUDENT_ID, parameters, new CourseRowMapper());
+                .query(SQL_COURSE_LIST_BY_STUDENT_ID, parameters, new SecureCourseRowMapper());
         return courseList;
     }
     @Override

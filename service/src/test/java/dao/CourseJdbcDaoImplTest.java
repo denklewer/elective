@@ -173,10 +173,6 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
                 .setInstructor(User.newBuilder()
                         .setFirstName("Irina")
                         .setLastName("Pototskay")
-                        .setLogin("mechanics")
-                        .setId(45)
-                        .setEmail("irina_71@google.com")
-                        .setPassword("goodLecture")
                         .build())
                 .build();
 
@@ -193,10 +189,6 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
                 .setInstructor(User.newBuilder()
                         .setFirstName("Igor")
                         .setLastName("Olemskoi")
-                        .setLogin("iv_olemskoi")
-                        .setId(65)
-                        .setEmail("ivladimirovich58@gmail.com")
-                        .setPassword("tRyToBrEAK67823645")
                         .build())
                 .build();
 
