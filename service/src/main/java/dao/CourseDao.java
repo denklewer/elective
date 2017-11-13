@@ -43,4 +43,6 @@ public interface CourseDao {
      * @return list of available Courses
      */
     List<Course> list();
+
+     List<Course> listByStudentIdExeptMine( long studentId);
 }

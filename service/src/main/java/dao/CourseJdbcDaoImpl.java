@@ -1,5 +1,6 @@
 package dao;
 
+import dao.mappers.SecureCourseRowMapper;
 import logger.EnableLogging;
 import model.Course;
 import dao.mappers.CourseRowMapper;
@@ -67,7 +68,16 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " User join Course " +
             " on (user_id = instructor_id); ";
 
-
+    private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
+            "course_name, " +
+            "start_date, " +
+            "end_date , " +
+            "u.last_name instructor_last_name, " +
+            "u.first_name instructor_first_name " +
+            "FROM Course c LEFT JOIN Course_participation cp " +
+            "ON (c.course_id = cp.course_id and cp.student_id = :userId) " +
+            "JOIN User u ON (u.user_id = c.instructor_id) " +
+            "WHERE  cp.course_id IS NULL);";
 
 
     @Override
@@ -133,7 +143,15 @@ public class CourseJdbcDaoImpl implements CourseDao {
     @Override
     @EnableLogging
     public List<Course> list() {
-      return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
+        return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
+    }
+
+    @Override
+    @EnableLogging
+    public List<Course> listByStudentIdExeptMine( long studentId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", studentId);
+        return namedParameterJdbcTemplate.query(SQL_GET_COURSES_EXCEPT_MINE,parameters,new SecureCourseRowMapper());
     }
 
 }

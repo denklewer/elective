@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestConfig.class)
 public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringContextTests {
+
     @Autowired
     private CourseDao courseDao;
 
@@ -122,5 +124,36 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
             assertTrue(list.size() == countRowsInTable);
 
     }
+
+
+
+    @Test
+    public void listByStudentIdExeptMine() throws Exception {
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+        Date parsingDateStart = ft.parse("2016-02-07");
+        Date parsingDateEnd = ft.parse("2016-05-15");
+
+        List<Course> list = courseDao.listByStudentIdExeptMine(1);
+
+
+        List<Course> expectedList = new ArrayList<Course>();
+        User instructor = User.newBuilder()
+                .setFirstName("Ilya")
+                .setLastName("Kiselev").build();
+        Course course = Course.newBuilder().setName("course1")
+                .setId(4)
+                .setStart(parsingDateStart)
+                .setEnd(parsingDateEnd)
+                .setInstructor(instructor).build();
+        expectedList.add(course);
+
+        assertTrue(  list.get(0).equals(expectedList.get(0)));
+
+
+
+
+
+    }
+
 
 }

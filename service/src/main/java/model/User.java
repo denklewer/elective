@@ -87,12 +87,12 @@ public class User {
 
     public static class Builder{
 
-        private Long id;
+        private long id = 0;
         private String firstName;
         private String lastName;
-        private String login;
-        private String password;
-        private String email;
+        private String login = "";
+        private String password = "";
+        private String email = "";
 
         private Builder() {
         }
@@ -127,8 +127,7 @@ public class User {
             return this;
         }
 
-        public User build(){
-            return new User(id, firstName, lastName, login, password, email);
+        public User build(){ return new User(id, firstName, lastName, login, password, email);
         }
 
     }
