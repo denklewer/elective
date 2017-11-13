@@ -5,3 +5,11 @@ VALUES('1', '5', '5', 'excellent'),
 ('21','32','4','you can better'),
 ('35', '13', '5', 'Great student!'),
 ('35', '32', '0', '');
+('35', 13, '5', 'Great student!'),
+('1', '6', '5', 'excellent'),
+('1', '7', '5', 'excellent'),
+('1', '14', '5', 'excellent'),
+('1', '32', '5', 'excellent'),
+('1', '13', '5', 'excellent'),
+('1', '127', '5', 'excellent');
+
