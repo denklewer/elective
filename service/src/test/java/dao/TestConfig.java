@@ -1,7 +1,8 @@
 package dao;
 
 
-import logger.ServiceLogger;
+import epam_team1.service.dao.CourseJdbcDaoImpl;
+import epam_team1.service.logger.ServiceLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
