@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 /*@Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:application.properties")
 @ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)*/
 public class AppConfig {
 

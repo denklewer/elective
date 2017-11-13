@@ -7,6 +7,8 @@ function createRow(course){
     row.appendChild(createCol(course.teacher.firstName + " " + course.teacher.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
+    row.appendChild(createButton(course.id));
+
     return row;
 }
 
@@ -17,8 +19,19 @@ function createCol(text){
     return col;
 }
 
+function createButton(id){
+    //<button class="btn btn-lg btn-primary btn-block" type="Subscribe">Sign in</button>
+    var element = document.createElement("th");
+    var button = document.createElement("BUTTON");
+    var text = document.createTextNode("Subscribe");
+    button.appendChild(text);
+    element.appendChild(button);
+
+    return element;
+}
+
 function createTableBody(courses){
-    var tableBody = document.getElementById('myCoursesTbody');
+    var tableBody = document.getElementById('courses');
     for (var i in courses) {
         tableBody.appendChild(createRow(courses[i]));
     }

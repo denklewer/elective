@@ -4,9 +4,9 @@ function createRow(course){
     var row = document.createElement("tr");
     row.appendChild(createCol(course.id));
     row.appendChild(createCol(course.name));
-    row.appendChild(createCol(course.teacher.firstName + " " + course.teacher.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
+    row.appendChild(createLink(course.id));
     return row;
 }
 
@@ -17,8 +17,17 @@ function createCol(text){
     return col;
 }
 
+function createLink(id) {
+    var col = document.createElement("th");
+    var element = document.createElement("a");
+    element.href = "/students.html?id="+id;
+    element.innerHTML = "Students";
+    col.appendChild(element);
+    return col;
+}
+
 function createTableBody(courses){
-    var tableBody = document.getElementById('myCoursesTbody');
+    var tableBody = document.getElementById('courses');
     for (var i in courses) {
         tableBody.appendChild(createRow(courses[i]));
     }

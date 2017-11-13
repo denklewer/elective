@@ -1,9 +1,0 @@
-CREATE TABLE User (
-  user_id BIGINT NOT NULL AUTO_INCREMENT,
-  first_name varchar(20) NOT NULL,
-  last_name varchar(20) NOT NULL,
-  Login varchar(45) NOT NULL,
-  Password varchar(45) NOT NULL,
-  email varchar(45) DEFAULT NULL,
-  PRIMARY KEY (user_id)
-);

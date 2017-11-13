@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class CourseController {
 
-    @RequestMapping("/courses")
+    @RequestMapping("/elective/courses")
     public List<Course> courses(){
         User user = User.newBuilder()
                 .setFirstName("Leonardo")
