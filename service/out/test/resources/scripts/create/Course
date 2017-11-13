@@ -1,8 +1,0 @@
-CREATE TABLE COURSE (
-  course_id BIGINT NOT NULL AUTO_INCREMENT,
-  course_name varchar(100) NOT NULL,
-  instructor_id BIGINT DEFAULT NULL,
-  start_date DATE DEFAULT NULL,
-  end_date DATE DEFAULT NULL,
-  PRIMARY KEY (course_id)
-);
