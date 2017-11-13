@@ -3,6 +3,7 @@
 build
 *.class
 *.iml
-
 out/
 build/
+*.log
+

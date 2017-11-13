@@ -1,5 +1,7 @@
 package epam_team1.service.model;
 
+import java.io.Serializable;
+
 public class StudentScore {
 
     private final User student;
@@ -67,5 +69,37 @@ public class StudentScore {
         public StudentScore build(){
             return new StudentScore(student, course, score, feedback);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "StudentScore{" +
+                "student=" + student +
+                ", course=" + course +
+                ", score=" + score +
+                ", feedback='" + feedback + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StudentScore that = (StudentScore) o;
+
+        if (score != that.score) return false;
+        if (student != null ? !student.equals(that.student) : that.student != null) return false;
+        if (course != null ? !course.equals(that.course) : that.course != null) return false;
+        return feedback != null ? feedback.equals(that.feedback) : that.feedback == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = student != null ? student.hashCode() : 0;
+        result = 31 * result + (course != null ? course.hashCode() : 0);
+        result = 31 * result + score;
+        result = 31 * result + (feedback != null ? feedback.hashCode() : 0);
+        return result;
     }
 }

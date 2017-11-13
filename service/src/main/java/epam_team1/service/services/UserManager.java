@@ -1,19 +1,17 @@
-package epam_team1.service.dao;
+package epam_team1.service.services;
 
-
-import epam_team1.service.model.User;
+import model.User;
 
 import java.util.List;
 
-public interface UserDao {
-
+public interface UserManager {
     /**
      * Get User from source by id.
      *
      * @param id User id in database
      * @return User from database, where key is id
      */
-    User read(long id);
+    User readById(long id);
 
     /**
      * Update User in source.
@@ -36,7 +34,7 @@ public interface UserDao {
      *
      * @param id User id
      */
-    void delete(long id);
+    void deleteById(long id);
 
     /**
      * Get list of available Users from database.
@@ -51,5 +49,4 @@ public interface UserDao {
      * @return list of Users which are Students
      */
     List<User> getStudents();
-
 }

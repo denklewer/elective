@@ -6,7 +6,7 @@ import org.apache.commons.dbcp.managed.BasicManagedDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,19 +17,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-/*@Configuration
+
 @EnableTransactionManagement
-@PropertySource("classpath:application.properties")
-@ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)*/
+@PropertySource("classpath:database.properties")
+@ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
+@EnableAspectJAutoProxy
 public class AppConfig {
 
     @Autowired
     private Environment environment;
-
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(mySqlDataSource());
-    }
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
@@ -52,5 +48,10 @@ public class AppConfig {
         dataSource.setPassword(environment.getProperty("password"));
 
         return dataSource;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(mySqlDataSource());
     }
 }

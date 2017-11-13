@@ -1,5 +1,7 @@
 package epam_team1.service.model;
 
+import java.io.Serializable;
+
 public class User {
     private final long id;
     private final String firstName;

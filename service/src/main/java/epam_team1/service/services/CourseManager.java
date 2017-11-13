@@ -1,18 +1,17 @@
-package epam_team1.service.dao;
+package epam_team1.service.services;
 
-import epam_team1.service.model.Course;
+import model.Course;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CourseDao {
+public interface CourseManager {
     /**
      * Get Course from source by id.
      *
      * @param id Course id in database
      * @return Course from database, where key is id
      */
-    Course read(long id);
+    Course readById(long id);
 
     /**
      * Update Course in source.
@@ -35,7 +34,7 @@ public interface CourseDao {
      *
      * @param id Course id
      */
-    void delete(long id);
+    void deleteById(long id);
 
     /**
      * Get list of available Courses from database.

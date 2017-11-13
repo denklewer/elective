@@ -1,12 +1,20 @@
 package dao;
 
 
+<<<<<<< HEAD
 import epam_team1.service.dao.CourseJdbcDaoImpl;
+=======
+import logger.ServiceLogger;
+>>>>>>> 7260103f3db6fe923e7a4d80e25af4f732356c27
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+<<<<<<< HEAD
+=======
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+>>>>>>> 7260103f3db6fe923e7a4d80e25af4f732356c27
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,6 +30,7 @@ import javax.sql.DataSource;
 @TestConfiguration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
+@EnableAspectJAutoProxy
 public class TestConfig {
 
     @Autowired
@@ -31,6 +40,10 @@ public class TestConfig {
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
+    @Bean
+    public ServiceLogger serviceLogger () {
+        return new ServiceLogger();
+    }
 
     @Bean
     public DataSource h2DataSource() {
@@ -38,7 +51,11 @@ public class TestConfig {
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2) // set data base type
                 .addScript("scripts/create/user") // set create table script
+                .addScript("scripts/create/course")
                 .addScript("scripts/create/userinserts") // insert values into user table
+                .addScript("scripts/create/courseinserts")
+                .addScript("scripts/create/course_participation")
+                .addScript("scripts/create/studentScoreInserts")
                 .build();
         return db;
     }

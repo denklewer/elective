@@ -57,6 +57,7 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 
     @Test
     public void updateTest() throws Exception{
+
         User updatedUser = User.newBuilder()
                 .setFirstName("Lana")
                 .setLastName("Wachowski")
