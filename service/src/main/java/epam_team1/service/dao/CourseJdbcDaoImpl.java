@@ -163,7 +163,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
     @Override
     @EnableLogging
-    public List<Course> listByStudentIdExeptMine( long studentId) {
+    public List<Course> listByStudentIdExceptMine(long studentId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("userId", studentId);
         return namedParameterJdbcTemplate.query(SQL_GET_COURSES_EXCEPT_MINE,parameters,new SecureCourseRowMapper());

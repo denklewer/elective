@@ -30,6 +30,15 @@ public class CourseManagerImpl implements CourseManager {
         courseDao.delete(id);
 
     }
+    @Override
+    public List<Course>  listByStudentId(long id) {
+       return courseDao.listByStudentId(id);
+    }
+    @Override
+    public List<Course>  listByStudentIdExceptMine(long id) {
+        return courseDao.listByStudentIdExceptMine(id);
+    }
+
 
     @Override
     public List<Course> list() {

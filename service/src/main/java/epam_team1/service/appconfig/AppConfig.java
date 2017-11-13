@@ -4,6 +4,7 @@ package epam_team1.service.appconfig;
 
 import org.apache.commons.dbcp.managed.BasicManagedDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 
 import epam_team1.service.dao.CourseJdbcDaoImpl;
@@ -22,7 +23,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableTransactionManagement
+//@EnableTransactionManagement
 @ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
 @EnableAspectJAutoProxy
 public class AppConfig {
@@ -31,10 +32,10 @@ public class AppConfig {
     private Environment environment;
 
 
-    @Bean
+   /* @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
-    }
+    }*/
 
 
     @Bean
