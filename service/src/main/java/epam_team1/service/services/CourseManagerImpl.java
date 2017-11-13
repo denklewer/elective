@@ -1,7 +1,7 @@
 package epam_team1.service.services;
 
-import dao.CourseDao;
-import model.Course;
+import epam_team1.service.dao.CourseDao;
+import epam_team1.service.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

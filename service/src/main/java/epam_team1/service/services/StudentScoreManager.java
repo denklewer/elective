@@ -1,6 +1,6 @@
 package epam_team1.service.services;
 
-import model.StudentScore;
+import epam_team1.service.model.StudentScore;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package epam_team1.service.services;
 
-import dao.UserDao;
-import model.User;
+import epam_team1.service.dao.UserDao;
+import epam_team1.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

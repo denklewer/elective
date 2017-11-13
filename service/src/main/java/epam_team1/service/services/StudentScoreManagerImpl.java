@@ -1,7 +1,7 @@
 package epam_team1.service.services;
 
-import dao.StudentScoreDao;
-import model.StudentScore;
+import epam_team1.service.dao.StudentScoreDao;
+import epam_team1.service.model.StudentScore;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

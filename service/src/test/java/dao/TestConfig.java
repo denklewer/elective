@@ -1,20 +1,19 @@
 package dao;
 
 
-<<<<<<< HEAD
+
 import epam_team1.service.dao.CourseJdbcDaoImpl;
-=======
-import logger.ServiceLogger;
->>>>>>> 7260103f3db6fe923e7a4d80e25af4f732356c27
+
+import epam_team1.service.logger.ServiceLogger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-<<<<<<< HEAD
-=======
+
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
->>>>>>> 7260103f3db6fe923e7a4d80e25af4f732356c27
+
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;

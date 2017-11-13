@@ -1,6 +1,6 @@
 package epam_team1.service.services;
 
-import model.Course;
+import epam_team1.service.model.Course;
 
 import java.util.List;
 

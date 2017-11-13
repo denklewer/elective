@@ -1,5 +1,5 @@
 package epam_team1.web.controllers;
-
+/*
 import model.StudentScore;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,9 @@ import epam_team1.service.services.UserManager;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/elective")
+@RequestMapping(value = "/elective")*/
 public class ElectiveController {
-
+/*
     @Autowired
     private UserManager userManager;
     @Autowired
@@ -60,5 +60,5 @@ public class ElectiveController {
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
-
+*/
 }

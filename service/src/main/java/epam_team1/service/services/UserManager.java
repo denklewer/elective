@@ -1,6 +1,6 @@
 package epam_team1.service.services;
 
-import model.User;
+import epam_team1.service.model.User;
 
 import java.util.List;
 

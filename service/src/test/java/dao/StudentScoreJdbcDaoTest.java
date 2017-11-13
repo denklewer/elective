@@ -1,8 +1,9 @@
 package dao;
 
-import model.Course;
-import model.StudentScore;
-import model.User;
+import epam_team1.service.dao.StudentScoreDao;
+import epam_team1.service.model.Course;
+import epam_team1.service.model.StudentScore;
+import epam_team1.service.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
