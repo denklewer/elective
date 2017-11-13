@@ -38,9 +38,18 @@ public interface CourseDao {
     void delete(long id);
 
     /**
+     * Get list of available Courses in which student was subscribed.
+     *
+     * @param studentId student_id from database
+     * @return list of available Courses
+     */
+    List<Course> listByStudentId(long studentId);
+
+    /**
      * Get list of available Courses from database.
      *
      * @return list of available Courses
      */
     List<Course> list();
+
 }

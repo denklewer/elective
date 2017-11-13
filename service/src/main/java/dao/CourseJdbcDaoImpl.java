@@ -14,10 +14,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -67,8 +63,15 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " User join Course " +
             " on (user_id = instructor_id); ";
 
-
-
+    private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT * FROM " +
+            " Course c JOIN " +
+            " first_name instructor_first_name, " +
+            " last_name  instructor_last_name, " +
+            " login instructor_login, " +
+            " password instructor_password, " +
+            " email instructor_email, " +
+            " Course_participation cp ON c.course_id = cp.course_id " +
+            " WHERE student_id = :studentId;";
 
     @Override
     @EnableLogging
@@ -136,4 +139,13 @@ public class CourseJdbcDaoImpl implements CourseDao {
       return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
     }
 
+    @Override
+    public List<Course> listByStudentId(long studentId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("studentId", studentId);
+
+        List<Course> courseList = namedParameterJdbcTemplate
+                .query(SQL_COURSE_LIST_BY_STUDENT_ID, parameters, new CourseRowMapper());
+        return courseList;
+    }
 }

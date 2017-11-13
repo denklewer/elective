@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -117,10 +118,64 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
 
     @Test
     public void list() throws Exception {
-            int countRowsInTable = countRowsInTable("Course");
-            List<Course> list = courseDao.list();
-            assertTrue(list.size() == countRowsInTable);
+        int countRowsInTable = countRowsInTable("Course");
+        List<Course> list = courseDao.list();
+        assertTrue(list.size() == countRowsInTable);
 
     }
+
+    @Test
+    public void listByStudentId() throws Exception {
+
+        List<Course> courseList = new ArrayList<>();
+
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+        Date parsingDateStart32 = ft.parse("2016-01-07");
+        Date parsingDateEnd32 = ft.parse("2016-04-11");
+        Course course32 = Course.newBuilder()
+                .setId(32)
+                .setName("Analitic dynamic")
+                .setStart(parsingDateStart32)
+                .setEnd(parsingDateEnd32)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Irina")
+                        .setLastName("Pototskay")
+                        .setLogin("mechanics")
+                        .setId(45)
+                        .setEmail("irina_71@google.com")
+                        .setPassword("goodLecture")
+                        .build())
+                .build();
+
+        courseList.add(course32);
+
+        Date parsingDateStart13 = ft.parse("2016-09-04");
+        Date parsingDateEnd13 = ft.parse("2017-04-28");
+        Course course13 = Course.newBuilder()
+                .setId(13)
+                .setName("Integrals")
+                .setStart(parsingDateStart13)
+                .setEnd(parsingDateEnd13)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Igor")
+                        .setLastName("Olemskoi")
+                        .setLogin("iv_olemskoi")
+                        .setId(65)
+                        .setEmail("ivladimirovich58@gmail.com")
+                        .setPassword("tRyToBrEAK67823645")
+                        .build())
+                .build();
+
+        courseList.add(course13);
+
+        List<Course> downloadCourseList = courseDao.listByStudentId(35);
+
+        for (Course item: downloadCourseList) {
+            assertTrue(courseList.contains(item));
+        }
+    }
+
 
 }
