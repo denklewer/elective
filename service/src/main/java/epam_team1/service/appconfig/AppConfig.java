@@ -2,6 +2,8 @@ package epam_team1.service.appconfig;
 
 
 
+import epam_team1.service.services.UserManagerImpl;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.managed.BasicManagedDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,8 +25,8 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-//@EnableTransactionManagement
-@ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
+@EnableTransactionManagement
+@ComponentScan(basePackageClasses = {CourseJdbcDaoImpl.class, UserManagerImpl.class})
 @EnableAspectJAutoProxy
 public class AppConfig {
 
@@ -32,23 +34,22 @@ public class AppConfig {
     private Environment environment;
 
 
-   /* @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }*/
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(mySqlDataSource());
+    }
 
 
     @Bean
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(mySqlDataSource());
     }
 
     @Bean
     public DataSource mySqlDataSource() {
         System.out.println("mySql");
         String className = environment.getProperty("spring.datasource.driver-class-name");
-        BasicManagedDataSource dataSource = new BasicManagedDataSource();
-
+        BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(className);
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
         dataSource.setUsername(environment.getProperty("spring.datasource.username"));

@@ -17,18 +17,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/elective")
-
 public class ElectiveController {
 
     @Autowired
-    @Qualifier("userManager")
     private UserManager userManager;
     @Autowired
-    @Qualifier("courseManager")
     private CourseManager courseManager;
     @Autowired
-    @Qualifier("studentScoreManager")
     private StudentScoreManager studentScoreManager;
+
+    @GetMapping("/ping")
+    public ResponseEntity getPong() {
+        return new ResponseEntity("pong",HttpStatus.OK);
+    }
 
     @GetMapping("/users")
     public List getUsers() {
