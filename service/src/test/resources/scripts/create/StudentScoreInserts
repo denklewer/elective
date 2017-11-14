@@ -1,6 +1,0 @@
-INSERT INTO Course_participation(student_id, course_id, grade, feedback)
-VALUES('1', '5', '5', 'excellent'),
-('2', '5', '4', 'good'),
-('3', '6', '4', 'good'),
-('21','32','4','you can better'),
-('35', 13, '5', 'Great student!');
