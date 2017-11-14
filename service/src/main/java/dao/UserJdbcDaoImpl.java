@@ -1,5 +1,6 @@
 package dao;
 
+import dao.mappers.StudentsListByCourseRowMapper;
 import logger.EnableLogging;
 import dao.exceptions.ReadException;
 import dao.exceptions.UpdateException;
@@ -25,9 +26,6 @@ public class UserJdbcDaoImpl implements UserDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
-
-
     private final String SQL_READ = "SELECT * FROM" +
             " User" +
             " WHERE user_id = :userId";
@@ -48,6 +46,13 @@ public class UserJdbcDaoImpl implements UserDao {
             " WHERE user_id = :userId";
 
     private final String SQL_LIST = "SELECT * FROM User";
+
+    private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
+            " first_name, " +
+            " last_name " +
+            " FROM Course_Participation " +
+            " JOIN User ON user_id = student_id " +
+            " WHERE course_id = :courseId";
 
 
     @Override
@@ -146,5 +151,17 @@ public class UserJdbcDaoImpl implements UserDao {
     @Override
     public List<User> getStudents() {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public List<User> getStudentsByCourseId(long courseId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("courseId", courseId);
+
+        List<User> userList = namedParameterJdbcTemplate
+                .query(SQL_STUDENTS_BY_COURSE_ID, parameters,
+                        new StudentsListByCourseRowMapper());
+
+        return userList;
     }
 }

@@ -102,4 +102,28 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 
     }
 
+    @Test
+    public void getStudentsByCourseId() {
+        List<User> userList = new ArrayList<>();
+
+        User user1 = User.newBuilder()
+                .setFirstName("Anton")
+                .setLastName("Nechiporuk")
+                .build();
+
+        User user2 = User.newBuilder()
+                .setFirstName("Yuirii")
+                .setLastName("Antipenko")
+                .build();
+
+        userList.add(user1);
+        userList.add(user2);
+
+        List<User> userListDownload = userJdbcDao.getStudentsByCourseId(32);
+
+        for (User item : userListDownload) {
+            assertTrue(userList.contains(item));
+        }
+    }
+
 }

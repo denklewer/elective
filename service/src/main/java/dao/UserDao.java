@@ -52,4 +52,12 @@ public interface UserDao {
      */
     List<User> getStudents();
 
+    /**
+     * Get list of Students which was subscribed on courseId.
+     *
+     * @param courseId courseId
+     * @return list of Students
+     */
+    List<User> getStudentsByCourseId(long courseId);
+
 }
