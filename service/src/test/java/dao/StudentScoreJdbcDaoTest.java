@@ -164,6 +164,6 @@ public class StudentScoreJdbcDaoTest extends AbstractTransactionalJUnit4SpringCo
 
     @Test
     public void list() throws Exception {
-    }
 
+    }
 }

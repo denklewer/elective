@@ -1,5 +1,8 @@
 package epam_team1.service.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class StudentScore {
 
     private final User student;
@@ -7,7 +10,11 @@ public class StudentScore {
     private final int score;
     private final String feedback;
 
-    public StudentScore(User student, Course course, int score, String feedback) {
+    @JsonCreator
+    public StudentScore(@JsonProperty("student") User student,
+                        @JsonProperty("course") Course course,
+                        @JsonProperty("score") int score,
+                        @JsonProperty("feedback") String feedback) {
         this.student = student;
         this.course = course;
         this.score = score;

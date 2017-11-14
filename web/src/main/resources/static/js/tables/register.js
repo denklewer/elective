@@ -1,14 +1,14 @@
-document.getElementById("change").onclick = function() {changeRegisterInfo()};
+document.getElementById("register").onclick = function() {register()};
 
 
-function changeRegisterInfo() {
+function register() {
     console.log("clicked");
     var user = {
-        id: 61, // change for current id
+        id: 0,
         firstName: $('#inputFirstName').val(),
         lastName: $('#inputLastName').val(),
         login: $('#inputLogin').val(),
-        password: $('#inputNewPassword').val(),
+        password: $('#inputPassword').val(),
         email: $('#inputEmail').val()
     }
 
@@ -28,7 +28,7 @@ function request(user) {
     $.ajax({
         url: "http://localhost:8080/elective/users",
         data: JSON.stringify(user),
-        type: "Put",
+        type: "Post",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {

@@ -9,9 +9,6 @@ buildscript {
 
 apply plugin: 'checkstyle'
 apply plugin: 'java'
-//apply plugin: 'eclipse'
-//apply plugin: 'idea'
-//apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
 
 
@@ -53,6 +50,8 @@ dependencies {
     compile 'org.springframework:spring-aop'
     compile 'org.aspectj:aspectjtools'
     compile 'org.aspectj:aspectjrt'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
 
     testCompile group: 'junit', name: 'junit'
     testCompile group: 'com.h2database', name: 'h2'

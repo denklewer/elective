@@ -1,5 +1,6 @@
 package epam_team1.service.dao;
 
+import epam_team1.service.dao.mappers.SecureCourseRowMapper;
 import epam_team1.service.dao.mappers.CourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.Course;
@@ -63,6 +64,27 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " on (user_id = instructor_id); ";
 
 
+    private final String SQL_COURSE_LIST_BY_STUDENT_ID =  "SELECT c.course_id, " +
+            " c.course_name, " +
+            " c.start_date, " +
+            " c.end_date , " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM Course c JOIN Course_participation cp " +
+            " ON (c.course_id = cp.course_id AND cp.student_id = :studentId) " +
+            " JOIN User u ON (u.user_id = c.instructor_id);";
+
+
+    private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
+            " course_name, " +
+            " start_date, " +
+            " end_date , " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM Course c LEFT JOIN Course_participation cp " +
+            " ON (c.course_id = cp.course_id and cp.student_id = :userId) " +
+            " JOIN User u ON (u.user_id = c.instructor_id) " +
+            " WHERE  cp.course_id IS NULL);";
 
 
     @Override
@@ -128,7 +150,26 @@ public class CourseJdbcDaoImpl implements CourseDao {
     @Override
     @EnableLogging
     public List<Course> list() {
-      return namedParameterJdbcTemplate.query(SQL_LIST,new CourseRowMapper());
+        List<Course> courses = namedParameterJdbcTemplate.query(SQL_LIST, new CourseRowMapper());
+        System.out.println("DAO: " + courses);
+        return courses;
+    }
+
+    @Override
+    public List<Course> listByStudentId(long studentId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("studentId", studentId);
+
+        List<Course> courseList = namedParameterJdbcTemplate
+                .query(SQL_COURSE_LIST_BY_STUDENT_ID, parameters, new SecureCourseRowMapper());
+        return courseList;
+    }
+    @Override
+    @EnableLogging
+    public List<Course> listByStudentIdExceptMine(long studentId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", studentId);
+        return namedParameterJdbcTemplate.query(SQL_GET_COURSES_EXCEPT_MINE,parameters,new SecureCourseRowMapper());
     }
 
 }

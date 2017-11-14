@@ -42,4 +42,17 @@ public interface CourseManager {
      * @return list of available Courses
      */
     List<Course> list();
+
+    /**
+     * get list of student's courses.
+     * @param id student's id
+     * @return list of student's courses.
+     */
+    List<Course> listByStudentId(long id);
+    /**
+     * get list of student's courses.
+     * @param id student's id
+     * @return list of student's courses.
+     */
+    List<Course> listByStudentIdExceptMine(long id);
 }

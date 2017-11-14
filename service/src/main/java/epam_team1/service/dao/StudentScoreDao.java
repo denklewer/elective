@@ -45,4 +45,6 @@ public interface StudentScoreDao {
      * @return List of available StudentScore
      */
     List<StudentScore> list();
+
+
 }
