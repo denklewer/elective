@@ -1,6 +1,10 @@
 package epam_team1.service.dao;
 
 
+import epam_team1.service.dao.exceptions.CreateException;
+import epam_team1.service.dao.exceptions.DeleteException;
+import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.exceptions.UpdateException;
 import epam_team1.service.dao.mappers.StudentScoreMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.StudentScore;
@@ -73,11 +77,15 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", courseId)
                 .addValue("studentId", userId);
+        try {
+            StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new StudentScoreMapper());
 
-        StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
-                parameters, new StudentScoreMapper());
-
-        return studentScore;
+            return studentScore;
+        }
+        catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 
     @Transactional
@@ -90,10 +98,14 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
 
-        namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
-
-        return studentScore;
+            return studentScore;
+        }
+        catch (Exception ex) {
+            throw new UpdateException(ex);
+        }
     }
 
     @Transactional
@@ -106,10 +118,13 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
+            return studentScore;
+        } catch (Exception ex) {
+            throw new CreateException(ex);
+        }
 
-        namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
-
-        return studentScore;
     }
 
     @Transactional
@@ -120,13 +135,24 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+        }
+        catch (Exception ex) {
+            throw new DeleteException(ex);
 
-        namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+
+        }
     }
 
     @Override
     @EnableLogging
     public List<StudentScore> list() {
-        return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+        }
+        catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 }
