@@ -21,13 +21,12 @@ import java.util.Map;
 
 @Import(AppConfig.class)
 @SpringBootApplication
-@ComponentScan(basePackageClasses = ElectiveController.class)
 public class WebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
-//        new SpringApplicationBuilder()
-//                .bannerMode(Banner.Mode.CONSOLE)
-//                .sources(ServiceApplication.class, WebApplication.class)
-//                .run(args);
+    //    SpringApplication.run(WebApplication.class, args);
+        new SpringApplicationBuilder()
+                .bannerMode(Banner.Mode.CONSOLE)
+                .sources(WebApplication.class)
+                .run(args);
     }
 }

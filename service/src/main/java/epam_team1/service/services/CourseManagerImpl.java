@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service("courseManager")
+@Service
 public class CourseManagerImpl implements CourseManager {
     @Autowired
-    CourseDao courseDao;
+    private CourseDao courseDao;
     @Override
     public Course readById(long id) {
         return courseDao.read(id);
@@ -28,7 +28,6 @@ public class CourseManagerImpl implements CourseManager {
     @Override
     public void deleteById(long id) {
         courseDao.delete(id);
-
     }
 
     @Override
