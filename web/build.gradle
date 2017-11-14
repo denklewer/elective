@@ -14,10 +14,6 @@ apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 
-//plugins {
-//    id 'org.springframework.boot' version '1.5.8.RELEASE'
-//}
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -43,21 +39,9 @@ tasks.withType(Checkstyle) {
     }
 }
 
-ext{
-    springVersion = '4.3.12.RELEASE'
-    mySqlVersion = '5.1.6'
-    commonsDbcpVersion = '1.4'
-    aspectjVersion = "1.8.2"
-}
-
 dependencies {
-//    compile 'org.springframework:spring-context:' + springVersion
-//    compile 'org.springframework:spring-core:' + springVersion
-//    compile 'org.springframework:spring-webmvc:' + springVersion
     compile 'org.springframework.boot:spring-boot-starter-web'
-//    compile 'epam_team1:service:1.0'
     compile project(':service')
 
-    //testCompile group: 'org.mockito', name: 'mockito-all'
     testCompile group: 'junit', name: 'junit'
 }
