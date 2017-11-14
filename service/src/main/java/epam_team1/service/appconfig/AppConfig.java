@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = {CourseJdbcDaoImpl.class, UserManagerImpl.class})
+@PropertySource({"database.properties","application.properties"})
 @EnableAspectJAutoProxy
 public class AppConfig {
 
@@ -48,12 +49,13 @@ public class AppConfig {
     @Bean
     public DataSource mySqlDataSource() {
         System.out.println("mySql");
-        String className = environment.getProperty("spring.datasource.driver-class-name");
+        String className = environment.getProperty("driver-class-name");
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(className);
-        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
-        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
+        dataSource.setUrl(environment.getProperty("url"));
+        dataSource.setUsername(environment.getProperty("dbuser"));
+        dataSource.setPassword(environment.getProperty("password"));
+
         System.out.println("End");
         return dataSource;
     }
