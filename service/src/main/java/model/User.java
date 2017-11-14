@@ -1,6 +1,6 @@
 package model;
 
-import java.util.List;
+import java.io.Serializable;
 
 public class User {
     private final long id;
@@ -10,7 +10,7 @@ public class User {
     private final String password;
     private final String email;
 
-    public User(long id, String firstName, String lastName, String login, String password, String email) {
+    private User(long id, String firstName, String lastName, String login, String password, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -130,5 +130,6 @@ public class User {
         public User build(){
             return new User(id, firstName, lastName, login, password, email);
         }
+
     }
 }

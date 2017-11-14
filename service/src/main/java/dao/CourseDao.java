@@ -1,19 +1,18 @@
 package dao;
 
 import model.Course;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-@Transactional("transactionManager")
-public interface CourseJdbcDao {
+public interface CourseDao {
     /**
      * Get Course from source by id.
      *
      * @param id Course id in database
      * @return Course from database, where key is id
      */
-    public Course read(long id);
+    Course read(long id);
 
     /**
      * Update Course in source.
@@ -21,7 +20,7 @@ public interface CourseJdbcDao {
      * @param course for update
      * @return new update Course
      */
-    public Course update(Course course);
+    Course update(Course course);
 
     /**
      * Insert Course in data source.
@@ -29,21 +28,19 @@ public interface CourseJdbcDao {
      * @param course for insertion in database
      * @return new Course, which was just now wrote in database
      */
-    public Course create(Course course);
+    Course create(Course course);
 
     /**
      * Remove Course from table by id.
      *
      * @param id Course id
-     * @return Course before delete
      */
-    public Course delete(long id);
+    void delete(long id);
 
     /**
      * Get list of available Courses from database.
      *
      * @return list of available Courses
      */
-    public List<Course> list();
-
+    List<Course> list();
 }

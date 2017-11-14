@@ -1,109 +1,150 @@
 package dao;
 
+import logger.EnableLogging;
+import dao.exceptions.ReadException;
+import dao.exceptions.UpdateException;
 import model.User;
 import dao.mappers.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+
 import java.util.List;
 
 @Repository
-public class UserJdbcDaoImpl implements UserJdbcDao {
+public class UserJdbcDaoImpl implements UserDao {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+
+
+
+    private final String SQL_READ = "SELECT * FROM" +
+            " User" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_UPDATE = "UPDATE User SET" +
+            " first_name = :firstName," +
+            " last_name = :lastName," +
+            " Login = :login," +
+            " email = :email," +
+            " password = :password" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_CREATE = "INSERT INTO User" +
+            " (first_name, last_name, Login, Password, email)" +
+            " VALUES (:firstName, :lastName, :login, :password, :email)";
+
+    private final String SQL_DELETE = "DELETE FROM User" +
+            " WHERE user_id = :userId";
+
+    private final String SQL_LIST = "SELECT * FROM User";
+
 
     @Override
+    @EnableLogging
     public User read(long id) {
-        String sql = "SELECT * FROM User WHERE user_id = ? ";
-        User user = jdbcTemplate.queryForObject(sql,
-                new UserRowMapper(),
-                id
-        );
 
-        return user;
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", id);
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new UserRowMapper());
+            return user;
+
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+
     }
 
+    @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public User update(User user) {
-        String sql = "UPDATE User" +
-                " SET" +
-                " first_name = ?," +
-                " last_name = ?," +
-                " login = ?," +
-                " email = ?," +
-                " password = ?" +
-                " WHERE  user_id= ?";
-        jdbcTemplate.update(sql,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getLogin(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getId());
-        return user;
+
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("login", user.getLogin())
+                .addValue("password", user.getPassword())
+                .addValue("email", user.getEmail())
+                .addValue("userId", user.getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
+            return user;
+        } catch (Exception ex) {
+            throw new UpdateException(ex);
+        }
     }
 
+    @Transactional("transactionManager")
     @Override
+    @EnableLogging
     public User create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        PreparedStatementCreator creator = con -> {
-            PreparedStatement statement =
-                    con.prepareStatement("INSERT INTO " +
-                                    "User(first_name, " +
-                                    "last_name, " +
-                                    "email, " +
-                                    "login, " +
-                                    "password) " +
-                                    "VALUES (?,?,?,?,?)",
-                            Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPassword());
-            return statement;
-        };
-        jdbcTemplate.update(creator, keyHolder);
-        int id = keyHolder.getKey().intValue();
-        User returnUser = User.newBuilder()
-                .setEmail(user.getEmail())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setLogin(user.getLogin())
-                .setPassword(user.getPassword())
-                .setId(id)
-                .build();
-        return returnUser;
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("login", user.getLogin())
+                .addValue("password", user.getPassword())
+                .addValue("email", user.getEmail());
+        try {
+            long result = namedParameterJdbcTemplate.update(SQL_CREATE,
+                    parameters,
+                    keyHolder,
+                    new String[]{"user_id"});
+            long id = keyHolder.getKey().longValue();
+
+            User returnUser = User.newBuilder()
+                    .setEmail(user.getEmail())
+                    .setFirstName(user.getFirstName())
+                    .setLastName(user.getLastName())
+                    .setLogin(user.getLogin())
+                    .setPassword(user.getPassword())
+                    .setId(id)
+                    .build();
+            return returnUser;
+        } catch (DataAccessException ex){
+            throw  new UpdateException(ex);
+        }
+        catch (Exception ex) {
+            throw  new RuntimeException("ID extraction error", ex);
+        }
     }
 
+    @Transactional("transactionManager")
     @Override
-    public User delete(long id) {
-        User user = read(id);
-        String sql = "DELETE FROM User WHERE user_id = ?";
-        jdbcTemplate.update(sql, id);
-        return user;
+    @EnableLogging
+    public void delete(long id) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("userId", id);
+        namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
     }
 
 
     @Override
+    @EnableLogging
     public List<User> list() {
-        String sql = "SELECT * from User";
-        return  jdbcTemplate.query(sql, new UserRowMapper());
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST, new UserRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+
     }
 
     @Override
-    public List<User> getStudents(){
-        throw  new NotImplementedException();
+    public List<User> getStudents() {
+        throw new NotImplementedException();
     }
-
-
 }
