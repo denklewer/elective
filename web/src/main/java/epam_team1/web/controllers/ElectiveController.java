@@ -37,7 +37,7 @@ public class ElectiveController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity getUser(@PathVariable("id") long id) {
+    public ResponseEntity getUser(@PathVariable("id") long id) {//user
         User user = userManager.readById(id);
         if (user == null) {
             return new ResponseEntity("No user found for ID " + id, HttpStatus.NOT_FOUND);

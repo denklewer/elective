@@ -25,62 +25,62 @@ function createTableBody(courses){
 }
 
 
-var courses = [
-    {
-        id: 1,
-        name: "JavaCore",
-        teacher: {
-              id: 0,
-              firstName: "Shipilev",
-              lastName: "Alexey",
-              login: "shipilev",
-              password: "123456",
-              email: "email"
-        },
-        start: "10.02.2017",
-        end: "12.05.2017"
-    },
-    {
-        id: 1,
-        name: "JavaCore",
-        teacher: {
-              id: 0,
-              firstName: "Shipilev",
-              lastName: "Alexey",
-              login: "shipilev",
-              password: "123456",
-              email: "email"
-        },
-        start: "10.02.2017",
-        end: "12.05.2017"
-    },
-    {
-        id: 1,
-        name: "JavaCore",
-        teacher: {
-              id: 0,
-              firstName: "Shipilev",
-              lastName: "Alexey",
-              login: "shipilev",
-              password: "123456",
-              email: "email"
-        },
-        start: "10.02.2017",
-        end: "12.05.2017"
-    }
-];
+//var courses = [
+//    {
+//        id: 1,
+//        name: "JavaCore",
+//        teacher: {
+//              id: 0,
+//              firstName: "Shipilev",
+//              lastName: "Alexey",
+//              login: "shipilev",
+//              password: "123456",
+//              email: "email"
+//        },
+//        start: "10.02.2017",
+//        end: "12.05.2017"
+//    },
+//    {
+//        id: 1,
+//        name: "JavaCore",
+//        teacher: {
+//              id: 0,
+//              firstName: "Shipilev",
+//              lastName: "Alexey",
+//              login: "shipilev",
+//              password: "123456",
+//              email: "email"
+//        },
+//        start: "10.02.2017",
+//        end: "12.05.2017"
+//    },
+//    {
+//        id: 1,
+//        name: "JavaCore",
+//        teacher: {
+//              id: 0,
+//              firstName: "Shipilev",
+//              lastName: "Alexey",
+//              login: "shipilev",
+//              password: "123456",
+//              email: "email"
+//        },
+//        start: "10.02.2017",
+//        end: "12.05.2017"
+//    }
+//];
 
 
 function getCourses(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/mycourses",
+        url: "http://localhost:8080/elective/users",
         contentType: 'applcation/json',
         success: function(courses){
             createTableBody(courses);
         },
         error: function(){
-            createTableBody(courses);
+            //createTableBody(courses);
         }
     })
 };

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class CourseManagerImpl implements CourseManager {
     @Autowired
-    CourseDao courseDao;
+    private CourseDao courseDao;
     @Override
     public Course readById(long id) {
         return courseDao.read(id);
@@ -28,7 +28,6 @@ public class CourseManagerImpl implements CourseManager {
     @Override
     public void deleteById(long id) {
         courseDao.delete(id);
-
     }
     @Override
     public List<Course>  listByStudentId(long id) {
