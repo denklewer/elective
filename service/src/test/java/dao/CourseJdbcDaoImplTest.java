@@ -1,7 +1,8 @@
 package dao;
 
-import model.Course;
-import model.User;
+import epam_team1.service.dao.CourseDao;
+import epam_team1.service.model.Course;
+import epam_team1.service.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,6 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
 
     @Autowired
     private CourseDao courseDao;
-
-
-
 
     @Test
     public void read() throws Exception {
