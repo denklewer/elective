@@ -1,11 +1,11 @@
 package epam_team1.service.dao;
 
-import dao.mappers.StudentsListByCourseRowMapper;
-import logger.EnableLogging;
-import dao.exceptions.ReadException;
-import dao.exceptions.UpdateException;
-import model.User;
-import dao.mappers.UserRowMapper;
+import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
+import epam_team1.service.logger.EnableLogging;
+import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.exceptions.UpdateException;
+import epam_team1.service.model.User;
+import epam_team1.service.dao.mappers.UserRowMapper;
 
 import epam_team1.service.dao.exceptions.ReadException;
 import epam_team1.service.logger.EnableLogging;
@@ -22,7 +22,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

@@ -16,11 +16,13 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MissingRequiredPropertiesException;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.StandardEnvironment;
+import org.springframework.context.annotation.Import;
 
 import java.util.Map;
 
 @Import(AppConfig.class)
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"epam_team1.service"})
+@ComponentScan(basePackageClasses = ElectiveController.class)
 public class WebApplication {
     public static void main(String[] args) {
     //    SpringApplication.run(WebApplication.class, args);

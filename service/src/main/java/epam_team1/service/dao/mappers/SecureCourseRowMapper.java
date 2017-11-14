@@ -1,6 +1,7 @@
-package dao.mappers;
+package epam_team1.service.dao.mappers;
 
-import model.Course;
+
+import epam_team1.service.model.Course;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

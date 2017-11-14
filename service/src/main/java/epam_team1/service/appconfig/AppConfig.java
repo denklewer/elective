@@ -29,13 +29,13 @@ public class AppConfig {
 
 
     @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(mySqlDataSource());
     }
 
     @Bean
-    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(mySqlDataSource());
     }
 
     @Bean
@@ -47,14 +47,5 @@ public class AppConfig {
         dataSource.setUsername(environment.getProperty("datasource.username"));
         dataSource.setPassword(environment.getProperty("datasource.password"));
         return dataSource;
-//        String className = environment.getProperty("datasource.driver-class-name");
-//        BasicDataSource dataSource = new BasicDataSource();
-//
-//        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//        dataSource.setUrl("jdbc:mysql://138.68.75.40:3306/epam-elective");
-//        dataSource.setUsername("epam-admin");
-//        dataSource.setPassword("secretservice");
-//        dataSource.setValidationQuery("select 1 from dual");
-//        return dataSource;
     }
 }

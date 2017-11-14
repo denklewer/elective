@@ -51,5 +51,10 @@ public interface CourseDao {
      */
     List<Course> list();
 
-     List<Course> listByStudentIdExeptMine( long studentId);
+    /**
+     * Get available Courses for student, except his courses.
+     * @param studentId student's id
+     * @return list of courses
+     */
+     List<Course> listByStudentIdExceptMine( long studentId);
 }

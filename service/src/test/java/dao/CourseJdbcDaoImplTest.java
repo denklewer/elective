@@ -131,7 +131,7 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
         Date parsingDateStart = ft.parse("2016-02-07");
         Date parsingDateEnd = ft.parse("2016-05-15");
 
-        List<Course> list = courseDao.listByStudentIdExeptMine(1);
+        List<Course> list = courseDao.listByStudentIdExceptMine(1);
 
 
         List<Course> expectedList = new ArrayList<Course>();

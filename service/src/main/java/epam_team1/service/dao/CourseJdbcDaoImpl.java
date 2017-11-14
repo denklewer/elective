@@ -1,9 +1,6 @@
 package epam_team1.service.dao;
 
-import dao.mappers.SecureCourseRowMapper;
-import logger.EnableLogging;
-import model.Course;
-import dao.mappers.CourseRowMapper;
+import epam_team1.service.dao.mappers.SecureCourseRowMapper;
 import epam_team1.service.dao.mappers.CourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.Course;
@@ -66,6 +63,15 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " User join Course " +
             " on (user_id = instructor_id); ";
 
+//    private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT * FROM " +
+//            " Course c JOIN " +
+//            " first_name instructor_first_name, " +
+//            " last_name  instructor_last_name, " +
+//            " login instructor_login, " +
+//            " password instructor_password, " +
+//            " email instructor_email, " +
+//            " Course_participation cp ON c.course_id = cp.course_id " +
+//            " WHERE student_id = :studentId;";
 
     private final String SQL_COURSE_LIST_BY_STUDENT_ID =  "SELECT c.course_id, " +
             " c.course_name, " +
@@ -167,7 +173,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
     @Override
     @EnableLogging
-    public List<Course> listByStudentIdExeptMine( long studentId) {
+    public List<Course> listByStudentIdExceptMine(long studentId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("userId", studentId);
         return namedParameterJdbcTemplate.query(SQL_GET_COURSES_EXCEPT_MINE,parameters,new SecureCourseRowMapper());
