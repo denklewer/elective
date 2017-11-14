@@ -45,12 +45,11 @@ ext{
 }
 
 dependencies {
-
     compile 'mysql:mysql-connector-java:' + mySqlVersion
     compile 'commons-dbcp:commons-dbcp:' + commonsDbcpVersion
-
     compile 'org.springframework.boot:spring-boot-starter-jdbc:1.5.8.RELEASE'
-
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
     compile 'org.springframework:spring-aop:' + springVersion
     compile 'org.aspectj:aspectjtools:' + aspectjVersion
     compile 'org.aspectj:aspectjrt:' + aspectjVersion
@@ -59,8 +58,6 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.8.RELEASE'
 
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
-    compile group: 'javax.transaction', name: 'jta', version: '1.1'
+    //compile group: 'javax.transaction', name: 'jta', version: '1.1'
 
 }

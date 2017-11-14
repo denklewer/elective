@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = {CourseJdbcDaoImpl.class, UserManagerImpl.class})
+@PropertySource("classpath:database.properties")
 @EnableAspectJAutoProxy
 public class AppConfig {
 
@@ -39,14 +40,21 @@ public class AppConfig {
 
     @Bean
     public DataSource mySqlDataSource() {
-        String className = environment.getProperty("datasource.driver-class-name");
         BasicDataSource dataSource = new BasicDataSource();
 
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://138.68.75.40:3306/epam-elective");
-        dataSource.setUsername("epam-admin");
-        dataSource.setPassword("secretservice");
-        dataSource.setValidationQuery("select 1 from dual");
+        dataSource.setDriverClassName(environment.getProperty("datasource.driver-class-name"));
+        dataSource.setUrl(environment.getProperty("datasource.url"));
+        dataSource.setUsername(environment.getProperty("datasource.username"));
+        dataSource.setPassword(environment.getProperty("datasource.password"));
         return dataSource;
+//        String className = environment.getProperty("datasource.driver-class-name");
+//        BasicDataSource dataSource = new BasicDataSource();
+//
+//        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://138.68.75.40:3306/epam-elective");
+//        dataSource.setUsername("epam-admin");
+//        dataSource.setPassword("secretservice");
+//        dataSource.setValidationQuery("select 1 from dual");
+//        return dataSource;
     }
 }
