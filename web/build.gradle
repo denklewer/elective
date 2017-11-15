@@ -21,20 +21,23 @@ apply plugin: 'org.springframework.boot'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    mavenCentral() // для dependency
     mavenLocal()
 }
 
+// checkstyle взят с предыдущего тренинга в епаме.
 checkstyle {
     toolVersion = "8.2"
     configFile rootProject.file("config\\checkstyle\\checkstyle.xml")
 }
 
+// взят с предыдущего тренинга в епаме, для того чтобы работал checkstyle(без него не работает).
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 compileJava.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 compileTestJava.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 
+// всё ещё тот же checkstyle и его настройка
 tasks.withType(Checkstyle) {
     ignoreFailures = true
     reports {
@@ -43,6 +46,8 @@ tasks.withType(Checkstyle) {
     }
 }
 
+
+// вроде не нужно?!?!?! Можно ли убрать???
 ext{
     springVersion = '4.3.12.RELEASE'
     mySqlVersion = '5.1.6'
@@ -50,14 +55,23 @@ ext{
     aspectjVersion = "1.8.2"
 }
 
+
+// зависимости
 dependencies {
 //    compile 'org.springframework:spring-context:' + springVersion
 //    compile 'org.springframework:spring-core:' + springVersion
 //    compile 'org.springframework:spring-webmvc:' + springVersion
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-web' // берется из гугла
+    // гуглим mavenCentral, заходим на этот сайт вводит springBoot и ищем нужную версию для Gradle
 //    compile 'epam_team1:service:1.0'
-    compile project(':service')
 
+    compile group: 'org.springframework.security', name: 'spring-security-web'
+
+    compile project(':service') // отсюда берется jar из модуля сервис.
+
+    compile group: 'org.springframework.security', name: 'spring-security-config'
     //testCompile group: 'org.mockito', name: 'mockito-all'
+
+    // взято с репозитория Maven в инете.
     testCompile group: 'junit', name: 'junit'
 }
