@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .anyRequest().authenticated()
-                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/", "/login", "/assets/js/vendor/popper.min.js").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
