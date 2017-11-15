@@ -199,5 +199,4 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
         }
     }
 
-
 }
