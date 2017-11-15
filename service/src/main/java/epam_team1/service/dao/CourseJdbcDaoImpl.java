@@ -85,7 +85,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " u.first_name instructor_first_name " +
             " FROM Course c JOIN Course_participation cp " +
             " ON (c.course_id = cp.course_id AND cp.student_id = :studentId) " +
-            " JOIN User u ON (u.user_id = c.instructor_id);";
+            " LEFT JOIN User u ON (u.user_id = c.instructor_id);";
 
 
     private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
