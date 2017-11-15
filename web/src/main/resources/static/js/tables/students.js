@@ -6,7 +6,7 @@ function createRow(user){
     row.appendChild(createCol(user.firstName + " " + user.lastName));
     row.appendChild(createCol(user.login));
     row.appendChild(createCol(user.email));
-    row.appendChild(createButton(user.id));
+    row.appendChild(createButton(user));
 
     return row;
 }
@@ -18,12 +18,36 @@ function createCol(text){
     return col;
 }
 
-function createButton(id){
+function createButton(user){
     //<button class="btn btn-lg btn-primary btn-block" type="Subscribe">Sign in</button>
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Feedback");
     button.appendChild(text);
+    button.setAttribute("id", "button" + user.id);
+    button.addEventListener("click", function(){
+               //document.getElementById("demo").innerHTML = "Hello World";
+               var options = {
+                   "backdrop" : "static"
+               }
+               $('#basicModal').modal(options);
+               document.getElementById("userName")
+                        .appendChild(document
+                                    .createTextNode(user.firstName + " " + user.lastName));
+
+               document.getElementById("save").addEventListener("click", function(){
+                    var studentScore = {
+                        student: user,
+                        course: course,
+                        score: $('#score').val(),
+                        feedback: $('#feedback').val()
+                    };
+
+                    console.log(studentScore);
+
+
+               });
+           });
     element.appendChild(button);
 
     return element;
@@ -69,7 +93,7 @@ var users = [
 function getUsers(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/mycourses",
+        url: "http://localhost:8080/elective/courses/students/"+courseId,
         contentType: 'applcation/json',
         success: function(users){
             createTableBody(users);
@@ -80,4 +104,65 @@ function getUsers(){
     })
 };
 
+function getCourse(){
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/elective/courses/" + courseId,
+        contentType: 'applcation/json',
+        success: function(course){
+            return course;
+        },
+        error: function(){
+            //createTableBody(users);
+            return {
+                id: 1,
+                name: "JavaCore",
+                user: {
+                      id: 0,
+                      firstName: "Shipilev",
+                      lastName: "Alexey",
+                      login: "shipilev",
+                      password: "123456",
+                      email: "email"
+                     },
+                     start: "10.02.2017",
+                     end: "12.05.2017"
+            };
+        }
+    })
+};
+
+function setScore(studentScore){
+    $.ajax({
+        type: 'Put',
+        url: "http://localhost:8080/elective/score",
+        data: JSON.stringify(studentScore),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+             console.log("ok");
+             console.log(result);
+        },
+        error: function (result)
+        {
+            console.log("not ok");
+            console.log(result);
+        }
+    })
+};
+
+
+var courseId = getUrlVars()["id"];
+
+console.log(courseId);
+
 getUsers();
+var course = getCourse();
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}

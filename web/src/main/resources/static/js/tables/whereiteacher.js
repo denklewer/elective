@@ -7,6 +7,7 @@ function createRow(course){
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
     row.appendChild(createLink(course.id));
+    row.appendChild(createButton(course));
     return row;
 }
 
@@ -33,68 +34,151 @@ function createTableBody(courses){
     }
 }
 
-//
-//var courses = [
-//    {
-//        id: 1,
-//        name: "JavaCore",
-//        teacher: {
-//              id: 0,
-//              firstName: "Shipilev",
-//              lastName: "Alexey",
-//              login: "shipilev",
-//              password: "123456",
-//              email: "email"
-//        },
-//        start: "10.02.2017",
-//        end: "12.05.2017"
-//    },
-//    {
-//        id: 1,
-//        name: "JavaCore",
-//        teacher: {
-//              id: 0,
-//              firstName: "Shipilev",
-//              lastName: "Alexey",
-//              login: "shipilev",
-//              password: "123456",
-//              email: "email"
-//        },
-//        start: "10.02.2017",
-//        end: "12.05.2017"
-//    },
-//    {
-//        id: 1,
-//        name: "JavaCore",
-//        teacher: {
-//              id: 0,
-//              firstName: "Shipilev",
-//              lastName: "Alexey",
-//              login: "shipilev",
-//              password: "123456",
-//              email: "email"
-//        },
-//        start: "10.02.2017",
-//        end: "12.05.2017"
-//    }
-//];
+function refresh(){
+    var tableBody = document.getElementById('courses');
+    while (tableBody.hasChildNodes()) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+}
+
+function createButton(course){
+    var element = document.createElement("th");
+    var button = document.createElement("BUTTON");
+    var text = document.createTextNode("Delete");
+    button.appendChild(text);
+    button.addEventListener("click", function(){
+        deleteCourse(course);
+    });
+    element.appendChild(button);
+
+    return element;
+}
+
+
+
+var deck = [
+    {
+        id: 1,
+        name: "JavaCore",
+        user: {
+              id: 0,
+              firstName: "Shipilev",
+              lastName: "Alexey",
+              login: "shipilev",
+              password: "123456",
+              email: "email"
+        },
+        start: "10.02.2017",
+        end: "12.05.2017"
+    },
+    {
+        id: 1,
+        name: "JavaCore",
+        user: {
+              id: 0,
+              firstName: "Shipilev",
+              lastName: "Alexey",
+              login: "shipilev",
+              password: "123456",
+              email: "email"
+        },
+        start: "10.02.2017",
+        end: "12.05.2017"
+    },
+    {
+        id: 1,
+        name: "JavaCore",
+        user: {
+              id: 0,
+              firstName: "Shipilev",
+              lastName: "Alexey",
+              login: "shipilev",
+              password: "123456",
+              email: "email"
+        },
+        start: "10.02.2017",
+        end: "12.05.2017"
+    }
+];
 
 
 function getCourses(){
 console.log("get courses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/mycourses/"+id,
+        url: "http://localhost:8080/elective/courses/"+id,
         contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);
             console.log("ok");
         },
         error: function(){
-            //createTableBody(courses);
+            createTableBody(deck);
             console.log("not ok");
+        }
+    })
+};
+function deleteCourse(course){
+    $.ajax({
+        type: 'Delete',
+        url: "http://localhost:8080/elective/courses/" + course.id,
+        data: JSON.stringify(course),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+             console.log("ok");
+             console.log(result);
+             refresh();
+             getCourses();
+        },
+        error: function (result)
+        {
+            console.log("not ok");
+            console.log(result);
+            refresh();
+            getCourses();
+        }
+    })
+};
+function addCourse(course){
+    $.ajax({
+        type: 'Post',
+        url: "http://localhost:8080/elective/courses/" + course.id,
+        data: JSON.stringify(course),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+             console.log("ok");
+             console.log(result);
+             refresh();
+             getCourses();
+        },
+        error: function (result)
+        {
+            console.log("not ok");
+            console.log(result);
+            refresh();
+            getCourses();
         }
     })
 };
 
 getCourses();
+document.getElementById("add")
+        .addEventListener("click", function(){
+               var options = {
+                   "backdrop" : "static"
+               }
+               $('#basicModal').modal(options);
+               document.getElementById("save").addEventListener("click", function(){
+                    var course = {
+                        id: 0,
+                        name: $('#name').val(),
+                        start: $('#startDate').val(),
+                        end: $('#endDate').val(),
+                        teacher: ""
+                    };
+                    addCourse(course);
+                    console.log(course);
+               });
+        });
