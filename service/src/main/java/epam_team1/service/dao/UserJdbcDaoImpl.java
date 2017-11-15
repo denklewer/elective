@@ -2,6 +2,7 @@ package epam_team1.service.dao;
 
 
 import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.dao.exceptions.UpdateException;
 import epam_team1.service.model.User;
@@ -51,6 +52,13 @@ public class UserJdbcDaoImpl implements UserDao {
 
     private final String SQL_LIST = "SELECT * FROM User";
 
+
+    private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
+            " first_name, " +
+            " last_name " +
+            " FROM Course_Participation " +
+            " JOIN User ON user_id = student_id " +
+            " WHERE course_id = :courseId";
 
     @Override
     @EnableLogging
@@ -150,4 +158,19 @@ public class UserJdbcDaoImpl implements UserDao {
     public List<User> getStudents() {
         throw new NotImplementedException();
     }
+
+    @Override
+    @EnableLogging
+    public List<User> getStudentsByCourseId(long courseId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("courseId", courseId);
+
+        List<User> userList = namedParameterJdbcTemplate
+                .query(SQL_STUDENTS_BY_COURSE_ID, parameters,
+                        new StudentsListByCourseRowMapper());
+
+        return userList;
+    }
+
+
 }
