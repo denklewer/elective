@@ -4,10 +4,10 @@ function createRow(course){
     var row = document.createElement("tr");
     row.appendChild(createCol(course.id));
     row.appendChild(createCol(course.name));
-    row.appendChild(createCol(course.teacher.firstName + " " + course.teacher.lastName));
+    row.appendChild(createCol(course.user.firstName + " " + course.user.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
-    row.appendChild(createButton(course.id));
+    row.appendChild(createButton(course));
 
     return row;
 }
@@ -19,12 +19,20 @@ function createCol(text){
     return col;
 }
 
-function createButton(id){
-    //<button class="btn btn-lg btn-primary btn-block" type="Subscribe">Sign in</button>
+function createButton(course){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Subscribe");
     button.appendChild(text);
+    button.addEventListener("click", function(){
+        var studentScore = {
+            student: "",
+            course: course,
+            score: "",
+            feedback: ""
+        }
+        subscribe(studentScore);
+    });
     element.appendChild(button);
 
     return element;
@@ -38,11 +46,11 @@ function createTableBody(courses){
 }
 
 
-var courses = [
+var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -56,7 +64,7 @@ var courses = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -70,7 +78,7 @@ var courses = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -85,17 +93,41 @@ var courses = [
 
 
 function getCourses(){
+    console.log("getCourses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/mycourses",
-        contentType: 'applcation/json',
+        url: "http://localhost:8080/elective/courses",
+        contentType: 'application/json',
         success: function(courses){
+            console.log("ok");
             createTableBody(courses);
         },
         error: function(){
-            createTableBody(courses);
+            console.log("not so ok");
+            createTableBody(deck);
         }
     })
 };
+
+function subscribe(studentScore){
+    $.ajax({
+        type: 'Post',
+        url: "http://localhost:8080/elective/score",
+        data: JSON.stringify(studentScore),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+             console.log("ok");
+             console.log(result);
+        },
+        error: function (result)
+        {
+            console.log("not ok");
+            console.log(result);
+        }
+    })
+};
+
+
 
 getCourses();

@@ -14,10 +14,6 @@ apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'org.springframework.boot'
 
-//plugins {
-//    id 'org.springframework.boot' version '1.5.8.RELEASE'
-//}
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -58,6 +54,8 @@ ext{
 
 // зависимости
 dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile project(':service')
 //    compile 'org.springframework:spring-context:' + springVersion
 //    compile 'org.springframework:spring-core:' + springVersion
 //    compile 'org.springframework:spring-webmvc:' + springVersion

@@ -1,5 +1,8 @@
 package epam_team1.service.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class Course {
@@ -9,9 +12,12 @@ public class Course {
     private final Date start;
     private final Date end;
 
-    //SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-
-    private Course(long id, String name, User instructor, Date start, Date end) {
+    @JsonCreator
+    private Course(@JsonProperty("id") long id,
+                   @JsonProperty("name") String name,
+                   @JsonProperty("user") User instructor,
+                   @JsonProperty("start") Date start,
+                   @JsonProperty("end") Date end) {
         this.id = id;
         this.name = name;
         this.instructor = instructor;

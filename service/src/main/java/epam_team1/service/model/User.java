@@ -1,5 +1,9 @@
 package epam_team1.service.model;
 
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
     private final long id;
     private final String firstName;
@@ -8,7 +12,13 @@ public class User {
     private final String password;
     private final String email;
 
-    private User(long id, String firstName, String lastName, String login, String password, String email) {
+    @JsonCreator
+    private User(@JsonProperty("id") long id,
+                 @JsonProperty("firstName") String firstName,
+                 @JsonProperty("lastName") String lastName,
+                 @JsonProperty("login") String login,
+                 @JsonProperty("password") String password,
+                 @JsonProperty("email") String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
