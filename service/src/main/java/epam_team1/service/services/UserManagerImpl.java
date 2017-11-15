@@ -4,6 +4,7 @@ import epam_team1.service.dao.UserDao;
 import epam_team1.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -40,5 +41,10 @@ public class UserManagerImpl implements  UserManager{
     @Override
     public List<User> getStudents() {
         return userDao.getStudents();
+    }
+
+    @Override
+    public List<User> getStudentsByCourseId(long id) {
+        throw new NotImplementedException();
     }
 }

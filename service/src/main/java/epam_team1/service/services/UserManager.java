@@ -49,4 +49,11 @@ public interface UserManager {
      * @return list of Users which are Students
      */
     List<User> getStudents();
+
+    /**
+     * Get list of available Users from database.
+     *
+     * @return list of Users which are Students
+     */
+    List<User> getStudentsByCourseId(long id);
 }

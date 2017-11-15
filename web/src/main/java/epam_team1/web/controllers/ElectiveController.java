@@ -2,6 +2,7 @@ package epam_team1.web.controllers;
 
 
 import epam_team1.service.model.Course;
+import epam_team1.service.model.StudentScore;
 import epam_team1.service.model.User;
 import epam_team1.service.services.CourseManager;
 import epam_team1.service.services.StudentScoreManager;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 import java.util.List;
@@ -83,6 +85,11 @@ public class ElectiveController {
         return courseManager.listByStudentId(id);
     }
 
+    @GetMapping("/courses/students/{id}")
+    public List getStudentsByCourseId(@PathVariable("id") long id) {
+        throw new NotImplementedException();
+    }
+
     @GetMapping("/available_courses/{id}")
     public List getCoursesExceptMine(@PathVariable("id") long id) {
         return courseManager.listByStudentIdExceptMine(id);
@@ -102,7 +109,7 @@ public class ElectiveController {
     }
 
     @PutMapping("/courses/{id}")
-    public ResponseEntity updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
         course = courseManager.update(course);
         if (course == null) {
             return new ResponseEntity("No user found for ID " + id, HttpStatus.NOT_FOUND);
@@ -110,11 +117,24 @@ public class ElectiveController {
         }
         return new ResponseEntity(course, HttpStatus.OK);
     }
-    
 
 
+    @PostMapping(value = "/score")
+    public ResponseEntity<StudentScore> subscribe(@RequestBody StudentScore score) {
+        studentScoreManager.create(score);
+        return new ResponseEntity(score, HttpStatus.OK);
+    }
 
+    @PutMapping(value = "/score")
+    public ResponseEntity<StudentScore> setScore(@RequestBody StudentScore score) {
+        studentScoreManager.update(score);
+        return new ResponseEntity(score, HttpStatus.OK);
+    }
 
-
+    @DeleteMapping(value = "/score")
+    public ResponseEntity<StudentScore> unsubscribe(@RequestBody StudentScore score) {
+        studentScoreManager.delete(score.getStudent().getId(), score.getCourse().getId());
+        return new ResponseEntity(score, HttpStatus.OK);
+    }
 
 }
