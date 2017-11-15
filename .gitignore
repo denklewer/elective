@@ -4,6 +4,7 @@ build
 *.class
 *.iml
 out/
-build/
+build
 *.log
+*.jar
 
