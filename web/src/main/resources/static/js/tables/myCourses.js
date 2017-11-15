@@ -4,10 +4,10 @@ function createRow(course){
     var row = document.createElement("tr");
     row.appendChild(createCol(course.id));
     row.appendChild(createCol(course.name));
-    row.appendChild(createCol(course.teacher.firstName + " " + course.teacher.lastName));
+    row.appendChild(createCol(course.user.firstName + " " + course.user.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
-    row.appendChild(createButton(course));
+    row.appendChild(createButtonSub(course));
     return row;
 }
 
@@ -25,7 +25,7 @@ function createTableBody(courses){
     }
 }
 
-function createButton(course){
+function createButtonSub(course){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Unsubscribe");
@@ -43,11 +43,32 @@ function createButton(course){
 
     return element;
 }
+
+
+function createScoreRow(score){
+    console.log(score);
+    var row = document.createElement("tr");
+    row.appendChild(createCol(score.course.name));
+    row.appendChild(createCol(score.score));
+    row.appendChild(createCol(score.feedback));
+    return row;
+}
+
+function createScoreTableBody(scores){
+    var tableBody = document.getElementById('feedbackTbody');
+    for (var i in scores) {
+        tableBody.appendChild(createScoreRow(scores[i]));
+    }
+}
+
+
+
+
 var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -61,7 +82,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -75,7 +96,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        user: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -93,7 +114,7 @@ function getCourses(){
     $.ajax({
         type: 'GET',
         url: "http://localhost:8080/elective/users",
-        contentType: 'applcation/json',
+        contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);
         },
@@ -102,6 +123,50 @@ function getCourses(){
         }
     })
 };
+
+var testScore = [
+    {
+        course: {
+            name: "Swimming"
+        },
+        score: 1,
+        feedback: "You need to swim deeper"
+    },
+    {
+        course: {
+            name: "Darts"
+        },
+        score: 1,
+        feedback: "You need to go better"
+    },
+    {
+        course: {
+            name: "Swimming"
+        },
+        score: 1,
+        feedback: "You need to go better"
+    }
+
+
+
+
+];
+
+
+function getScore(){
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/elective/score",
+        contentType: 'application/json',
+        success: function(scores){
+            createScoreTableBody(scores);
+        },
+        error: function(){
+            createScoreTableBody(testScore);
+        }
+    })
+};
+
 
 function unsubscribe(studentScore){
     $.ajax({
@@ -124,3 +189,4 @@ function unsubscribe(studentScore){
 
 
 getCourses();
+getScore();
