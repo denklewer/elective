@@ -33,10 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT Login, Password, 1 FROM User WHERE Login = ?");
-
-//                .roles("USER").and()
-//                .withUser("admin").password("Password").roles("USER", "ADMIN");
     }
+
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -56,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.html")
                 .permitAll()
                 .usernameParameter("username")
-                .passwordParameter("password")
-                .and();
+                .passwordParameter("password");
 
         // чтобы войти в личный кабинет.
      /*   http.formLogin()
