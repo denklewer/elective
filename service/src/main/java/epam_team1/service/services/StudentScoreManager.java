@@ -44,4 +44,11 @@ public interface StudentScoreManager {
      * @return List of available StudentScore
      */
     List<StudentScore> list();
+
+    /**
+     * Get list of student StudentScore from database.
+     *
+     * @return List of available StudentScore
+     */
+    List<StudentScore> list(long userId);
 }

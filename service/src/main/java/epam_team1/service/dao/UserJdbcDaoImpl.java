@@ -158,6 +158,7 @@ public class UserJdbcDaoImpl implements UserDao {
     }
 
     @Override
+    @EnableLogging
     public List<User> getStudents() {
         throw new NotImplementedException();
     }

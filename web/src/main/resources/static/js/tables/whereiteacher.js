@@ -1,4 +1,4 @@
-var id = 28;
+//var id = 28;
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
@@ -21,7 +21,7 @@ function createCol(text){
 function createLink(id) {
     var col = document.createElement("th");
     var element = document.createElement("a");
-    element.href = "/students.html?id="+id;
+    element.href = "http://localhost:8080/pages/students.html?id="+id;
     element.innerHTML = "Students";
     col.appendChild(element);
     return col;
@@ -106,7 +106,7 @@ function getCourses(){
 console.log("get courses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/courses/"+id,
+        url: "http://localhost:8080/elective/courses/",
         contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);

@@ -1,5 +1,6 @@
 package epam_team1.service.services;
 
+import epam_team1.service.dao.StudentScoreDao;
 import epam_team1.service.dao.UserDao;
 import epam_team1.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,16 @@ import org.springframework.stereotype.Service;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserManagerImpl implements  UserManager{
+
     @Autowired
     UserDao userDao;
+    @Autowired
+    StudentScoreDao studentScoreDao;
+
     @Override
     public User readById(long id) {
         return userDao.read(id);
@@ -45,6 +51,8 @@ public class UserManagerImpl implements  UserManager{
 
     @Override
     public List<User> getStudentsByCourseId(long id) {
-        throw new NotImplementedException();
+        return studentScoreDao.listByCourse(id).stream()
+                .map(score -> userDao.read(score.getStudent().getId()))
+                .collect(Collectors.toList());
     }
 }
