@@ -5,6 +5,7 @@ import epam_team1.service.dao.exceptions.CreateException;
 import epam_team1.service.dao.exceptions.DeleteException;
 import epam_team1.service.dao.exceptions.ReadException;
 import epam_team1.service.dao.exceptions.UpdateException;
+import epam_team1.service.dao.mappers.StudentScoreGradeAndFeedbackAndCourse;
 import epam_team1.service.dao.mappers.StudentScoreMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.StudentScore;
@@ -67,11 +68,15 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     private final String SQL_DELETE = "DELETE FROM Course_participation" +
             " WHERE student_id = :studentId and course_id = :courseId";
 
-    private final String SQL_LIST = "SELECT * FROM Course_participation";
-
-    //
-    private final String SQL_LIST_BY_USER_ID = "SELECT * FROM " +
-            " Course_participation WHERE student_id = :studentId";
+    private final String SQL_LIST_BY_USER_ID = "SELECT " +
+            " grade," +
+            " feedback," +
+            " course_name," +
+            " start_date," +
+            " end_date" +
+            " FROM Course_participation" +
+            " JOIN Course USING (course_id)" +
+            " WHERE student_id = :studentId";
 
     private final String SQL_LIST_BY_COURSE_ID = "SELECT * FROM " +
             "( SELECT  *" +
@@ -178,18 +183,8 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         try {
             SqlParameterSource parameters = new MapSqlParameterSource()
                     .addValue("studentId", userId);
-            return namedParameterJdbcTemplate.query(SQL_LIST_BY_USER_ID, parameters, new StudentScoreMapper());
-        }
-        catch (Exception ex) {
-            throw new ReadException(ex);
-        }
-    }
-
-    @Override
-    @EnableLogging
-    public List<StudentScore> list() {
-        try {
-            return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+            return namedParameterJdbcTemplate.query(SQL_LIST_BY_USER_ID,
+                    parameters, new StudentScoreGradeAndFeedbackAndCourse());
         }
         catch (Exception ex) {
             throw new ReadException(ex);
@@ -207,5 +202,10 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         catch (Exception ex) {
             throw new ReadException(ex);
         }
+    }
+
+    @Override
+    public List<StudentScore> list() {
+        return null;
     }
 }
