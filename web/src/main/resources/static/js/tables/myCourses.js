@@ -1,13 +1,18 @@
 
+var currentUser;
+getUser();
+getCourses();
+getScore();
+
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
     row.appendChild(createCol(course.id));
     row.appendChild(createCol(course.name));
-    row.appendChild(createCol(course.teacher.firstName + " " + course.teacher.lastName));
+    row.appendChild(createCol(course.instructor.firstName + " " + course.instructor.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
-    row.appendChild(createButton(course));
+    row.appendChild(createButtonSub(course));
     return row;
 }
 
@@ -25,14 +30,14 @@ function createTableBody(courses){
     }
 }
 
-function createButton(course){
+function createButtonSub(course){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Unsubscribe");
     button.appendChild(text);
     button.addEventListener("click", function(){
         var studentScore = {
-            student: "",
+            student: currentUser,
             course: course,
             score: "",
             feedback: ""
@@ -43,11 +48,32 @@ function createButton(course){
 
     return element;
 }
+
+
+function createScoreRow(score){
+    console.log(score);
+    var row = document.createElement("tr");
+    row.appendChild(createCol(score.course.name));
+    row.appendChild(createCol(score.score));
+    row.appendChild(createCol(score.feedback));
+    return row;
+}
+
+function createScoreTableBody(scores){
+    var tableBody = document.getElementById('feedbackTbody');
+    for (var i in scores) {
+        tableBody.appendChild(createScoreRow(scores[i]));
+    }
+}
+
+
+
+
 var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -61,7 +87,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -75,7 +101,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        teacher: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -92,9 +118,10 @@ var deck = [
 function getCourses(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/users",
-        contentType: 'applcation/json',
+        url: "http://localhost:8080/elective/courses/" + currentUser.id,
+        contentType: 'application/json',
         success: function(courses){
+            console.log(courses);
             createTableBody(courses);
         },
         error: function(){
@@ -102,6 +129,68 @@ function getCourses(){
         }
     })
 };
+
+function getUser(){
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "http://localhost:8080/elective/current",
+        contentType: 'application/json',
+        success: function(user){
+            console.log(user);
+            currentUser = user;
+        },
+        error: function(){
+            deck[0].user;
+        }
+    })
+};
+
+var testScore = [
+    {
+        course: {
+            name: "Swimming"
+        },
+        score: 1,
+        feedback: "You need to swim deeper"
+    },
+    {
+        course: {
+            name: "Darts"
+        },
+        score: 1,
+        feedback: "You need to go better"
+    },
+    {
+        course: {
+            name: "Swimming"
+        },
+        score: 1,
+        feedback: "You need to go better"
+    }
+
+
+
+
+];
+
+
+function getScore(){
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/elective/score/" + currentUser.id,
+        contentType: 'application/json',
+        success: function(scores){
+            console.log(scores)
+            createScoreTableBody(scores);
+        },
+        error: function(result){
+            console.log(result);
+            createScoreTableBody(testScore);
+        }
+    })
+};
+
 
 function unsubscribe(studentScore){
     $.ajax({
@@ -121,6 +210,3 @@ function unsubscribe(studentScore){
         }
     })
 };
-
-
-getCourses();

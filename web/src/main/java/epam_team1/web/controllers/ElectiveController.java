@@ -28,10 +28,18 @@ public class ElectiveController {
     @Autowired
     private StudentScoreManager studentScoreManager;
 
+    private User current;
+
     @GetMapping("/ping")
     public ResponseEntity getPong() {
         return new ResponseEntity("pong",HttpStatus.OK);
     }
+
+    @GetMapping("/current")
+    public User getCurrent(){
+        return userManager.readById(35);
+    }
+
 
     @GetMapping("/users")
     public List getUsers() {
@@ -72,7 +80,7 @@ public class ElectiveController {
     }
 
 
-    // курсы
+    // Courses
     @GetMapping("/courses")
     public List getCourses() {
         List<Course> courses = courseManager.list();
@@ -87,7 +95,7 @@ public class ElectiveController {
 
     @GetMapping("/courses/students/{id}")
     public List getStudentsByCourseId(@PathVariable("id") long id) {
-        throw new NotImplementedException();
+        return userManager.getStudentsByCourseId(id);
     }
 
     @GetMapping("/available_courses/{id}")
@@ -109,7 +117,7 @@ public class ElectiveController {
     }
 
     @PutMapping("/courses/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
+    public ResponseEntity updateCourse(@PathVariable("id") long id, @RequestBody Course course) {
         course = courseManager.update(course);
         if (course == null) {
             return new ResponseEntity("No user found for ID " + id, HttpStatus.NOT_FOUND);
@@ -118,6 +126,12 @@ public class ElectiveController {
         return new ResponseEntity(course, HttpStatus.OK);
     }
 
+    // StudentScores
+    @GetMapping(value = "/score/{id}")
+    public ResponseEntity<List<StudentScore>> getScore(@PathVariable("id") long id) {
+        List<StudentScore> studentScores = studentScoreManager.list(id);
+        return new ResponseEntity(studentScores, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/score")
     public ResponseEntity<StudentScore> subscribe(@RequestBody StudentScore score) {

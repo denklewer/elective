@@ -46,5 +46,23 @@ public interface StudentScoreDao {
      */
     List<StudentScore> list();
 
+    /**
+     * Get list of student StudentScore by student Id from database.
+     *
+     * @param userId user Id
+     * @return List of available StudentScore
+     */
+    List<StudentScore> list(long userId);
+
+    /**
+     * Get list of student StudentScore by course Id from database.
+     *
+     * @param courseId course Id
+     * @return List of available StudentScore
+     */
+    List<StudentScore> listByCourse(long courseId);
+
+
+
 
 }

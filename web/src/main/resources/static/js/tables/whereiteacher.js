@@ -1,4 +1,5 @@
-var id = 28;
+var currentUser;
+getUser();
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
@@ -21,7 +22,7 @@ function createCol(text){
 function createLink(id) {
     var col = document.createElement("th");
     var element = document.createElement("a");
-    element.href = "/students.html?id="+id;
+    element.href = "http://localhost:8080/pages/students.html?id="+id;
     element.innerHTML = "Students";
     col.appendChild(element);
     return col;
@@ -60,7 +61,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -74,7 +75,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -88,7 +89,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -106,7 +107,7 @@ function getCourses(){
 console.log("get courses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/courses/"+id,
+        url: "http://localhost:8080/elective/courses/" + currentUser.id,
         contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);
@@ -143,7 +144,7 @@ function deleteCourse(course){
 function addCourse(course){
     $.ajax({
         type: 'Post',
-        url: "http://localhost:8080/elective/courses/" + course.id,
+        url: "http://localhost:8080/elective/courses/",
         data: JSON.stringify(course),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -163,6 +164,22 @@ function addCourse(course){
     })
 };
 
+function getUser(){
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "http://localhost:8080/elective/current",
+        contentType: 'application/json',
+        success: function(user){
+            console.log(user);
+            currentUser = user;
+        },
+        error: function(){
+            deck[0].user;
+        }
+    })
+};
+
 getCourses();
 document.getElementById("add")
         .addEventListener("click", function(){
@@ -176,7 +193,7 @@ document.getElementById("add")
                         name: $('#name').val(),
                         start: $('#startDate').val(),
                         end: $('#endDate').val(),
-                        teacher: ""
+                        user: currentUser
                     };
                     addCourse(course);
                     console.log(course);

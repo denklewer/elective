@@ -1,13 +1,8 @@
 package epam_team1.service.dao;
 
-import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
-import epam_team1.service.logger.EnableLogging;
-import epam_team1.service.dao.exceptions.ReadException;
-import epam_team1.service.dao.exceptions.UpdateException;
-import epam_team1.service.model.User;
-import epam_team1.service.dao.mappers.UserRowMapper;
 
 import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.dao.exceptions.UpdateException;
 import epam_team1.service.model.User;
@@ -22,6 +17,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -56,13 +52,13 @@ public class UserJdbcDaoImpl implements UserDao {
 
     private final String SQL_LIST = "SELECT * FROM User";
 
+
     private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
             " first_name, " +
             " last_name " +
             " FROM Course_Participation " +
             " JOIN User ON user_id = student_id " +
             " WHERE course_id = :courseId";
-
 
     @Override
     @EnableLogging
@@ -158,11 +154,13 @@ public class UserJdbcDaoImpl implements UserDao {
     }
 
     @Override
+    @EnableLogging
     public List<User> getStudents() {
         throw new NotImplementedException();
     }
 
     @Override
+    @EnableLogging
     public List<User> getStudentsByCourseId(long courseId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", courseId);
@@ -173,4 +171,6 @@ public class UserJdbcDaoImpl implements UserDao {
 
         return userList;
     }
+
+
 }
