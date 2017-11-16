@@ -59,4 +59,5 @@ public interface UserDao {
      */
     List<User> getStudentsByCourseId(long courseId);
 
+
 }

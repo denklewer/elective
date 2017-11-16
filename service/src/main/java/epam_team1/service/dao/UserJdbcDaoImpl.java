@@ -8,6 +8,7 @@ import epam_team1.service.model.User;
 import epam_team1.service.dao.mappers.UserRowMapper;
 
 import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.dao.exceptions.UpdateException;
 import epam_team1.service.model.User;

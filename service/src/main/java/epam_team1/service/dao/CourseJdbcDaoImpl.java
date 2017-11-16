@@ -53,7 +53,8 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     private final String SQL_DELETE = "DELETE FROM Course WHERE course_id = :courseId";
 
-    private final String SQL_LIST = "select " +
+    private final String SQL_LIST =
+            "select " +
             " instructor_id," +
             " first_name instructor_first_name, " +
             " last_name  instructor_last_name, " +
@@ -66,16 +67,6 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " end_date from " +
             " User join Course " +
             " on (user_id = instructor_id); ";
-
-//    private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT * FROM " +
-//            " Course c JOIN " +
-//            " first_name instructor_first_name, " +
-//            " last_name  instructor_last_name, " +
-//            " login instructor_login, " +
-//            " password instructor_password, " +
-//            " email instructor_email, " +
-//            " Course_participation cp ON c.course_id = cp.course_id " +
-//            " WHERE student_id = :studentId;";
 
     private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT c.course_id, " +
             " c.course_name, " +
@@ -180,7 +171,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     @EnableLogging
     public List<Course> list() {
         try {
-            List<Course> courses = namedParameterJdbcTemplate.query(SQL_LIST, new CourseRowMapper());
+            List<Course> courses = namedParameterJdbcTemplate.query(SQL_LIST, new SecureCourseRowMapper());
             System.out.println("DAO: " + courses);
             return courses;
         } catch (Exception ex) {
