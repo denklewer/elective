@@ -69,7 +69,9 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     private final String SQL_LIST = "SELECT * FROM Course_participation";
 
-    private final String SQL_LIST_BY_USER_ID = "SELECT * FROM Course_participation WHERE student_id = :studentId";
+    //
+    private final String SQL_LIST_BY_USER_ID = "SELECT * FROM " +
+            " Course_participation WHERE student_id = :studentId";
 
     private final String SQL_LIST_BY_COURSE_ID = "SELECT * FROM " +
             "( SELECT  *" +

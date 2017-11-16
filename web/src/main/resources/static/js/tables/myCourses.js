@@ -1,10 +1,15 @@
 
+var currentUser;
+getUser();
+getCourses();
+getScore();
+
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
     row.appendChild(createCol(course.id));
     row.appendChild(createCol(course.name));
-    row.appendChild(createCol(course.user.firstName + " " + course.user.lastName));
+    row.appendChild(createCol(course.instructor.firstName + " " + course.instructor.lastName));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
     row.appendChild(createButtonSub(course));
@@ -32,7 +37,7 @@ function createButtonSub(course){
     button.appendChild(text);
     button.addEventListener("click", function(){
         var studentScore = {
-            student: "",
+            student: currentUser,
             course: course,
             score: "",
             feedback: ""
@@ -68,7 +73,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -82,7 +87,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -96,7 +101,7 @@ var deck = [
     {
         id: 1,
         name: "JavaCore",
-        user: {
+        instructor: {
               id: 0,
               firstName: "Shipilev",
               lastName: "Alexey",
@@ -113,13 +118,30 @@ var deck = [
 function getCourses(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/users",
+        url: "http://localhost:8080/elective/courses/" + currentUser.id,
         contentType: 'application/json',
         success: function(courses){
+            console.log(courses);
             createTableBody(courses);
         },
         error: function(){
             createTableBody(deck);
+        }
+    })
+};
+
+function getUser(){
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "http://localhost:8080/elective/current",
+        contentType: 'application/json',
+        success: function(user){
+            console.log(user);
+            currentUser = user;
+        },
+        error: function(){
+            deck[0].user;
         }
     })
 };
@@ -156,12 +178,14 @@ var testScore = [
 function getScore(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/score",
+        url: "http://localhost:8080/elective/score/" + currentUser.id,
         contentType: 'application/json',
         success: function(scores){
+            console.log(scores)
             createScoreTableBody(scores);
         },
-        error: function(){
+        error: function(result){
+            console.log(result);
             createScoreTableBody(testScore);
         }
     })
@@ -186,7 +210,3 @@ function unsubscribe(studentScore){
         }
     })
 };
-
-
-getCourses();
-getScore();

@@ -3,12 +3,12 @@ CREATE TABLE `Course_participation` (
   `course_id` bigint(20) NOT NULL,
   `grade` int(11) DEFAULT NULL,
   `feedback` varchar(200) DEFAULT NULL,
-  KEY `student_id_idx` (`student_id`),
-  KEY `course_id_idx` (`course_id`),
-  CONSTRAINT `fk_course_id`
-  FOREIGN KEY (`course_id`)
-  REFERENCES `Course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_user_id`
-  FOREIGN KEY (`student_id`)
-  REFERENCES `User` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_student_id_idx` (`student_id`),
+  KEY `fk_course_id_idx` (`course_id`),
+  CONSTRAINT `fk_course_id` FOREIGN KEY (`course_id`)
+  REFERENCES `Course` (`course_id`)
+  ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_student_id` FOREIGN KEY (`student_id`)
+  REFERENCES `User` (`user_id`)
+  ON DELETE CASCADE ON UPDATE CASCADE
 )

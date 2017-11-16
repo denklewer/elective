@@ -1,6 +1,5 @@
 document.getElementById("register").onclick = function() {register()};
 
-
 function register() {
     console.log("clicked");
     var user = {
