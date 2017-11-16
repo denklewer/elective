@@ -107,7 +107,7 @@ function getCourses(){
 console.log("get courses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/courses/" + currentUser.id,
+        url: "http://localhost:8080/elective/i_teach/" + currentUser.id,
         contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);

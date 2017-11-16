@@ -93,6 +93,11 @@ public class ElectiveController {
         return courseManager.listByStudentId(id);
     }
 
+    @GetMapping("/allcourses/{id}")
+    public Course getCourse(@PathVariable("id") long id) {
+        return courseManager.readById(id);
+    }
+
     @GetMapping("/courses/students/{id}")
     public List getStudentsByCourseId(@PathVariable("id") long id) {
         return userManager.getStudentsByCourseId(id);

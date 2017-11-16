@@ -52,24 +52,10 @@ ext{
 }
 
 
-// зависимости
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile project(':service')
-//    compile 'org.springframework:spring-context:' + springVersion
-//    compile 'org.springframework:spring-core:' + springVersion
-//    compile 'org.springframework:spring-webmvc:' + springVersion
     compile 'org.springframework.boot:spring-boot-starter-web' // берется из гугла
     // гуглим mavenCentral, заходим на этот сайт вводит springBoot и ищем нужную версию для Gradle
-//    compile 'epam_team1:service:1.0'
-
-    compile group: 'org.springframework.security', name: 'spring-security-web'
-
     compile project(':service') // отсюда берется jar из модуля сервис.
-
-    compile group: 'org.springframework.security', name: 'spring-security-config'
-    //testCompile group: 'org.mockito', name: 'mockito-all'
-
     // взято с репозитория Maven в инете.
     testCompile group: 'junit', name: 'junit'
 }

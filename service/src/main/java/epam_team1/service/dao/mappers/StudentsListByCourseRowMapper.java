@@ -10,6 +10,7 @@ public class StudentsListByCourseRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = User.newBuilder()
+                .setId(rs.getLong("user_id"))
                 .setFirstName(rs.getString("first_name"))
                 .setLastName(rs.getString("last_name"))
                 .build();
