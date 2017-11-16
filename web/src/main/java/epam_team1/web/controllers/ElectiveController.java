@@ -35,13 +35,13 @@ public class ElectiveController {
         return new ResponseEntity("pong",HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/current")
     public User getCurrent(){
         return userManager.readById(35);
     }
 
 
-    @GetMapping("/users")//ok
+    @GetMapping("/users")
     public List getUsers() {
         return userManager.list();
     }
@@ -81,24 +81,24 @@ public class ElectiveController {
 
 
     // Courses
-    @GetMapping("/courses")//bad
+    @GetMapping("/courses")
     public List getCourses() {
         List<Course> courses = courseManager.list();
         System.out.println("Controller: " + courses);
         return courses;
     }
 
-    @GetMapping("/courses/{id}")//bad
+    @GetMapping("/courses/{id}")
     public List getCourses(@PathVariable("id") long id) {
         return courseManager.listByStudentId(id);
     }
 
-    @GetMapping("/courses/students/{id}")//bad
+    @GetMapping("/courses/students/{id}")
     public List getStudentsByCourseId(@PathVariable("id") long id) {
         return userManager.getStudentsByCourseId(id);
     }
 
-    @GetMapping("/available_courses/{id}")//bad
+    @GetMapping("/available_courses/{id}")
     public List getCoursesExceptMine(@PathVariable("id") long id) {
         return courseManager.listByStudentIdExceptMine(id);
     }
@@ -128,7 +128,7 @@ public class ElectiveController {
 
     // StudentScores
     @GetMapping(value = "/score/{id}")
-    public ResponseEntity<List<StudentScore>> getScore(@RequestBody long id) {
+    public ResponseEntity<List<StudentScore>> getScore(@PathVariable("id") long id) {
         List<StudentScore> studentScores = studentScoreManager.list(id);
         return new ResponseEntity(studentScores, HttpStatus.OK);
     }

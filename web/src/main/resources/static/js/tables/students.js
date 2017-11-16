@@ -61,7 +61,7 @@ function createTableBody(users){
 }
 
 
-var users = [
+var deck = [
     {
          id: 0,
          firstName: "Shipilev",
@@ -94,12 +94,12 @@ function getUsers(){
     $.ajax({
         type: 'GET',
         url: "http://localhost:8080/elective/courses/students/"+courseId,
-        contentType: 'applcation/json',
+        contentType: 'application/json',
         success: function(users){
             createTableBody(users);
         },
         error: function(){
-            createTableBody(users);
+            createTableBody(deck);
         }
     })
 };
@@ -108,7 +108,7 @@ function getCourse(){
     $.ajax({
         type: 'GET',
         url: "http://localhost:8080/elective/courses/" + courseId,
-        contentType: 'applcation/json',
+        contentType: 'application/json',
         success: function(course){
             return course;
         },

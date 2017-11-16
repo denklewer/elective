@@ -1,3 +1,6 @@
+var currentUser;
+getUser();
+
 document.getElementById("change").onclick = function() {changeRegisterInfo()};
 
 
@@ -42,3 +45,19 @@ function request(user) {
         }
     });
 }
+
+function getUser(){
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "http://localhost:8080/elective/current",
+        contentType: 'application/json',
+        success: function(user){
+            console.log(user);
+            currentUser = user;
+        },
+        error: function(){
+            deck[0].user;
+        }
+    })
+};
