@@ -120,7 +120,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     @Override
     @EnableLogging
     public StudentScore update(StudentScore studentScore) {
-
+        System.out.println("DAO" + studentScore);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("grade", studentScore.getScore())
                 .addValue("feedback", studentScore.getFeedback())

@@ -150,6 +150,7 @@ public class ElectiveController {
 
     @PutMapping(value = "/score")
     public ResponseEntity<StudentScore> setScore(@RequestBody StudentScore score) {
+        System.out.println("Contr: " + score);
         studentScoreManager.update(score);
         return new ResponseEntity(score, HttpStatus.OK);
     }
