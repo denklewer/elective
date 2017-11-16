@@ -91,6 +91,19 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " WHERE  cp.course_id IS NULL);";
 
 
+    private final String SQL_LIST_BY_INSTRUCTOR_ID = "SELECT " +
+            " course_id, " +
+            " course_name, " +
+            " start_date, " +
+            " end_date, " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM " +
+            " Course c JOIN " +
+            " User u ON (u.user_id = c.instructor_id)" +
+            " WHERE c.instructor_id = :instructorId;";
+
+
     @Override
     @EnableLogging
     public Course read(long id) {
@@ -205,4 +218,15 @@ public class CourseJdbcDaoImpl implements CourseDao {
         }
     }
 
+    @Override
+    public List<Course> listByInstructorId(long instructorId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("instructorId", instructorId);
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST_BY_INSTRUCTOR_ID,
+                    parameters, new SecureCourseRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
 }

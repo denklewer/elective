@@ -55,4 +55,12 @@ public interface CourseManager {
      * @return list of student's courses.
      */
     List<Course> listByStudentIdExceptMine(long id);
+
+    /**
+     * Get list of courses, which this instructor teach.
+     *
+     * @param id instructor's id
+     * @return list of courses, which person teach
+     */
+    List<Course> listByInstructorId(long id);
 }

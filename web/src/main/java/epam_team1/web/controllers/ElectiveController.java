@@ -119,6 +119,10 @@ public class ElectiveController {
         return courseManager.listByStudentIdExceptMine(id);
     }
 
+    @GetMapping("/i_teach/{id}")
+    public List getCoursesWhichITeach(@PathVariable("id") long id) {
+        return courseManager.listByInstructorId(id);
+    }
 
     @PostMapping(value = "/courses")
     public ResponseEntity createCourse(@RequestBody Course course) {

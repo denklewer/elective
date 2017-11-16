@@ -199,4 +199,48 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
         }
     }
 
+    @Test
+    public void listByInstructorId() throws Exception{
+        List<Course> courseList = new ArrayList<>();
+
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+        Date parsingDateStart127 = ft.parse("2016-09-04");
+        Date parsingDateEnd127 = ft.parse("2017-04-28");
+        Course course127 = Course.newBuilder()
+                .setId(127)
+                .setName("Integrals2")
+                .setStart(parsingDateStart127)
+                .setEnd(parsingDateEnd127)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Igor")
+                        .setLastName("Olemskoi")
+                        .build())
+                .build();
+
+        courseList.add(course127);
+
+        Date parsingDateStart13 = ft.parse("2016-09-04");
+        Date parsingDateEnd13 = ft.parse("2017-04-28");
+        Course course13 = Course.newBuilder()
+                .setId(13)
+                .setName("Integrals")
+                .setStart(parsingDateStart13)
+                .setEnd(parsingDateEnd13)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Igor")
+                        .setLastName("Olemskoi")
+                        .build())
+                .build();
+
+        courseList.add(course13);
+
+        List<Course> downloadCourseList = courseDao.listByInstructorId(65);
+
+        for (Course item: downloadCourseList) {
+            assertTrue(courseList.contains(item));
+        }
+    }
+
 }
