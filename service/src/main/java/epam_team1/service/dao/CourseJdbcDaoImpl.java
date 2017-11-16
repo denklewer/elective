@@ -53,7 +53,8 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     private final String SQL_DELETE = "DELETE FROM Course WHERE course_id = :courseId";
 
-    private final String SQL_LIST = "select " +
+    private final String SQL_LIST =
+            "select " +
             " instructor_id," +
             " first_name instructor_first_name, " +
             " last_name  instructor_last_name, " +
@@ -67,7 +68,6 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " User join Course " +
             " on (user_id = instructor_id); ";
 
-
     private final String SQL_COURSE_LIST_BY_STUDENT_ID = "SELECT c.course_id, " +
             " c.course_name, " +
             " c.start_date, " +
@@ -76,7 +76,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " u.first_name instructor_first_name " +
             " FROM Course c JOIN Course_participation cp " +
             " ON (c.course_id = cp.course_id AND cp.student_id = :studentId) " +
-            " JOIN User u ON (u.user_id = c.instructor_id);";
+            " LEFT JOIN User u ON (u.user_id = c.instructor_id);";
 
 
     private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
@@ -89,6 +89,19 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " ON (c.course_id = cp.course_id AND cp.student_id = :userId) " +
             " JOIN User u ON (u.user_id = c.instructor_id) " +
             " WHERE  cp.course_id IS NULL);";
+
+
+    private final String SQL_LIST_BY_INSTRUCTOR_ID = "SELECT " +
+            " course_id, " +
+            " course_name, " +
+            " start_date, " +
+            " end_date, " +
+            " u.last_name instructor_last_name, " +
+            " u.first_name instructor_first_name " +
+            " FROM " +
+            " Course c JOIN " +
+            " User u ON (u.user_id = c.instructor_id)" +
+            " WHERE c.instructor_id = :instructorId;";
 
 
     @Override
@@ -171,7 +184,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     @EnableLogging
     public List<Course> list() {
         try {
-            List<Course> courses = namedParameterJdbcTemplate.query(SQL_LIST, new CourseRowMapper());
+            List<Course> courses = namedParameterJdbcTemplate.query(SQL_LIST, new SecureCourseRowMapper());
             System.out.println("DAO: " + courses);
             return courses;
         } catch (Exception ex) {
@@ -205,4 +218,15 @@ public class CourseJdbcDaoImpl implements CourseDao {
         }
     }
 
+    @Override
+    public List<Course> listByInstructorId(long instructorId) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("instructorId", instructorId);
+        try {
+            return namedParameterJdbcTemplate.query(SQL_LIST_BY_INSTRUCTOR_ID,
+                    parameters, new SecureCourseRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
 }

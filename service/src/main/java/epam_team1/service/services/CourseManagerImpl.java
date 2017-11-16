@@ -43,4 +43,9 @@ public class CourseManagerImpl implements CourseManager {
     public List<Course> list() {
         return courseDao.list();
     }
+
+    @Override
+    public List<Course> listByInstructorId(long id) {
+        return courseDao.listByInstructorId(id);
+    }
 }

@@ -1,2 +1,8 @@
 group 'epam_team1'
 version '1.0'
+
+// зачем это сюда добавлено?!?! можно ли убрать??
+repositories {
+    mavenCentral()
+}
+

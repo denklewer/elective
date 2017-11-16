@@ -52,13 +52,13 @@ public class UserJdbcDaoImpl implements UserDao {
 
     private final String SQL_LIST = "SELECT * FROM User";
 
-
     private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
             " first_name, " +
             " last_name " +
             " FROM Course_Participation " +
             " JOIN User ON user_id = student_id " +
             " WHERE course_id = :courseId";
+
 
     @Override
     @EnableLogging
