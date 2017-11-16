@@ -1,3 +1,10 @@
+var courseId = getUrlVars()["id"];
+
+console.log(courseId);
+
+getUsers();
+var courseThat;
+getCourse();
 
 function createRow(user){
     console.log(user);
@@ -36,9 +43,10 @@ function createButton(user){
                                     .createTextNode(user.firstName + " " + user.lastName));
 
                document.getElementById("save").addEventListener("click", function(){
+                    console.log(courseThat);
                     var studentScore = {
                         student: user,
-                        course: course,
+                        course: courseThat,
                         score: $('#score').val(),
                         feedback: $('#feedback').val()
                     };
@@ -107,10 +115,12 @@ function getUsers(){
 function getCourse(){
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/courses/" + courseId,
+        async: false,
+        url: "http://localhost:8080/elective/allcourses/" + courseId,
         contentType: 'application/json',
         success: function(course){
-            return course;
+            console.log(course);
+            courseThat = course;
         },
         error: function(){
             //createTableBody(users);
@@ -152,12 +162,6 @@ function setScore(studentScore){
 };
 
 
-var courseId = getUrlVars()["id"];
-
-console.log(courseId);
-
-getUsers();
-var course = getCourse();
 
 function getUrlVars() {
     var vars = {};

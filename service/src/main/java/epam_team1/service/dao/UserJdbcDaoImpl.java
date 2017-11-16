@@ -58,8 +58,9 @@ public class UserJdbcDaoImpl implements UserDao {
 
     private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
             " first_name, " +
-            " last_name " +
-            " FROM Course_Participation " +
+            " last_name, " +
+            " user_id " +
+            " FROM Course_participation " +
             " JOIN User ON user_id = student_id " +
             " WHERE course_id = :courseId";
 
@@ -185,12 +186,13 @@ public class UserJdbcDaoImpl implements UserDao {
     public List<User> getStudentsByCourseId(long courseId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", courseId);
-
-        List<User> userList = namedParameterJdbcTemplate
-                .query(SQL_STUDENTS_BY_COURSE_ID, parameters,
-                        new StudentsListByCourseRowMapper());
-
-        return userList;
+        try {
+            return namedParameterJdbcTemplate
+                    .query(SQL_STUDENTS_BY_COURSE_ID, parameters,
+                            new StudentsListByCourseRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 
 

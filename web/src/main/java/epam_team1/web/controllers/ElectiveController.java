@@ -109,6 +109,11 @@ public class ElectiveController {
         return courseManager.listByStudentId(id);
     }
 
+    @GetMapping("/allcourses/{id}")
+    public Course getCourse(@PathVariable("id") long id) {
+        return courseManager.readById(id);
+    }
+
     @GetMapping("/courses/students/{id}")
     public List getStudentsByCourseId(@PathVariable("id") long id) {
         return userManager.getStudentsByCourseId(id);
@@ -161,6 +166,7 @@ public class ElectiveController {
 
     @PutMapping(value = "/score")
     public ResponseEntity<StudentScore> setScore(@RequestBody StudentScore score) {
+        System.out.println("Contr: " + score);
         studentScoreManager.update(score);
         return new ResponseEntity(score, HttpStatus.OK);
     }

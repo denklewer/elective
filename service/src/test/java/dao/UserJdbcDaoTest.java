@@ -97,11 +97,13 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
         List<User> userList = new ArrayList<>();
 
         User user1 = User.newBuilder()
+                .setId(21)
                 .setFirstName("Anton")
                 .setLastName("Nechiporuk")
                 .build();
 
         User user2 = User.newBuilder()
+                .setId(35)
                 .setFirstName("Yuirii")
                 .setLastName("Antipenko")
                 .build();

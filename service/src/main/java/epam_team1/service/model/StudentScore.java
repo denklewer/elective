@@ -45,8 +45,8 @@ public class StudentScore {
 
         private User student;
         private Course course;
-        private int score;
-        private String feedback="";
+        private int score = 0;
+        private String feedback = "";
 
         private Builder() {
         }
