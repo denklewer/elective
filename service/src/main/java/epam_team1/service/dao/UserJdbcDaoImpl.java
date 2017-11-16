@@ -35,6 +35,10 @@ public class UserJdbcDaoImpl implements UserDao {
             " User" +
             " WHERE user_id = :userId";
 
+    private final String SQL_READ_BY_LOGIN = "SELECT * FROM" +
+            " User" +
+            " WHERE Login = :login";
+
     private final String SQL_UPDATE = "UPDATE User SET" +
             " first_name = :firstName," +
             " last_name = :lastName," +
@@ -68,6 +72,23 @@ public class UserJdbcDaoImpl implements UserDao {
                 .addValue("userId", id);
         try {
             User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new UserRowMapper());
+            return user;
+
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
+
+
+    @Override
+    @EnableLogging
+    public User readByLogin(String login) {
+
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("login", login);
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(SQL_READ_BY_LOGIN,
                     parameters, new UserRowMapper());
             return user;
 

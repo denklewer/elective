@@ -52,8 +52,8 @@ public class ElectiveController {
     }
 
     @GetMapping("/current")
-    public User getCurrent(){
-        return userManager.readById(35);
+    public User getCurrent(Principal principal){
+        return userManager.readByLogin(principal.getName());
     }
 
 
