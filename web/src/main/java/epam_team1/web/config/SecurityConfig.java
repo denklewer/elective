@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT Login, Password, 1 FROM User WHERE Login = ?");
+                .usersByUsernameQuery("SELECT Login, Password, 1 FROM User WHERE Login = ?")
+                 .authoritiesByUsernameQuery("select Login, 'ROLE_ADMIN' from User where Login=?");
     }
 
 
@@ -48,16 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/login.html","/elective/ping").permitAll()
+                .antMatchers("/login.html","/pages/register.html").permitAll()
                 .anyRequest().authenticated()
                 .antMatchers("/index.html").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
-                .usernameParameter("username")
-                .passwordParameter("password")
+                .failureForwardUrl("/error.html")
                 .and()
-                .exceptionHandling().accessDeniedPage("/error.html")
+                .exceptionHandling().accessDeniedPage("/pages/register.html")
                 .and()
                 .csrf().disable();
 
