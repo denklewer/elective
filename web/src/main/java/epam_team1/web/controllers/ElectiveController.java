@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,23 @@ public class ElectiveController {
     private User current;
 
     @GetMapping("/ping")
-    public ResponseEntity getPong() {
-        return new ResponseEntity("pong",HttpStatus.OK);
+    public ResponseEntity<HelloweenResponse> hello(Principal principal) {
+
+        return new ResponseEntity<HelloweenResponse>(
+                new HelloweenResponse("Happy Halloween, " + principal.getName() + "!"), HttpStatus.OK);
+    }
+
+    public static class HelloweenResponse {
+        private String message;
+        public HelloweenResponse(String message) {
+            this.message = message;
+        }
+        public String getMessage() {
+            return message;
+        }
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 
     @GetMapping("/current")

@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     private DataSource dataSource;
 
@@ -47,14 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/login.html","/elective/ping").permitAll()
                 .anyRequest().authenticated()
-                .antMatchers("/", "/login", "/assets/js/vendor/popper.min.js").permitAll()
+                .antMatchers("/index.html").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
-                .permitAll()
                 .usernameParameter("username")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .and()
+                .exceptionHandling().accessDeniedPage("/error.html")
+                .and()
+                .csrf().disable();
+
+       // http.formLogin().successHandler(authenticationSuccessHandler);
 
         // чтобы войти в личный кабинет.
      /*   http.formLogin()
@@ -72,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 */
 
         // чтобы выйти из личного кабинета.
-        http.logout()
+      /*  http.logout()
                 // разрешаем делать логаут всем
                 .permitAll()
                 // указываем URL логаута
@@ -80,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем URL при удачном логауте
                 .logoutSuccessUrl("/login?logout")
                 // делаем не валидной текущую сессию
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true);*/
     }
 
 
@@ -98,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**,/static/login.html");
     }
 
 }
