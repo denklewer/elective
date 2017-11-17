@@ -15,6 +15,14 @@ public interface UserDao {
     User read(long id);
 
     /**
+     * Get User from source by id.
+     *
+     * @param id User id in database
+     * @return User from database, where key is id
+     */
+    User readByLogin(String login);
+
+    /**
      * Update User in source.
      *
      * @param user for update

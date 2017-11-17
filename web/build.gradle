@@ -51,11 +51,11 @@ ext{
     aspectjVersion = "1.8.2"
 }
 
-
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web' // берется из гугла
-    // гуглим mavenCentral, заходим на этот сайт вводит springBoot и ищем нужную версию для Gradle
-    compile project(':service') // отсюда берется jar из модуля сервис.
-    // взято с репозитория Maven в инете.
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile project(':service')
+    compile group: 'org.springframework.security', name: 'spring-security-web'
+    compile group: 'org.springframework.security', name: 'spring-security-config'
+    //testCompile group: 'org.mockito', name: 'mockito-all'
     testCompile group: 'junit', name: 'junit'
 }

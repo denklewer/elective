@@ -48,7 +48,9 @@ function createButtonStud(user){
                         score: $('#score').val(),
                         feedback: $('#feedback').val()
                     };
+
                     setScore(studentScore);
+
                     console.log(studentScore);
 
 

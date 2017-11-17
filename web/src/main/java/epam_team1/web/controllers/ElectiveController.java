@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -29,13 +30,28 @@ public class ElectiveController {
     private User current;
 
     @GetMapping("/ping")
-    public ResponseEntity<String> getPong() {
-        return new ResponseEntity<>("pong",HttpStatus.OK);
+    public ResponseEntity<HelloweenResponse> hello(Principal principal) {
+
+        return new ResponseEntity<HelloweenResponse>(
+                new HelloweenResponse("Happy Halloween, " + principal.getName() + "!"), HttpStatus.OK);
+    }
+
+    public static class HelloweenResponse {
+        private String message;
+        public HelloweenResponse(String message) {
+            this.message = message;
+        }
+        public String getMessage() {
+            return message;
+        }
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 
     @GetMapping("/current")
-    public User getCurrent(){
-        return userManager.readById(35);
+    public User getCurrent(Principal principal){
+        return userManager.readByLogin(principal.getName());
     }
 
 
@@ -157,6 +173,12 @@ public class ElectiveController {
     public ResponseEntity<StudentScore> unsubscribe(@RequestBody StudentScore score) {
         studentScoreManager.delete(score.getStudent().getId(), score.getCourse().getId());
         return new ResponseEntity<>(score, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
     }
 
 }

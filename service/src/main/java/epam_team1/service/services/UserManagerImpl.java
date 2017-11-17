@@ -19,6 +19,10 @@ public class UserManagerImpl implements  UserManager{
     public User readById(long id) {
         return userDao.read(id);
     }
+    @Override
+    public User readByLogin(String login) {
+        return userDao.readByLogin(login);
+    }
 
     @Override
     public User update(User user) {
