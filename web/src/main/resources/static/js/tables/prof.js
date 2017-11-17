@@ -6,19 +6,19 @@ document.getElementById("change").onclick = function() {changeRegisterInfo()};
 
 function changeRegisterInfo() {
     console.log("clicked");
-    var user = {
-        id: 61, // change for current id
+    var user1 = {
+        id: currentUser.id, // change for current id
         firstName: $('#inputFirstName').val(),
         lastName: $('#inputLastName').val(),
         login: $('#inputLogin').val(),
         password: $('#inputNewPassword').val(),
         email: $('#inputEmail').val()
-    }
+    };
 
-    if(!loginValidation(user)) {
+    if(!loginValidation(user1)) {
         return  false;
     }
-    request(user);
+    request(user1);
 }
 
 function loginValidation(user) {
@@ -26,11 +26,11 @@ function loginValidation(user) {
        return true;
 }
 
-function request(user) {
-    console.log("request");
+function request(user2) {
+    console.log(user2);
     $.ajax({
         url: "http://localhost:8080/elective/users",
-        data: JSON.stringify(user),
+        data: JSON.stringify(user2),
         type: "Put",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
