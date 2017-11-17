@@ -1,5 +1,68 @@
 var currentUser;
 getUser();
+
+function createRowStud(user, course){
+    console.log(user);
+    var row = document.createElement("tr");
+    row.appendChild(createColStud(user.id));
+    row.appendChild(createColStud(user.firstName + " " + user.lastName));
+    row.appendChild(createColStud(user.login));
+    row.appendChild(createColStud(user.email));
+    row.appendChild(createButtonStudList(user, course));
+
+    return row;
+}
+
+function createColStud(text){
+    var col = document.createElement("th");
+    var content = document.createTextNode(text);
+    col.appendChild(content);
+    return col;
+}
+
+function createButtonStudList(user, course){
+    var element = document.createElement("th");
+    var button = document.createElement("BUTTON");
+    var text = document.createTextNode("Feedback");
+    button.appendChild(text);
+    button.setAttribute("id", "button" + user.id);
+    button.addEventListener("click", function(){
+               var options = {
+                   "backdrop" : "static"
+               }
+               $('#studentsModalScore').modal(options);
+               document.getElementById("userName")
+                        .appendChild(document
+                                    .createTextNode(user.firstName + " " + user.lastName));
+
+               document.getElementById("saveScore").addEventListener("click", function(){
+                    console.log(course);
+                    var studentScore = {
+                        student: user,
+                        course: course,
+                        score: $('#score').val(),
+                        feedback: $('#feedback').val()
+                    };
+                    setScore(studentScore);
+                    console.log(studentScore);
+
+
+               });
+           });
+    element.appendChild(button);
+
+    return element;
+}
+
+function createTableBodyStud(users, course){
+    var tableBody = document.getElementById('students');
+    for (var i in users) {
+        tableBody.appendChild(createRowStud(users[i], course));
+    }
+}
+
+
+
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
@@ -7,8 +70,8 @@ function createRow(course){
     row.appendChild(createCol(course.name));
     row.appendChild(createCol(course.start));
     row.appendChild(createCol(course.end));
-    row.appendChild(createLink(course.id));
-    row.appendChild(createButton(course));
+    row.appendChild(createButtonStud(course));
+    row.appendChild(createButtonDel(course));
     return row;
 }
 
@@ -19,13 +82,21 @@ function createCol(text){
     return col;
 }
 
-function createLink(id) {
-    var col = document.createElement("th");
-    var element = document.createElement("a");
-    element.href = "http://localhost:8080/pages/students.html?id="+id;
-    element.innerHTML = "Students";
-    col.appendChild(element);
-    return col;
+function createButtonStud(course) {
+    var element = document.createElement("th");
+    var button = document.createElement("BUTTON");
+    var text = document.createTextNode("Students");
+    button.appendChild(text);
+    button.addEventListener("click", function(){
+        var options = {
+            "backdrop" : "static"
+        }
+        $('#modalStudents').modal(options);
+        getUsers(course);
+    });
+    element.appendChild(button);
+
+    return element;
 }
 
 function createTableBody(courses){
@@ -42,7 +113,7 @@ function refresh(){
     }
 }
 
-function createButton(course){
+function createButtonDel(course){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Delete");
@@ -179,6 +250,40 @@ function getUser(){
         }
     })
 };
+
+function getUsers(course){
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/elective/courses/students/"+course.id,
+        contentType: 'application/json',
+        success: function(users){
+            createTableBodyStud(users, course);
+        },
+        error: function(){
+            createTableBodyStud(deck, course);
+        }
+    })
+};
+
+function setScore(studentScore){
+    $.ajax({
+        type: 'Put',
+        url: "http://localhost:8080/elective/score",
+        data: JSON.stringify(studentScore),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+             console.log("ok");
+             console.log(result);
+        },
+        error: function (result)
+        {
+            console.log("not ok");
+            console.log(result);
+        }
+    })
+};
+
 
 getCourses();
 document.getElementById("add")

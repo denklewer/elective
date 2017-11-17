@@ -84,10 +84,72 @@
             </main>
         </div>
 
-    </div>
+        <div class="modal" id="modalStudents" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="modalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <main role="main" class="col-sm-9 ml-sm-auto col-md-12 pt-3">
+                                    <h1>Students</h1>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Login</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="students">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </main>
+                            </div>
+                        </div>
 
 
-    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+
+
+                    </div>
+                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="modal fade" id="studentsModalScore" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="studentsModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-signin">
+                            <h2 class="form-signin-heading" id="userName"></h2>
+                            <label for="score" class="sr-only">Score</label>
+                            <input type="score" id="score" class="form-control" placeholder="score" required autofocus>
+                            <label for="feedback" class="sr-only">Feedback</label>
+                            <input type="feedback" id="feedback" class="form-control" placeholder="feedback" required autofocus>
+                        </form>
+                    </div>
+                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" id="saveScore" type="button">Save</button></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>

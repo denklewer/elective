@@ -6,7 +6,7 @@ getUsers();
 var courseThat;
 getCourse();
 
-function createRow(user){
+function createRowStud(user){
     console.log(user);
     var row = document.createElement("tr");
     row.appendChild(createCol(user.id));
@@ -18,22 +18,20 @@ function createRow(user){
     return row;
 }
 
-function createCol(text){
+function createColStud(text){
     var col = document.createElement("th");
     var content = document.createTextNode(text);
     col.appendChild(content);
     return col;
 }
 
-function createButton(user){
-    //<button class="btn btn-lg btn-primary btn-block" type="Subscribe">Sign in</button>
+function createButtonStud(user){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Feedback");
     button.appendChild(text);
     button.setAttribute("id", "button" + user.id);
     button.addEventListener("click", function(){
-               //document.getElementById("demo").innerHTML = "Hello World";
                var options = {
                    "backdrop" : "static"
                }
@@ -50,7 +48,7 @@ function createButton(user){
                         score: $('#score').val(),
                         feedback: $('#feedback').val()
                     };
-
+                    setScore(studentScore);
                     console.log(studentScore);
 
 
@@ -61,7 +59,7 @@ function createButton(user){
     return element;
 }
 
-function createTableBody(users){
+function createTableBodyStud(users){
     var tableBody = document.getElementById('students');
     for (var i in users) {
         tableBody.appendChild(createRow(users[i]));

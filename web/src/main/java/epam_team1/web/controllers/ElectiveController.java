@@ -8,11 +8,9 @@ import epam_team1.service.services.CourseManager;
 import epam_team1.service.services.StudentScoreManager;
 import epam_team1.service.services.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 import java.util.List;
@@ -31,8 +29,8 @@ public class ElectiveController {
     private User current;
 
     @GetMapping("/ping")
-    public ResponseEntity getPong() {
-        return new ResponseEntity("pong",HttpStatus.OK);
+    public ResponseEntity<String> getPong() {
+        return new ResponseEntity<>("pong",HttpStatus.OK);
     }
 
     @GetMapping("/current")
@@ -42,54 +40,54 @@ public class ElectiveController {
 
 
     @GetMapping("/users")
-    public List getUsers() {
+    public List<User> getUsers() {
         return userManager.list();
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity getUser(@PathVariable("id") long id) {//user
+    public ResponseEntity<Object> getUser(@PathVariable("id") long id) {//user
         User user = userManager.readById(id);
         if (user == null) {
-            return new ResponseEntity("No user found for ID " + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>("No user found for ID " + id, HttpStatus.NOT_FOUND);
 
         }
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
   // Users
     @PostMapping(value = "/users")
-    public ResponseEntity createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         userManager.create(user);
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteUser(@PathVariable Long id) {
         userManager.deleteById(id);
-        return new ResponseEntity(id, HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @PutMapping("/users")
-    public ResponseEntity updateUser(@RequestBody User user) {
+    public ResponseEntity<Object> updateUser(@RequestBody User user) {
         User userNew = userManager.update(user);
         if (user == null) {
-            return new ResponseEntity("No user found for ID " + user.getId(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No user found for ID " + user.getId(), HttpStatus.NOT_FOUND);
 
         }
 
-        return new ResponseEntity(userNew, HttpStatus.OK);
+        return new ResponseEntity<Object>(userNew, HttpStatus.OK);
     }
 
 
     // Courses
     @GetMapping("/courses")
-    public List getCourses() {
+    public List<Course> getCourses() {
         List<Course> courses = courseManager.list();
         System.out.println("Controller: " + courses);
         return courses;
     }
 
     @GetMapping("/courses/{id}")
-    public List getCourses(@PathVariable("id") long id) {
+    public List<Course> getCourses(@PathVariable("id") long id) {
         return courseManager.listByStudentId(id);
     }
 
@@ -99,30 +97,30 @@ public class ElectiveController {
     }
 
     @GetMapping("/courses/students/{id}")
-    public List getStudentsByCourseId(@PathVariable("id") long id) {
+    public List<User> getStudentsByCourseId(@PathVariable("id") long id) {
         return userManager.getStudentsByCourseId(id);
     }
 
     @GetMapping("/available_courses/{id}")
-    public List getCoursesExceptMine(@PathVariable("id") long id) {
+    public List<Course> getCoursesExceptMine(@PathVariable("id") long id) {
         return courseManager.listByStudentIdExceptMine(id);
     }
 
     @GetMapping("/i_teach/{id}")
-    public List getCoursesWhichITeach(@PathVariable("id") long id) {
+    public List<Course> getCoursesWhichITeach(@PathVariable("id") long id) {
         return courseManager.listByInstructorId(id);
     }
 
     @PostMapping(value = "/courses")
-    public ResponseEntity createCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         courseManager.create(course);
-        return new ResponseEntity(course, HttpStatus.OK);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @DeleteMapping("/courses/{id}")
-    public ResponseEntity deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteCourse(@PathVariable Long id) {
         courseManager.deleteById(id);
-        return new ResponseEntity(id, HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @PutMapping("/courses/{id}")
@@ -139,26 +137,26 @@ public class ElectiveController {
     @GetMapping(value = "/score/{id}")
     public ResponseEntity<List<StudentScore>> getScore(@PathVariable("id") long id) {
         List<StudentScore> studentScores = studentScoreManager.list(id);
-        return new ResponseEntity(studentScores, HttpStatus.OK);
+        return new ResponseEntity<>(studentScores, HttpStatus.OK);
     }
 
     @PostMapping(value = "/score")
     public ResponseEntity<StudentScore> subscribe(@RequestBody StudentScore score) {
         studentScoreManager.create(score);
-        return new ResponseEntity(score, HttpStatus.OK);
+        return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
     @PutMapping(value = "/score")
     public ResponseEntity<StudentScore> setScore(@RequestBody StudentScore score) {
         System.out.println("Contr: " + score);
         studentScoreManager.update(score);
-        return new ResponseEntity(score, HttpStatus.OK);
+        return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/score")
     public ResponseEntity<StudentScore> unsubscribe(@RequestBody StudentScore score) {
         studentScoreManager.delete(score.getStudent().getId(), score.getCourse().getId());
-        return new ResponseEntity(score, HttpStatus.OK);
+        return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
 }
