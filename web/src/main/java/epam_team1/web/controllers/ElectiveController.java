@@ -7,12 +7,18 @@ import epam_team1.service.model.User;
 import epam_team1.service.services.CourseManager;
 import epam_team1.service.services.StudentScoreManager;
 import epam_team1.service.services.UserManager;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 
@@ -175,10 +181,5 @@ public class ElectiveController {
         return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
-    }
 
 }

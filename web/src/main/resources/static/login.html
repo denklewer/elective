@@ -1,52 +1,42 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:include="layout :: head(title=~{::title},links=~{})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="./favicon.ico">
-
-    <title>Elective - Sing-in</title>
+    <title>Please Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
-
 </head>
 <body th:include="layout :: body" th:with="content=~{::content}">
-<div class="container">
-    <div  th:fragment="content">
-    <form class="form-signin">
-        <form name="f" th:action="@{/login}" method="post">
-            <fieldset>
-
-                <h2 class="form-signin-heading">Sign-in</h2>
-                <div th:if="${param.error}" class="alert alert-error">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}" class="alert alert-success">
-                    You have been logged out.
-                </div>
-                <label for="username" class="sr-only">Login</label>
-                <input type="text" id="username" class="form-control" placeholder="username" required autofocus>
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="password" required>
-                <button class="btn btn-lg btn-primary btn-block">Sign-in</button>
-            </fieldset>
-        </form>
+<div th:fragment="content">
+    <form name="f" th:action="@{/login}" method="post" class="form-signin">
+        <fieldset>
+            <legend>Please Login</legend>
+            <div th:if="${param.error}" class="alert alert-error">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out.
+            </div>
+            <label for="username">Username</label>
+            <input type="text" id="username" class="form-control" name="username"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+            </div>
+        </fieldset>
     </form>
     <form class="form-signin">
-        <button id="register" class="btn btn-lg btn-primary btn-block" type="submit">
+        <button id="register" class="btn btn-link btn-primary btn-block" type="link">
             <a class="nav-link" href="/pages/register.html">Register</a>
         </button>
     </form>
 </div>
-    <!--<script> window.jQuery || document.write('<script src="./assets/js/vendor/jquery-slim.min.js"><\/script>')</script>-->
-    <script type="text/javascript" src="./assets/js/vendor/popper.min.js"></script>
-    <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>
-
-</div> <!-- /container -->
 </body>
 </html>
