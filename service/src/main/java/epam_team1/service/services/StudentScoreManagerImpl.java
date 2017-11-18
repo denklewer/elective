@@ -38,9 +38,4 @@ public class StudentScoreManagerImpl implements StudentScoreManager {
         studentScoreDao.delete(userId,courseId);
 
     }
-
-    @Override
-    public List<StudentScore> list() {
-        throw new NotImplementedException();
-    }
 }

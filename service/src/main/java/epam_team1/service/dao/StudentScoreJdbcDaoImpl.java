@@ -204,8 +204,4 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         }
     }
 
-    @Override
-    public List<StudentScore> list() {
-        return null;
-    }
 }

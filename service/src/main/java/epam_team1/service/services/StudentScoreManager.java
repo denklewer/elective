@@ -39,13 +39,6 @@ public interface StudentScoreManager {
     void delete(long userId, long courseId);
 
     /**
-     * Get list of available StudentScore from database.
-     *
-     * @return List of available StudentScore
-     */
-    List<StudentScore> list();
-
-    /**
      * Get list of student StudentScore from database.
      *
      * @return List of available StudentScore
