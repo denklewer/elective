@@ -1,5 +1,6 @@
 package epam_team1.service.services;
 
+import epam_team1.service.dao.UserDao;
 import epam_team1.service.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ public class UserManagerTest {
 
     User mokedUser = mock(User.class);
 
+    UserDao mockedUserDao = mock(UserDao.class);
+
     @Test
     public void readById() throws Exception {
 //         //вот так не работает
@@ -37,6 +40,14 @@ public class UserManagerTest {
         mockedInterface.readById(35);
         // проверяем что это метод был вызвал
         verify(mockedInterface).readById(35);
+
+
+        // а нужна ли эта часть, если мы покрыли unit тестами Dao?????
+        // вызываем метод у mock объекта
+        mockedUserDao.read(35);
+        // проверяем что это метод был вызвал
+        verify(mockedUserDao).read(35);
+
 
     }
 
