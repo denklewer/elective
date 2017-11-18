@@ -1,6 +1,7 @@
 package epam_team1.service.services;
 
 import epam_team1.service.dao.UserDao;
+import epam_team1.service.dao.UserJdbcDaoImpl;
 import epam_team1.service.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,17 +16,19 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class UserManagerTest {
 
+//    @InjectMocks
+//    UserManagerImpl mockedObject;
+//
+//    UserManager mockedInterface = mock(UserManager.class);
+//
     @Mock
-    UserManager userManager;
+    User mokedUser;
 
     @InjectMocks
-    UserManagerImpl mockedObject = new UserManagerImpl();
+    UserManagerImpl userManagerInjectMock;
 
-    UserManager mockedInterface = mock(UserManager.class);
-
-    User mokedUser = mock(User.class);
-
-    UserDao mockedUserDao = mock(UserDao.class);
+    @Mock
+    UserJdbcDaoImpl userDaoMock;
 
     @Test
     public void readById() throws Exception {
@@ -37,74 +40,67 @@ public class UserManagerTest {
 
         // а так почему то работает
         // вызываем метод у mock объекта
-        mockedInterface.readById(35);
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).readById(35);
-
-
-        // а нужна ли эта часть, если мы покрыли unit тестами Dao?????
-        // вызываем метод у mock объекта
-        mockedUserDao.read(35);
-        // проверяем что это метод был вызвал
-        verify(mockedUserDao).read(35);
-
+        userManagerInjectMock.readById(35);
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).read(35);
 
     }
 
     @Test
     public void readByLogin() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.readByLogin("user");
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).readByLogin("user");
+        userManagerInjectMock.readByLogin("user");
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).readByLogin("user");
     }
 
     @Test
     public void update() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.update(mokedUser);
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).update(mokedUser);
+        userManagerInjectMock.update(mokedUser);
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).update(mokedUser);
     }
 
     @Test
     public void create() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.create(mokedUser);
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).create(mokedUser);
+        userManagerInjectMock.create(mokedUser);
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).create(mokedUser);
     }
 
     @Test
     public void deleteById() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.deleteById(10);
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).deleteById(10);
+        userManagerInjectMock.deleteById(25);
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).delete(25);
     }
 
     @Test
     public void list() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.list();
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).list();
+        userManagerInjectMock.list();
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).list();
     }
 
     @Test
     public void getStudents() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.getStudents();
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).getStudents();
+        userManagerInjectMock.getStudents();
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).getStudents();
     }
 
     @Test
     public void getStudentsByCourseId() throws Exception {
         // вызываем метод у mock объекта
-        mockedInterface.getStudentsByCourseId(25);
-        // проверяем что это метод был вызвал
-        verify(mockedInterface).getStudentsByCourseId(25);
+        userManagerInjectMock.getStudentsByCourseId(25);
+        // проверяем что этот метод был вызвал в dao классе
+        verify(userDaoMock).getStudentsByCourseId(25);
+
     }
 
 }
