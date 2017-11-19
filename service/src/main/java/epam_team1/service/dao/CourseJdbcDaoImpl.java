@@ -193,6 +193,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
 
     @Override
+    @EnableLogging
     public List<Course> listByStudentId(long studentId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("studentId", studentId);
@@ -222,6 +223,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
     }
 
     @Override
+    @EnableLogging
     public List<Course> listByInstructorId(long instructorId) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("instructorId", instructorId);
