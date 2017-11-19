@@ -35,6 +35,7 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
         User read = userJdbcDao.read(user.getId());
 
         assertEquals(user, read);
+
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ public class UserManagerTest {
 //         mockedObject.readById(35);
 //        // проверяем что это метод был вызвал
 //         verify(userManager).readById(35);
-
+        //Mockito.doNothing().when(userDaoMock).read(Mockito.anyInt());
         // а так почему то работает
         // вызываем метод у mock объекта
         userManagerInjectMock.readById(35);

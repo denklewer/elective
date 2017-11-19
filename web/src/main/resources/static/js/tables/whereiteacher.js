@@ -1,7 +1,5 @@
-var currentUser;
-getUser();
-
 function createRowStud(user, course){
+
     console.log(user);
     var row = document.createElement("tr");
     row.appendChild(createColStud(user.id));
@@ -9,18 +7,18 @@ function createRowStud(user, course){
     row.appendChild(createColStud(user.login));
     row.appendChild(createColStud(user.email));
     row.appendChild(createButtonStudList(user, course));
-
     return row;
-}
 
+}
 function createColStud(text){
+
     var col = document.createElement("th");
     var content = document.createTextNode(text);
     col.appendChild(content);
     return col;
 }
-
 function createButtonStudList(user, course){
+
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Feedback");
@@ -50,19 +48,16 @@ function createButtonStudList(user, course){
                });
            });
     element.appendChild(button);
-
     return element;
-}
 
+}
 function createTableBodyStud(users, course){
+    refresh('students');
     var tableBody = document.getElementById('students');
     for (var i in users) {
         tableBody.appendChild(createRowStud(users[i], course));
     }
 }
-
-
-
 function createRow(course){
     console.log(course);
     var row = document.createElement("tr");
@@ -74,15 +69,15 @@ function createRow(course){
     row.appendChild(createButtonDel(course));
     return row;
 }
-
 function createCol(text){
+
     var col = document.createElement("th");
     var content = document.createTextNode(text);
     col.appendChild(content);
     return col;
 }
-
 function createButtonStud(course) {
+
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Students");
@@ -95,25 +90,27 @@ function createButtonStud(course) {
         getUsers(course);
     });
     element.appendChild(button);
-
     return element;
-}
 
+}
 function createTableBody(courses){
+
+    refresh('courses');
     var tableBody = document.getElementById('courses');
     for (var i in courses) {
         tableBody.appendChild(createRow(courses[i]));
     }
 }
 
-function refresh(){
-    var tableBody = document.getElementById('courses');
+function refresh(id){
+    var tableBody = document.getElementById(id);
     while (tableBody.hasChildNodes()) {
         tableBody.removeChild(tableBody.firstChild);
     }
 }
 
 function createButtonDel(course){
+
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
     var text = document.createTextNode("Delete");
@@ -122,41 +119,10 @@ function createButtonDel(course){
         deleteCourse(course);
     });
     element.appendChild(button);
-
     return element;
+
 }
-
-
-
 var deck = [
-    {
-        id: 1,
-        name: "JavaCore",
-        instructor: {
-              id: 0,
-              firstName: "Shipilev",
-              lastName: "Alexey",
-              login: "shipilev",
-              password: "123456",
-              email: "email"
-        },
-        start: "10.02.2017",
-        end: "12.05.2017"
-    },
-    {
-        id: 1,
-        name: "JavaCore",
-        instructor: {
-              id: 0,
-              firstName: "Shipilev",
-              lastName: "Alexey",
-              login: "shipilev",
-              password: "123456",
-              email: "email"
-        },
-        start: "10.02.2017",
-        end: "12.05.2017"
-    },
     {
         id: 1,
         name: "JavaCore",
@@ -173,9 +139,11 @@ var deck = [
     }
 ];
 
+function test() {
+}
 
 function getCourses(){
-console.log("get courses");
+    console.log("get courses");
     $.ajax({
         type: 'GET',
         url: "http://localhost:8080/elective/i_teach/" + currentUser.id,
@@ -200,14 +168,12 @@ function deleteCourse(course){
         success: function (result) {
              console.log("ok");
              console.log(result);
-             refresh();
              getCourses();
         },
         error: function (result)
         {
             console.log("not ok");
             console.log(result);
-            refresh();
             getCourses();
         }
     })
@@ -222,36 +188,34 @@ function addCourse(course){
         success: function (result) {
              console.log("ok");
              console.log(result);
-             refresh();
              getCourses();
         },
         error: function (result)
         {
             console.log("not ok");
             console.log(result);
-            refresh();
             getCourses();
         }
     })
 };
-
 function getUser(){
+
     $.ajax({
-        async: false,
         type: 'GET',
         url: "http://localhost:8080/elective/current",
         contentType: 'application/json',
         success: function(user){
             console.log(user);
             currentUser = user;
+            getCourses();
         },
         error: function(){
             deck[0].user;
         }
     })
 };
-
 function getUsers(course){
+
     $.ajax({
         type: 'GET',
         url: "http://localhost:8080/elective/courses/students/"+course.id,
@@ -264,8 +228,8 @@ function getUsers(course){
         }
     })
 };
-
 function setScore(studentScore){
+
     $.ajax({
         type: 'Put',
         url: "http://localhost:8080/elective/score",
@@ -284,8 +248,8 @@ function setScore(studentScore){
     })
 };
 
-
-getCourses();
+var currentUser;
+getUser();
 document.getElementById("add")
         .addEventListener("click", function(){
                var options = {

@@ -125,7 +125,7 @@ public class ElectiveController {
     @EnableLogging
     @GetMapping("/available_courses/{id} {limit} {page}")
     public List<Course> getCoursesExceptMine(@PathVariable("id") long id, @PathVariable("limit") int limit, @PathVariable("page") int page) {
-        return courseManager.listByStudentIdExceptMine(id, limit,page);
+        return courseManager.listByStudentIdExceptMine(id, limit, page);
     }
 
     @GetMapping("/i_teach/{id}")
