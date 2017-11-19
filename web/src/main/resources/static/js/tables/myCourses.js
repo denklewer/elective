@@ -1,4 +1,16 @@
 
+$.i18n.properties({
+    name: 'Messages',
+    path: '/',
+    mode: 'both',
+    language: 'en',
+    callback: function() {
+        $("#profile").text($.i18n.prop('profile'));
+        $("#mycourses").text($.i18n.prop('mycourses'));
+    }
+});
+
+
 var currentUser;
 getUser();
 

@@ -1,6 +1,41 @@
 var currentUser;
 getUser();
 
+$.i18n.properties({
+    name: 'Messeges',
+    path: '/',
+    mode: 'both',
+    language: 'ru_RU',
+    callback: function() {
+        $("#profile").text($.i18n.prop('profile'));
+        $("#mycourses").text($.i18n.prop('mycourses'));
+        $("#teached").text($.i18n.prop('teached'));
+        $("#allcourses").text($.i18n.prop('allcourses'));
+
+        $("#profilepills").text($.i18n.prop('profile'));
+        $("#mycoursespills").text($.i18n.prop('mycourses'));
+        $("#teachedpills").text($.i18n.prop('teached'));
+        $("#allcoursespills").text($.i18n.prop('allcourses'));
+
+        $("#profileHeader").text($.i18n.prop('profile'));
+
+        $("#inputFirstName").text($.i18n.prop('firstname'));
+        document.getElementById("inputFirstName").setAttribute("placeholder", $.i18n.prop('firstname'));
+        $("#inputLastName").text($.i18n.prop('lastname'));
+        document.getElementById("inputLastName").setAttribute("placeholder", $.i18n.prop('lastname'));
+        $("#inputLogin").text($.i18n.prop('login'));
+        document.getElementById("inputLogin").setAttribute("placeholder", $.i18n.prop('login'));
+        $("#inputEmail").text($.i18n.prop('email'));
+        document.getElementById("inputEmail").setAttribute("placeholder", $.i18n.prop('email'));
+        $("#inputNewPassword").text($.i18n.prop('newpassword'));
+        document.getElementById("inputNewPassword").setAttribute("placeholder", $.i18n.prop('newpassword'));
+        $("#inputPassword").text($.i18n.prop('password'));
+        document.getElementById("inputPassword").setAttribute("placeholder", $.i18n.prop('password'));
+        $("#change").text($.i18n.prop('change'));
+        $("#masgChange").text($.i18n.prop('msgcanchange'));
+
+    }
+});
 document.getElementById("change").addEventListener("click",function() {
 
     console.log(currentUser);
