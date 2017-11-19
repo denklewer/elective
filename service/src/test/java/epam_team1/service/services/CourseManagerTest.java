@@ -62,8 +62,8 @@ public class CourseManagerTest {
 
     @Test
     public void listByStudentIdExceptMine() throws Exception {
-        courseManagerImplInjectMock.listByStudentIdExceptMine(4);
-        verify(courseJdbcDaoMock).listByStudentIdExceptMine(4);
+        courseManagerImplInjectMock.listByStudentIdExceptMine(4, 1000, 0);
+        verify(courseJdbcDaoMock).listByStudentIdExceptMine(4, 1000, 0);
     }
 
     @Test

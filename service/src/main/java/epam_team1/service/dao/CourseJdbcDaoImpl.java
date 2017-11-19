@@ -88,7 +88,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " FROM Course c LEFT JOIN Course_participation cp " +
             " ON (c.course_id = cp.course_id AND cp.student_id = :userId) " +
             " JOIN User u ON (u.user_id = c.instructor_id) " +
-            " WHERE  cp.course_id IS NULL);";
+            " WHERE  cp.course_id IS NULL) LIMIT :limit OFFSET :offset;";
 
 
     private final String SQL_LIST_BY_INSTRUCTOR_ID = "SELECT " +
@@ -208,9 +208,12 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Override
     @EnableLogging
-    public List<Course> listByStudentIdExceptMine(long studentId) {
+    public List<Course> listByStudentIdExceptMine(long studentId, int limit, int offset) {
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("userId", studentId);
+                .addValue("userId", studentId)
+                .addValue("limit", limit)
+                .addValue("offset", offset);
+
         try {
             return namedParameterJdbcTemplate.query(SQL_GET_COURSES_EXCEPT_MINE, parameters, new SecureCourseRowMapper());
         } catch (Exception ex) {

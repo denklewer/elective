@@ -34,8 +34,8 @@ public class CourseManagerImpl implements CourseManager {
        return courseDao.listByStudentId(id);
     }
     @Override
-    public List<Course>  listByStudentIdExceptMine(long id) {
-        return courseDao.listByStudentIdExceptMine(id);
+    public List<Course>  listByStudentIdExceptMine(long id, int limit , int page) {
+        return courseDao.listByStudentIdExceptMine(id, limit,limit * page);
     }
 
 

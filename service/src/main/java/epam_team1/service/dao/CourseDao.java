@@ -57,7 +57,7 @@ public interface CourseDao {
      * @param studentId student's id
      * @return list of courses
      */
-     List<Course> listByStudentIdExceptMine(long studentId);
+     List<Course> listByStudentIdExceptMine(long studentId, int limit , int offset);
 
     /**
      * Get list of courses, which this instructor teach.

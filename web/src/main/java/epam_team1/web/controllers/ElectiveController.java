@@ -1,6 +1,7 @@
 package epam_team1.web.controllers;
 
 
+import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.Course;
 import epam_team1.service.model.StudentScore;
 import epam_team1.service.model.User;
@@ -104,7 +105,6 @@ public class ElectiveController {
     @GetMapping("/courses")
     public List<Course> getCourses() {
         List<Course> courses = courseManager.list();
-        System.out.println("Controller: " + courses);
         return courses;
     }
 
@@ -122,10 +122,10 @@ public class ElectiveController {
     public List<User> getStudentsByCourseId(@PathVariable("id") long id) {
         return userManager.getStudentsByCourseId(id);
     }
-
-    @GetMapping("/available_courses/{id}")
-    public List<Course> getCoursesExceptMine(@PathVariable("id") long id) {
-        return courseManager.listByStudentIdExceptMine(id);
+    @EnableLogging
+    @GetMapping("/available_courses/{id} {limit} {page}")
+    public List<Course> getCoursesExceptMine(@PathVariable("id") long id, @PathVariable("limit") int limit, @PathVariable("page") int page) {
+        return courseManager.listByStudentIdExceptMine(id, limit,page);
     }
 
     @GetMapping("/i_teach/{id}")
