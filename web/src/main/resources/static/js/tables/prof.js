@@ -1,11 +1,16 @@
 var currentUser;
 getUser();
 
-document.getElementById("change").onclick = function() {changeRegisterInfo()};
+document.getElementById("change").addEventListener("click",function() {
+
+    console.log(currentUser);
+    changeRegisterInfo();
+});
 
 
 function changeRegisterInfo() {
     console.log("clicked");
+    console.log(currentUser);
     var user1 = {
         id: currentUser.id, // change for current id
         firstName: $('#inputFirstName').val(),
@@ -14,7 +19,7 @@ function changeRegisterInfo() {
         password: $('#inputNewPassword').val(),
         email: $('#inputEmail').val()
     };
-
+    console.log(user1);
     if(!loginValidation(user1)) {
         return  false;
     }
@@ -31,7 +36,7 @@ function request(user2) {
     $.ajax({
         url: "http://localhost:8080/elective/users",
         data: JSON.stringify(user2),
-        type: "Put",
+        type: "PUT",
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
@@ -53,7 +58,7 @@ function getUser(){
         contentType: 'application/json',
         success: function(user){
             console.log(user);
-            currentUser = user;
+            currentUser = JSON.parse(user);
 
         },
         error: function(){

@@ -65,7 +65,7 @@ public interface UserDao {
      * @param courseId courseId
      * @return list of Students
      */
-    List<User> getStudentsByCourseId(long courseId);
+    List<User> getStudentsByCourseId(long courseId,int limit, int offset);
 
 
 }

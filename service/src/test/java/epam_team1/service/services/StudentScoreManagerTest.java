@@ -49,8 +49,8 @@ public class StudentScoreManagerTest {
 
     @Test
     public void list() throws Exception {
-        studentScoreManagerInjectMock.list(7);
-        verify(studentScoreJdbcDaoMock).list(7);
+        studentScoreManagerInjectMock.list(7,1000, 0);
+        verify(studentScoreJdbcDaoMock).list(7,1000, 0);
     }
 
 

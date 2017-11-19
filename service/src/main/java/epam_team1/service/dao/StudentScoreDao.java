@@ -45,7 +45,7 @@ public interface StudentScoreDao {
      * @param userId user Id
      * @return List of available StudentScore
      */
-    List<StudentScore> list(long userId);
+    List<StudentScore> list(long userId, int limit, int offset);
 
     /**
      * Get list of student StudentScore by course Id from database.
@@ -53,7 +53,7 @@ public interface StudentScoreDao {
      * @param courseId course Id
      * @return List of available StudentScore
      */
-    List<StudentScore> listByCourse(long courseId);
+    List<StudentScore> listByCourse(long courseId, int limit, int offset);
 
 
 

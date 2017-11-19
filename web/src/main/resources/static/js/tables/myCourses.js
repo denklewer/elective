@@ -3,16 +3,18 @@ var currentUser;
 getUser();
 
 var num = 0;
-var limit = 5;
+var limit = 4;
 
 document.getElementById('prev').addEventListener("click", function () {
     num--;
     getCourses(limit, num);
+    getScore(limit, num);
 });
 
 document.getElementById('next').addEventListener("click", function () {
     num++;
     getCourses(limit, num);
+    getScore(limit, num);
 });
 
 function createRow(course){
@@ -45,7 +47,7 @@ function createTableBody(courses){
 function createButtonSub(course){
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
-    button.setAttribute("class", "btn btn-default");
+    button.setAttribute("class", "btn btn-sm btn-primary btn-block");
     var text = document.createTextNode("Unsubscribe");
     button.appendChild(text);
     button.addEventListener("click", function(){

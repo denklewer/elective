@@ -112,7 +112,7 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
         userList.add(user1);
         userList.add(user2);
 
-        List<User> userListDownload = userJdbcDao.getStudentsByCourseId(32);
+        List<User> userListDownload = userJdbcDao.getStudentsByCourseId(32,1000, 0);
 
         for (User item : userListDownload) {
             assertTrue(userList.contains(item));

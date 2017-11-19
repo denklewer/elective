@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -62,7 +61,7 @@ public class UserJdbcDaoImpl implements UserDao {
             " user_id " +
             " FROM Course_participation " +
             " JOIN User ON user_id = student_id " +
-            " WHERE course_id = :courseId";
+            " WHERE course_id = :courseId  LIMIT :limit OFFSET :offset";
 
 
     @Override
@@ -183,9 +182,11 @@ public class UserJdbcDaoImpl implements UserDao {
 
     @Override
     @EnableLogging
-    public List<User> getStudentsByCourseId(long courseId) {
+    public List<User> getStudentsByCourseId(long courseId, int limit, int offset) {
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("courseId", courseId);
+                .addValue("courseId", courseId)
+                .addValue("limit", limit)
+                .addValue("offset", offset);
         try {
             return namedParameterJdbcTemplate
                     .query(SQL_STUDENTS_BY_COURSE_ID, parameters,

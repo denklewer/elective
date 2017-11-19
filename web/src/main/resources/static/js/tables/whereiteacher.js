@@ -21,6 +21,7 @@ function createButtonStudList(user, course){
 
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
+    button.setAttribute("class", "btn btn-sm btn-primary btn-block");
     var text = document.createTextNode("Feedback");
     button.appendChild(text);
     button.setAttribute("id", "button" + user.id);
@@ -80,6 +81,7 @@ function createButtonStud(course) {
 
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
+    button.setAttribute("class", "btn btn-sm btn-primary btn-block");
     var text = document.createTextNode("Students");
     button.appendChild(text);
     button.addEventListener("click", function(){
@@ -88,6 +90,15 @@ function createButtonStud(course) {
         }
         $('#modalStudents').modal(options);
         getUsers(course);
+        document.getElementById('prevst').addEventListener("click", function () {
+            numSt--;
+            getUsers(course);
+        });
+
+        document.getElementById('nextst').addEventListener("click", function () {
+            numSt++;
+            getUsers(course);
+        });
     });
     element.appendChild(button);
     return element;
@@ -113,6 +124,7 @@ function createButtonDel(course){
 
     var element = document.createElement("th");
     var button = document.createElement("BUTTON");
+    button.setAttribute("class", "btn btn-sm btn-primary btn-block");
     var text = document.createTextNode("Delete");
     button.appendChild(text);
     button.addEventListener("click", function(){
@@ -139,14 +151,12 @@ var deck = [
     }
 ];
 
-function test() {
-}
 
 function getCourses(){
     console.log("get courses");
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/i_teach/" + currentUser.id,
+        url: "http://localhost:8080/elective/i_teach/" + currentUser.id + " " + limit + " " + num,
         contentType: 'application/json',
         success: function(courses){
             createTableBody(courses);
@@ -218,7 +228,7 @@ function getUsers(course){
 
     $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/elective/courses/students/"+course.id,
+        url: "http://localhost:8080/elective/courses/students/" + course.id + " " + limitSt + " " + numSt,
         contentType: 'application/json',
         success: function(users){
             createTableBodyStud(users, course);
@@ -268,3 +278,21 @@ document.getElementById("add")
                     console.log(course);
                });
         });
+
+
+var num = 0;
+var limit = 4;
+
+document.getElementById('prev').addEventListener("click", function () {
+    num--;
+    getCourses();
+});
+
+document.getElementById('next').addEventListener("click", function () {
+    num++;
+    getCourses();
+});
+
+var numSt = 0;
+var limitSt = 4;
+

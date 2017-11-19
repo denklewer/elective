@@ -25,7 +25,7 @@ function createCol(text){
 function createButton(course){
     var element = document.createElement("th");
     var button = document.createElement("button");
-    button.setAttribute("class", "btn btn-default");
+    button.setAttribute("class", "btn btn-sm btn-primary btn-block");
     var text = document.createTextNode("Subscribe");
     button.appendChild(text);
     button.addEventListener("click", function(){
