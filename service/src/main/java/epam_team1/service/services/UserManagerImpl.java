@@ -61,7 +61,7 @@ public class UserManagerImpl implements  UserManager{
 
     @Override
     @EnableLogging
-    public List<User> getStudentsByCourseId(long id) {
-        return userDao.getStudentsByCourseId(id);
+    public List<User> getStudentsByCourseId(long id,int limit, int page) {
+        return userDao.getStudentsByCourseId(id, limit, limit * page);
     }
 }

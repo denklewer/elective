@@ -43,5 +43,5 @@ public interface StudentScoreManager {
      *
      * @return List of available StudentScore
      */
-    List<StudentScore> list(long userId);
+    List<StudentScore> list(long userId,int limit , int page);
 }

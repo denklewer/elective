@@ -56,8 +56,8 @@ public class CourseManagerTest {
 
     @Test
     public void listByStudentId() throws Exception {
-        courseManagerImplInjectMock.listByStudentId(2);
-        verify(courseJdbcDaoMock).listByStudentId(2);
+        courseManagerImplInjectMock.listByStudentId(2,1000, 0);
+        verify(courseJdbcDaoMock).listByStudentId(2,1000, 0);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class CourseManagerTest {
 
     @Test
     public void listByInstructorId() throws Exception {
-        courseManagerImplInjectMock.listByInstructorId(6);
-        verify(courseJdbcDaoMock).listByInstructorId(6);
+        courseManagerImplInjectMock.listByInstructorId(6,1000, 0);
+        verify(courseJdbcDaoMock).listByInstructorId(6,1000, 0);
     }
 
 }

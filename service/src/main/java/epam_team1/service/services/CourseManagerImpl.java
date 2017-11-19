@@ -36,8 +36,8 @@ public class CourseManagerImpl implements CourseManager {
     }
     @Override
     @EnableLogging
-    public List<Course>  listByStudentId(long id) {
-       return courseDao.listByStudentId(id);
+    public List<Course>  listByStudentId(long id, int limit , int page) {
+       return courseDao.listByStudentId(id, limit, limit * page);
     }
     @Override
     @EnableLogging
@@ -54,7 +54,7 @@ public class CourseManagerImpl implements CourseManager {
 
     @Override
     @EnableLogging
-    public List<Course> listByInstructorId(long id) {
-        return courseDao.listByInstructorId(id);
+    public List<Course> listByInstructorId(long id, int limit , int page) {
+        return courseDao.listByInstructorId(id, limit, limit * page);
     }
 }

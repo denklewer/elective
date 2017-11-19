@@ -97,9 +97,9 @@ public class UserManagerTest {
     @Test
     public void getStudentsByCourseId() throws Exception {
         // вызываем метод у mock объекта
-        userManagerInjectMock.getStudentsByCourseId(25);
+        userManagerInjectMock.getStudentsByCourseId(25,1000, 0);
         // проверяем что этот метод был вызвал в dao классе
-        verify(userDaoMock).getStudentsByCourseId(25);
+        verify(userDaoMock).getStudentsByCourseId(25,1000, 0);
 
     }
 

@@ -48,7 +48,7 @@ public interface CourseManager {
      * @param id student's id
      * @return list of student's courses.
      */
-    List<Course> listByStudentId(long id);
+    List<Course> listByStudentId(long id, int limit , int page);
     /**
      * get list of student's courses.
      * @param id student's id
@@ -62,5 +62,5 @@ public interface CourseManager {
      * @param id instructor's id
      * @return list of courses, which person teach
      */
-    List<Course> listByInstructorId(long id);
+    List<Course> listByInstructorId(long id, int limit , int page);
 }

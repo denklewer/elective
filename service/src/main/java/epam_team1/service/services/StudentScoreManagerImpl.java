@@ -5,7 +5,6 @@ import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.StudentScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -22,8 +21,8 @@ public class StudentScoreManagerImpl implements StudentScoreManager {
 
     @Override
     @EnableLogging
-    public List<StudentScore> list(long userId) {
-        return studentScoreDao.list(userId);
+    public List<StudentScore> list(long userId,int limit , int page) {
+        return studentScoreDao.list(userId, limit, limit * page);
     }
 
     @Override

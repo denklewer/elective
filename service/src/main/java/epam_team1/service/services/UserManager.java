@@ -62,5 +62,5 @@ public interface UserManager {
      *
      * @return list of Users which are Students
      */
-    List<User> getStudentsByCourseId(long id);
+    List<User> getStudentsByCourseId(long id, int limit , int page);
 }

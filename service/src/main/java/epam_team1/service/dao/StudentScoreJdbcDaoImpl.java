@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 import java.util.List;
@@ -76,7 +75,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
             " end_date" +
             " FROM Course_participation" +
             " JOIN Course USING (course_id)" +
-            " WHERE student_id = :studentId";
+            " WHERE student_id = :studentId LIMIT :limit OFFSET :offset;";
 
     private final String SQL_LIST_BY_COURSE_ID = "SELECT * FROM " +
             "( SELECT  *" +
@@ -101,7 +100,7 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
             " Course_participation cp JOIN Course c ON (c.course_id = cp.course_id) JOIN User u ON (c.instructor_id = u.user_id) " +
             " WHERE" +
             " cp.course_id = :courseId) t2 " +
-            " ON t1.course_id = t2.course_id; ";
+            " ON t1.course_id = t2.course_id LIMIT :limit OFFSET :offset;;  ";
 
     @Override
     @EnableLogging
@@ -179,10 +178,12 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Override
     @EnableLogging
-    public List<StudentScore> list(long userId) {
+    public List<StudentScore> list(long userId, int limit, int offset) {
         try {
             SqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("studentId", userId);
+                    .addValue("studentId", userId)
+                    .addValue("limit", limit)
+                    .addValue("offset", offset);
             return namedParameterJdbcTemplate.query(SQL_LIST_BY_USER_ID,
                     parameters, new StudentScoreGradeAndFeedbackAndCourse());
         }
@@ -193,10 +194,12 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
 
     @Override
     @EnableLogging
-    public List<StudentScore> listByCourse(long courseId) {
+    public List<StudentScore> listByCourse(long courseId, int limit, int offset) {
         try {
             SqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("courseId", courseId);
+                    .addValue("courseId", courseId)
+                    .addValue("limit", limit)
+                    .addValue("offset", offset);
             return namedParameterJdbcTemplate.query(SQL_LIST_BY_COURSE_ID, parameters, new StudentScoreMapper());
         }
         catch (Exception ex) {

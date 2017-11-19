@@ -192,7 +192,7 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
 
         courseList.add(course13);
 
-        List<Course> downloadCourseList = courseDao.listByStudentId(35);
+        List<Course> downloadCourseList = courseDao.listByStudentId(35,1000, 0);
 
         for (Course item: downloadCourseList) {
             assertTrue(courseList.contains(item));
@@ -236,7 +236,7 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
 
         courseList.add(course13);
 
-        List<Course> downloadCourseList = courseDao.listByInstructorId(65);
+        List<Course> downloadCourseList = courseDao.listByInstructorId(65,1000, 0);
 
         for (Course item: downloadCourseList) {
             assertTrue(courseList.contains(item));

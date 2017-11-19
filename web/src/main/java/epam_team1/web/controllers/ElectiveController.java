@@ -36,25 +36,6 @@ public class ElectiveController {
 
     private User current;
 
-    @GetMapping("/ping")
-    public ResponseEntity<HelloweenResponse> hello(Principal principal) {
-
-        return new ResponseEntity<HelloweenResponse>(
-                new HelloweenResponse("Happy Halloween, " + principal.getName() + "!"), HttpStatus.OK);
-    }
-
-    public static class HelloweenResponse {
-        private String message;
-        public HelloweenResponse(String message) {
-            this.message = message;
-        }
-        public String getMessage() {
-            return message;
-        }
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    }
 
     @GetMapping("/current")
     public User getCurrent(Principal principal){
@@ -108,9 +89,12 @@ public class ElectiveController {
         return courses;
     }
 
-    @GetMapping("/courses/{id}")
-    public List<Course> getCourses(@PathVariable("id") long id) {
-        return courseManager.listByStudentId(id);
+    @GetMapping("/courses/{id} {limit} {page}")
+    public List<Course> getCourses(@PathVariable("id") long id,
+                                   @PathVariable("limit") int limit,
+                                   @PathVariable("page") int page) {
+
+        return courseManager.listByStudentId(id,limit,page);
     }
 
     @GetMapping("/allcourses/{id}")
@@ -118,19 +102,25 @@ public class ElectiveController {
         return courseManager.readById(id);
     }
 
-    @GetMapping("/courses/students/{id}")
-    public List<User> getStudentsByCourseId(@PathVariable("id") long id) {
-        return userManager.getStudentsByCourseId(id);
+    @GetMapping("/courses/students/{id} {limit} {page}")
+    public List<User> getStudentsByCourseId(@PathVariable("id") long id,
+                                            @PathVariable("limit") int limit,
+                                            @PathVariable("page") int page) {
+        return userManager.getStudentsByCourseId(id, limit, page);
     }
     @EnableLogging
     @GetMapping("/available_courses/{id} {limit} {page}")
-    public List<Course> getCoursesExceptMine(@PathVariable("id") long id, @PathVariable("limit") int limit, @PathVariable("page") int page) {
+    public List<Course> getCoursesExceptMine(@PathVariable("id") long id,
+                                             @PathVariable("limit") int limit,
+                                             @PathVariable("page") int page) {
         return courseManager.listByStudentIdExceptMine(id, limit,page);
     }
 
-    @GetMapping("/i_teach/{id}")
-    public List<Course> getCoursesWhichITeach(@PathVariable("id") long id) {
-        return courseManager.listByInstructorId(id);
+    @GetMapping("/i_teach/{id} {limit} {page}")
+    public List<Course> getCoursesWhichITeach(@PathVariable("id") long id,
+                                              @PathVariable("limit") int limit,
+                                              @PathVariable("page") int page) {
+        return courseManager.listByInstructorId(id, limit, page);
     }
 
     @PostMapping(value = "/courses")
@@ -156,9 +146,11 @@ public class ElectiveController {
     }
 
     // StudentScores
-    @GetMapping(value = "/score/{id}")
-    public ResponseEntity<List<StudentScore>> getScore(@PathVariable("id") long id) {
-        List<StudentScore> studentScores = studentScoreManager.list(id);
+    @GetMapping(value = "/score/{id} {limit} {page}")
+    public ResponseEntity<List<StudentScore>> getScore(@PathVariable("id") long id,
+                                                       @PathVariable("limit") int limit,
+                                                       @PathVariable("page") int page) {
+        List<StudentScore> studentScores = studentScoreManager.list(id,limit,page);
         return new ResponseEntity<>(studentScores, HttpStatus.OK);
     }
 

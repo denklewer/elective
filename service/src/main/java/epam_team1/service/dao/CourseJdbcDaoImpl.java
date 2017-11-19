@@ -76,7 +76,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " u.first_name instructor_first_name " +
             " FROM Course c JOIN Course_participation cp " +
             " ON (c.course_id = cp.course_id AND cp.student_id = :studentId) " +
-            " LEFT JOIN User u ON (u.user_id = c.instructor_id);";
+            " LEFT JOIN User u ON (u.user_id = c.instructor_id) LIMIT :limit OFFSET :offset;";
 
 
     private final String SQL_GET_COURSES_EXCEPT_MINE = "(SELECT c.course_id, " +
@@ -101,7 +101,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " FROM " +
             " Course c JOIN " +
             " User u ON (u.user_id = c.instructor_id)" +
-            " WHERE c.instructor_id = :instructorId;";
+            " WHERE c.instructor_id = :instructorId LIMIT :limit OFFSET :offset;";
 
 
     @Override
@@ -194,9 +194,12 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Override
     @EnableLogging
-    public List<Course> listByStudentId(long studentId) {
+    public List<Course> listByStudentId(long studentId, int limit, int offset) {
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("studentId", studentId);
+                .addValue("studentId", studentId)
+                .addValue("limit", limit)
+                .addValue("offset", offset);
+
         try {
 
             List<Course> courseList = namedParameterJdbcTemplate
@@ -224,9 +227,11 @@ public class CourseJdbcDaoImpl implements CourseDao {
 
     @Override
     @EnableLogging
-    public List<Course> listByInstructorId(long instructorId) {
+    public List<Course> listByInstructorId(long instructorId, int limit, int offset) {
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("instructorId", instructorId);
+                .addValue("instructorId", instructorId)
+                .addValue("limit", limit)
+                .addValue("offset", offset);
         try {
             return namedParameterJdbcTemplate.query(SQL_LIST_BY_INSTRUCTOR_ID,
                     parameters, new SecureCourseRowMapper());
