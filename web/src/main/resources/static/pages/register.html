@@ -20,7 +20,7 @@
 <div class="container">
     <form class="panel panel-default">
         <div class="col-sm-6 col-center">
-            <h2 class="panel-heading">Please, register</h2>
+            <h2 class="panel-heading" id="regWelcome">Please, register</h2>
                 <div class="panel-body">
                     <label for="inputFirstName" class="sr-only">First name</label>
                     <input type="firstname" id="inputFirstName" class="form-control" placeholder="First name" required autofocus>
@@ -33,10 +33,13 @@
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                     <button id="register" class="btn btn-link btn-primary btn-block" type="link">
-                        <a class="nav-link" href="/login.html">Register</a>
+                        <a class="nav-link" id="regBut" href="/login.html">Register</a>
                     </button>
                 </div>
         </div>
+        <button id="lang" class="btn btn-primary btn-block">
+            Eng
+        </button>
     </form>
 
     <!-- Bootstrap core JavaScript
@@ -44,6 +47,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-1.0.9.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-min-1.0.9.js"></script>
     <script src="../assets/js/vendor/popper.min.js"></script>
     <script src="../dist/js/bootstrap.min.js"></script>
     <script src="../js/tables/register.js"></script>

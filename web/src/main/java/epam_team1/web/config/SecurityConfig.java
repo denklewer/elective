@@ -48,10 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/assets/js/vendor/popper.min.js",
                         "/dist/js/bootstrap.min.js",
                         "/dist/js/bootstrap.min.js.map",
-                        "/assets/js/vendor/jquery-slim.min.js"
+                        "/assets/js/vendor/jquery-slim.min.js",
+                        "/js/jquery.cookie.js",
+                        "/js/jquery.i18n.properties-1.0.9.js",
+                        "/js/jquery.i18n.properties-min-1.0.9.js",
+                        "/Messeges.properties",
+                        "/Messeges_en_EN.properties",
+                        "/Messeges_ru_RU.properties"
                         ).permitAll()
                 .anyRequest().authenticated()
-                .antMatchers("/index.html").permitAll()
+                .antMatchers("/prof.html").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
