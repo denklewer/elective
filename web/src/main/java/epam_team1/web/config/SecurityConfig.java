@@ -54,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/jquery.i18n.properties-min-1.0.9.js",
                         "/Messeges.properties",
                         "/Messeges_en_EN.properties",
-                        "/Messeges_ru_RU.properties"
+                        "/Messeges_ru_RU.properties",
+                        "/js/tables/register.js"
                         ).permitAll()
                 .anyRequest().authenticated()
                 .antMatchers("/prof.html").permitAll()

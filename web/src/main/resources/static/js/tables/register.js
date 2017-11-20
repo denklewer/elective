@@ -1,61 +1,60 @@
 document.getElementById("register").onclick = function() {register()};
 
-function getLang(){
-    var lang = $.cookie('lang');
-    console.log(lang);
-
-    if(lang == null){
-        return 'en_EN';
-    }
-
-    return lang;
-}
-
-var langProp = {
-    name: 'Messeges',
-    path: '/',
-    mode: 'both',
-    language: getLang(),
-    callback: function() {
-
-
-        $("#lang").text($.i18n.prop('lang'));
-        $("#inputFirstName").text($.i18n.prop('firstname'));
-        document.getElementById("inputFirstName").setAttribute("placeholder", $.i18n.prop('firstname'));
-        $("#inputLastName").text($.i18n.prop('lastname'));
-        document.getElementById("inputLastName").setAttribute("placeholder", $.i18n.prop('lastname'));
-        $("#inputLogin").text($.i18n.prop('login'));
-        document.getElementById("inputLogin").setAttribute("placeholder", $.i18n.prop('login'));
-        $("#inputEmail").text($.i18n.prop('email'));
-        document.getElementById("inputEmail").setAttribute("placeholder", $.i18n.prop('email'));
-        $("#inputPassword").text($.i18n.prop('password'));
-        document.getElementById("inputPassword").setAttribute("placeholder", $.i18n.prop('password'));
-        $("#regWelcome").text($.i18n.prop('regWelcome'));
-        $("#regBut").text($.i18n.prop('registerBut'));
-
-    }
+var eng = {
+    lang: "Eng",
+    firstname: "First name",
+    lastname: "Last name",
+    login: "Login",
+    email: "Email",
+    password: "Password",
+    regWelc: "Please, register",
+    regBut: "Register"
 };
-
-
-$.i18n.properties(langProp);
+var ru = {
+    lang: "Рус",
+    firstname: "Имя",
+    lastname: "Фамилия",
+    login: "Логин",
+    email: "Почта",
+    password: "Пароль",
+    regWelc: "Пожалуйста, зарегистрируйтесь",
+    regBut: "Регистрация"
+};
 
 document.getElementById("lang").addEventListener("click", function () {
     var lang = $.cookie('lang');
     console.log(lang);
 
+    var lib;
+
     if(lang == null){
         lang = 'ru_RU';
+        lib = ru;
     }else if(lang == 'ru_RU'){
         lang = 'en_EN';
+        lib = eng;
     }else{
         lang = 'ru_RU';
+        lib = ru;
     }
     $.cookie('lang', lang, {
         expires: 5,
         path: '/',
     });
-    langProp.language = lang;
-    $.i18n.properties(langProp);
+    $("#lang").text(lib.lang);
+    $("#inputFirstName").text(lib.firstname);
+    document.getElementById("inputFirstName").setAttribute("placeholder", lib.firstname);
+    $("#inputLastName").text(lib.lastname);
+    document.getElementById("inputLastName").setAttribute("placeholder", lib.lastname);
+    $("#inputLogin").text(lib.login);
+    document.getElementById("inputLogin").setAttribute("placeholder", lib.login);
+    $("#inputEmail").text(lib.email);
+    document.getElementById("inputEmail").setAttribute("placeholder", lib.email);
+    $("#inputPassword").text(lib.password);
+    document.getElementById("inputPassword").setAttribute("placeholder", lib.password);
+    $("#regWelcome").text(lib.regWelc);
+    $("#regBut").text(lib.regBut);
+
 
 });
 
