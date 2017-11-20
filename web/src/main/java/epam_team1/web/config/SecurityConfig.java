@@ -60,6 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/pages/register.html")
                 .and()
                 .csrf().disable();
+
+        http.logout()
+                .permitAll();
     }
 
     @Override
