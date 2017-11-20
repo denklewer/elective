@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
-                .failureForwardUrl("/error.html")
+                .failureForwardUrl("/login.html")
                 .and()
                 .exceptionHandling().accessDeniedPage("/pages/register.html")
                 .and()
