@@ -57,9 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/Messeges_ru_RU.properties"
                         ).permitAll()
                 .anyRequest().authenticated()
-                .antMatchers("/prof.html").permitAll()
+                .antMatchers("/pages/prof.html").permitAll()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/pages/prof.html")
                 .loginPage("/login.html")
                 .failureForwardUrl("/login.html")
                 .and()
