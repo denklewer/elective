@@ -69,8 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .permitAll();
-
-
     }
 
     @Override
