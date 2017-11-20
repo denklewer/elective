@@ -1,6 +1,68 @@
 var currentUser;
 getUser();
+function getLang(){
+    var lang = $.cookie('lang');
+    console.log(lang);
 
+    if(lang == null){
+        return 'en_EN';
+    }
+
+    return lang;
+}
+
+var langProp = {
+    name: 'Messeges',
+    path: '/',
+    mode: 'both',
+    language: getLang(),
+    callback: function() {
+        $("#profile").text($.i18n.prop('profile'));
+        $("#mycourses").text($.i18n.prop('mycourses'));
+        $("#teached").text($.i18n.prop('teached'));
+        $("#allcourses").text($.i18n.prop('allcourses'));
+
+        $("#profilepills").text($.i18n.prop('profile'));
+        $("#mycoursespills").text($.i18n.prop('mycourses'));
+        $("#teachedpills").text($.i18n.prop('teached'));
+        $("#allcoursespills").text($.i18n.prop('allcourses'));
+
+        $("#profileHeader").text($.i18n.prop('profile'));
+
+        $("#lang").text($.i18n.prop('lang'));
+        $("#allCoursesH").text($.i18n.prop('allcourses'));
+        $("#allCoursesH2").text($.i18n.prop('allcourses'));
+        $("#coursename").text($.i18n.prop('coursename'));
+        $("#trainer").text($.i18n.prop('trainer'));
+        $("#startdate").text($.i18n.prop('startdate'));
+        $("#enddate").text($.i18n.prop('enddate'));
+
+
+    }
+};
+
+
+$.i18n.properties(langProp);
+
+document.getElementById("lang").addEventListener("click", function () {
+    var lang = $.cookie('lang');
+    console.log(lang);
+
+    if(lang == null){
+        lang = 'ru_RU';
+    }else if(lang == 'ru_RU'){
+        lang = 'en_EN';
+    }else{
+        lang = 'ru_RU';
+    }
+    $.cookie('lang', lang, {
+        expires: 5,
+        path: '/',
+    });
+    langProp.language = lang;
+    $.i18n.properties(langProp);
+
+});
 
 function createRow(course){
     console.log(course);

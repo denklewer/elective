@@ -1,11 +1,22 @@
 var currentUser;
 getUser();
 
-$.i18n.properties({
+function getLang(){
+    var lang = $.cookie('lang');
+    console.log(lang);
+
+    if(lang == null){
+        return 'en_EN';
+    }
+
+    return lang;
+}
+
+var langProp = {
     name: 'Messeges',
     path: '/',
     mode: 'both',
-    language: 'ru_RU',
+    language: getLang(),
     callback: function() {
         $("#profile").text($.i18n.prop('profile'));
         $("#mycourses").text($.i18n.prop('mycourses'));
@@ -19,6 +30,7 @@ $.i18n.properties({
 
         $("#profileHeader").text($.i18n.prop('profile'));
 
+        $("#lang").text($.i18n.prop('lang'));
         $("#inputFirstName").text($.i18n.prop('firstname'));
         document.getElementById("inputFirstName").setAttribute("placeholder", $.i18n.prop('firstname'));
         $("#inputLastName").text($.i18n.prop('lastname'));
@@ -35,7 +47,33 @@ $.i18n.properties({
         $("#masgChange").text($.i18n.prop('msgcanchange'));
 
     }
+};
+
+
+$.i18n.properties(langProp);
+
+document.getElementById("lang").addEventListener("click", function () {
+    var lang = $.cookie('lang');
+    console.log(lang);
+
+    if(lang == null){
+        lang = 'ru_RU';
+    }else if(lang == 'ru_RU'){
+        lang = 'en_EN';
+    }else{
+        lang = 'ru_RU';
+    }
+    $.cookie('lang', lang, {
+        expires: 5,
+        path: '/',
+    });
+    langProp.language = lang;
+    $.i18n.properties(langProp);
+
 });
+
+
+
 document.getElementById("change").addEventListener("click",function() {
 
     console.log(currentUser);

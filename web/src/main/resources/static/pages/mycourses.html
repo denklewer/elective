@@ -18,7 +18,10 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">My Courses</a>
+            <a class="navbar-brand" id="myCoursesh2" href="#">My Courses</a>
+            <button class="btn" id="lang" type="button" >
+                Eng
+            </button>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -26,20 +29,22 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/prof.html">Profile</a>
+                        <a class="nav-link" id="profile" href="/pages/prof.html">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">My courses <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" id="mycourses" href="#">My courses <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/whereiteacher.html">Сourses I teach</a>
+                        <a class="nav-link" id="teached" href="/pages/whereiteacher.html">Сourses I teach</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/allcourses.html">All courses</a>
+                        <a class="nav-link" id="allcourses" href="/pages/allcourses.html">All courses</a>
                     </li>
                 </ul>
 
             </div>
+            <!--<button class="btn" type="Button"><a href="/elective/loguot">&#128682</a></button>-->
+            <button class="btn" type="Button"><a href="/loguot">⌦</a></button>
         </nav>
     </header>
 
@@ -48,31 +53,31 @@
             <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">My courses <span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" id="mycoursespills" href="#">My courses <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/whereiteacher.html">Сourses I teach</a>
+                        <a class="nav-link" id="teachedpills" href="/pages/whereiteacher.html">Сourses I teach</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/allcourses.html">All courses</a>
+                        <a class="nav-link" id="allcoursespills" href="/pages/allcourses.html">All courses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pages/prof.html">My profile</a>
+                        <a class="nav-link" id="profilepills" href="/pages/prof.html">My profile</a>
                     </li>
                 </ul>
             </nav>
 
             <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-                <h1>My Courses</h1>
+                <h1 id="myCoursesh">My Courses</h1>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Course name</th>
-                            <th>Trainer</th>
-                            <th>Start date</th>
-                            <th>End date</th>
+                            <th id="coursename">Course name</th>
+                            <th id="trainer">Trainer</th>
+                            <th id="startdate">Start date</th>
+                            <th id="enddate">End date</th>
                         </tr>
                         </thead>
                         <tbody id="myCoursesTbody">
@@ -81,14 +86,14 @@
                 </div>
             </main>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-                <h1>My feedback</h1>
+                <h1 id="myfeed">My feedback</h1>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Course name</th>
-                            <th>score</th>
-                            <th>feedback</th>
+                            <th id="coursenamef">Course name</th>
+                            <th id="scoref">score</th>
+                            <th id="feedbackf">feedback</th>
                         </tr>
                         </thead>
                         <tbody id="feedbackTbody">
@@ -116,6 +121,9 @@
     <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-1.0.9.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-min-1.0.9.js"></script>
     <script src="../assets/js/vendor/popper.min.js"></script>
     <script src="../dist/js/bootstrap.min.js"></script>
     <script src="../js/tables/myCourses.js"></script>
