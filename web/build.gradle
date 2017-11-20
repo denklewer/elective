@@ -56,6 +56,5 @@ dependencies {
     compile project(':service')
     compile group: 'org.springframework.security', name: 'spring-security-web'
     compile group: 'org.springframework.security', name: 'spring-security-config'
-    testCompile group: 'org.mockito', name: 'mockito-all'
     testCompile group: 'junit', name: 'junit'
 }
