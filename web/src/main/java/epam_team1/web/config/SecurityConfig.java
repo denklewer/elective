@@ -58,11 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/tables/register.js"
                         ).permitAll()
                 .anyRequest().authenticated()
-                .antMatchers("/prof.html").permitAll()
+                .antMatchers("/pages/prof.html").permitAll()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/pages/prof.html")
                 .loginPage("/login.html")
-                .failureForwardUrl("/error.html")
+                .failureForwardUrl("/login.html")
                 .and()
                 .exceptionHandling().accessDeniedPage("/pages/register.html")
                 .and()
@@ -70,8 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .permitAll();
-
-
     }
 
     @Override

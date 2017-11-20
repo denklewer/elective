@@ -88,7 +88,7 @@ public class CourseJdbcDaoImpl implements CourseDao {
             " FROM Course c LEFT JOIN Course_participation cp " +
             " ON (c.course_id = cp.course_id AND cp.student_id = :userId) " +
             " JOIN User u ON (u.user_id = c.instructor_id) " +
-            " WHERE  cp.course_id IS NULL) LIMIT :limit OFFSET :offset;";
+            " WHERE  cp.course_id IS NULL AND u.user_id != :userId) LIMIT :limit OFFSET :offset;";
 
 
     private final String SQL_LIST_BY_INSTRUCTOR_ID = "SELECT " +
