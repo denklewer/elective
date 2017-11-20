@@ -1,6 +1,11 @@
 package epam_team1.service.dao;
 
 
+import epam_team1.service.dao.exceptions.CreateException;
+import epam_team1.service.dao.exceptions.DeleteException;
+import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.exceptions.UpdateException;
+import epam_team1.service.dao.mappers.StudentScoreGradeAndFeedbackAndCourse;
 import epam_team1.service.dao.mappers.StudentScoreMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.model.StudentScore;
@@ -21,10 +26,8 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
     private final String SQL_READ =
             "SELECT * FROM " +
-
                     "( SELECT  *" +
                     " FROM" +
                     " Course_participation cp JOIN User u ON (cp.student_id = u.user_id)" +
@@ -64,7 +67,40 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
     private final String SQL_DELETE = "DELETE FROM Course_participation" +
             " WHERE student_id = :studentId and course_id = :courseId";
 
-    private final String SQL_LIST = "SELECT * FROM StudentScore";
+    private final String SQL_LIST_BY_USER_ID = "SELECT " +
+            " grade," +
+            " feedback," +
+            " course_name," +
+            " start_date," +
+            " end_date" +
+            " FROM Course_participation" +
+            " JOIN Course USING (course_id)" +
+            " WHERE student_id = :studentId LIMIT :limit OFFSET :offset;";
+
+    private final String SQL_LIST_BY_COURSE_ID = "SELECT * FROM " +
+            "( SELECT  *" +
+            " FROM" +
+            " Course_participation cp JOIN User u ON (cp.student_id = u.user_id)" +
+            " WHERE" +
+            " cp.course_id = :courseId) t1 " +
+            " JOIN " +
+            " ( SELECT " +
+            " u.user_id instructor_id," +
+            " u.first_name instructor_first_name," +
+            " u.last_name instructor_last_name," +
+            " u.email instructor_email," +
+            " u.Password instructor_password," +
+            " u.Login instructor_login," +
+            " cp.course_id course_id," +
+            " cp.student_id student_id," +
+            " c.course_name, " +
+            " c.start_date, " +
+            " c.end_date" +
+            " FROM " +
+            " Course_participation cp JOIN Course c ON (c.course_id = cp.course_id) JOIN User u ON (c.instructor_id = u.user_id) " +
+            " WHERE" +
+            " cp.course_id = :courseId) t2 " +
+            " ON t1.course_id = t2.course_id LIMIT :limit OFFSET :offset;;  ";
 
     @Override
     @EnableLogging
@@ -73,27 +109,35 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("courseId", courseId)
                 .addValue("studentId", userId);
+        try {
+            StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new StudentScoreMapper());
 
-        StudentScore studentScore = namedParameterJdbcTemplate.queryForObject(SQL_READ,
-                parameters, new StudentScoreMapper());
-
-        return studentScore;
+            return studentScore;
+        }
+        catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
 
     @Transactional
     @Override
     @EnableLogging
     public StudentScore update(StudentScore studentScore) {
-
+        System.out.println("DAO" + studentScore);
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("grade", studentScore.getScore())
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
 
-        namedParameterJdbcTemplate.update(SQL_UPDATE, parameters);
-
-        return studentScore;
+            return studentScore;
+        }
+        catch (Exception ex) {
+            throw new UpdateException(ex);
+        }
     }
 
     @Transactional
@@ -106,27 +150,61 @@ public class StudentScoreJdbcDaoImpl implements StudentScoreDao {
                 .addValue("feedback", studentScore.getFeedback())
                 .addValue("studentId", studentScore.getStudent().getId())
                 .addValue("courseId", studentScore.getCourse().getId());
+        try {
+            namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
+            return studentScore;
+        } catch (Exception ex) {
+            throw new CreateException(ex);
+        }
 
-        namedParameterJdbcTemplate.update(SQL_CREATE, parameters);
-
-        return studentScore;
     }
 
     @Transactional
     @Override
     @EnableLogging
     public void delete(long userId, long courseId) {
-        StudentScore studentScore = read(userId, courseId);
         SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("studentId", studentScore.getStudent().getId())
-                .addValue("courseId", studentScore.getCourse().getId());
+                .addValue("studentId", userId)
+                .addValue("courseId", courseId);
+        try {
+            namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+        }
+        catch (Exception ex) {
+            throw new DeleteException(ex);
 
-        namedParameterJdbcTemplate.update(SQL_DELETE, parameters);
+
+        }
     }
 
     @Override
     @EnableLogging
-    public List<StudentScore> list() {
-        return namedParameterJdbcTemplate.query(SQL_LIST, new StudentScoreMapper());
+    public List<StudentScore> list(long userId, int limit, int offset) {
+        try {
+            SqlParameterSource parameters = new MapSqlParameterSource()
+                    .addValue("studentId", userId)
+                    .addValue("limit", limit)
+                    .addValue("offset", offset);
+            return namedParameterJdbcTemplate.query(SQL_LIST_BY_USER_ID,
+                    parameters, new StudentScoreGradeAndFeedbackAndCourse());
+        }
+        catch (Exception ex) {
+            throw new ReadException(ex);
+        }
     }
+
+    @Override
+    @EnableLogging
+    public List<StudentScore> listByCourse(long courseId, int limit, int offset) {
+        try {
+            SqlParameterSource parameters = new MapSqlParameterSource()
+                    .addValue("courseId", courseId)
+                    .addValue("limit", limit)
+                    .addValue("offset", offset);
+            return namedParameterJdbcTemplate.query(SQL_LIST_BY_COURSE_ID, parameters, new StudentScoreMapper());
+        }
+        catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
+
 }

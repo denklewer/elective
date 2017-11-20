@@ -2,6 +2,7 @@ package epam_team1.service.dao;
 
 
 import epam_team1.service.dao.exceptions.ReadException;
+import epam_team1.service.dao.mappers.StudentsListByCourseRowMapper;
 import epam_team1.service.logger.EnableLogging;
 import epam_team1.service.dao.exceptions.UpdateException;
 import epam_team1.service.model.User;
@@ -16,7 +17,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -33,6 +33,10 @@ public class UserJdbcDaoImpl implements UserDao {
     private final String SQL_READ = "SELECT * FROM" +
             " User" +
             " WHERE user_id = :userId";
+
+    private final String SQL_READ_BY_LOGIN = "SELECT * FROM" +
+            " User" +
+            " WHERE Login = :login";
 
     private final String SQL_UPDATE = "UPDATE User SET" +
             " first_name = :firstName," +
@@ -51,6 +55,14 @@ public class UserJdbcDaoImpl implements UserDao {
 
     private final String SQL_LIST = "SELECT * FROM User";
 
+    private final String SQL_STUDENTS_BY_COURSE_ID = "SELECT " +
+            " first_name, " +
+            " last_name, " +
+            " user_id " +
+            " FROM Course_participation " +
+            " JOIN User ON user_id = student_id " +
+            " WHERE course_id = :courseId  LIMIT :limit OFFSET :offset";
+
 
     @Override
     @EnableLogging
@@ -60,6 +72,23 @@ public class UserJdbcDaoImpl implements UserDao {
                 .addValue("userId", id);
         try {
             User user = namedParameterJdbcTemplate.queryForObject(SQL_READ,
+                    parameters, new UserRowMapper());
+            return user;
+
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
+
+
+    @Override
+    @EnableLogging
+    public User readByLogin(String login) {
+
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("login", login);
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(SQL_READ_BY_LOGIN,
                     parameters, new UserRowMapper());
             return user;
 
@@ -146,7 +175,26 @@ public class UserJdbcDaoImpl implements UserDao {
     }
 
     @Override
+    @EnableLogging
     public List<User> getStudents() {
         throw new NotImplementedException();
     }
+
+    @Override
+    @EnableLogging
+    public List<User> getStudentsByCourseId(long courseId, int limit, int offset) {
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("courseId", courseId)
+                .addValue("limit", limit)
+                .addValue("offset", offset);
+        try {
+            return namedParameterJdbcTemplate
+                    .query(SQL_STUDENTS_BY_COURSE_ID, parameters,
+                            new StudentsListByCourseRowMapper());
+        } catch (Exception ex) {
+            throw new ReadException(ex);
+        }
+    }
+
+
 }

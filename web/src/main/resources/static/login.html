@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: head(title=~{::title},links=~{})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Please Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+</head>
+<body th:include="layout :: body" th:with="content=~{::content}">
+<div class="row">
+<div class="col-md-4">
+
+</div>
+    <button id="lang" class="btn btn-primary col-md-4">
+        Eng
+    </button>
+</div>
+<div th:fragment="content">
+    <form name="f" th:action="@{/login}" method="post" class="form-signin">
+        <fieldset>
+            <legend><h2 id="logWelc">Please Login</h2></legend>
+            <label for="username" id="username2">Username</label>
+            <input type="text" id="username" class="form-control" name="username"/>
+            <label for="password" id="password2">Password</label>
+            <input type="password" id="password" class="form-control" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-lg btn-primary btn-block" id="log">Log in</button>
+            </div>
+        </fieldset>
+    </form>
+    <form class="form-signin">
+        <button id="register" class="btn btn-link btn-primary btn-block" type="link">
+            <a class="nav-link" href="/pages/register.html" id="reg">Register</a>
+        </button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-1.0.9.js"></script>
+    <script type="text/javascript" src="../js/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script src="../assets/js/vendor/popper.min.js"></script>
+    <script src="../dist/js/bootstrap.min.js"></script>
+    <script src="../js/tables/index.js"></script>
+
+</div>
+</body>
+</html>

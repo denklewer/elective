@@ -42,7 +42,7 @@ public interface CourseDao {
      * @param studentId student_id from database
      * @return list of available Courses
      */
-    List<Course> listByStudentId(long studentId);
+    List<Course> listByStudentId(long studentId, int limit , int offset);
 
     /**
      * Get list of available Courses from database.
@@ -53,8 +53,17 @@ public interface CourseDao {
 
     /**
      * Get available Courses for student, except his courses.
+     *
      * @param studentId student's id
      * @return list of courses
      */
-     List<Course> listByStudentIdExceptMine( long studentId);
+     List<Course> listByStudentIdExceptMine(long studentId, int limit , int offset);
+
+    /**
+     * Get list of courses, which this instructor teach.
+     *
+     * @param instructorId instructor's id
+     * @return list of courses, which person teach
+     */
+     List<Course> listByInstructorId(long instructorId, int limit , int offset);
 }

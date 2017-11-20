@@ -15,6 +15,14 @@ public interface UserDao {
     User read(long id);
 
     /**
+     * Get User from source by id.
+     *
+     * @param login User id in database
+     * @return User from database, where key is id
+     */
+    User readByLogin(String login);
+
+    /**
      * Update User in source.
      *
      * @param user for update
@@ -50,5 +58,14 @@ public interface UserDao {
      * @return list of Users which are Students
      */
     List<User> getStudents();
+
+    /**
+     * Get list of Students which was subscribed on courseId.
+     *
+     * @param courseId courseId
+     * @return list of Students
+     */
+    List<User> getStudentsByCourseId(long courseId,int limit, int offset);
+
 
 }

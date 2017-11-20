@@ -56,4 +56,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit'
     testCompile group: 'com.h2database', name: 'h2'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
+    // mockito
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.9.5'
 }

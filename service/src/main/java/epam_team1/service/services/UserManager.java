@@ -12,6 +12,13 @@ public interface UserManager {
      * @return User from database, where key is id
      */
     User readById(long id);
+    /**
+     * Get User from source by id.
+     *
+     * @param login User id in database
+     * @return User from database, where key is id
+     */
+    User readByLogin(String login);
 
     /**
      * Update User in source.
@@ -49,4 +56,11 @@ public interface UserManager {
      * @return list of Users which are Students
      */
     List<User> getStudents();
+
+    /**
+     * Get list of available Users from database.
+     *
+     * @return list of Users which are Students
+     */
+    List<User> getStudentsByCourseId(long id, int limit , int page);
 }

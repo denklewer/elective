@@ -1,6 +1,7 @@
 package epam_team1.service.appconfig;
 
 import epam_team1.service.dao.CourseJdbcDaoImpl;
+import epam_team1.service.logger.ServiceLogger;
 import epam_team1.service.services.UserManagerImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses = {CourseJdbcDaoImpl.class, UserManagerImpl.class})
+@ComponentScan( basePackageClasses = {CourseJdbcDaoImpl.class,
+        UserManagerImpl.class,
+        ServiceLogger.class})
 @PropertySource("classpath:database.properties")
 @EnableAspectJAutoProxy
 public class AppConfig {

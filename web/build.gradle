@@ -17,20 +17,23 @@ apply plugin: 'org.springframework.boot'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    mavenCentral() // для dependency
     mavenLocal()
 }
 
+// checkstyle взят с предыдущего тренинга в епаме.
 checkstyle {
     toolVersion = "8.2"
     configFile rootProject.file("config\\checkstyle\\checkstyle.xml")
 }
 
+// взят с предыдущего тренинга в епаме, для того чтобы работал checkstyle(без него не работает).
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 compileJava.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 compileTestJava.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 
+// всё ещё тот же checkstyle и его настройка
 tasks.withType(Checkstyle) {
     ignoreFailures = true
     reports {
@@ -39,9 +42,19 @@ tasks.withType(Checkstyle) {
     }
 }
 
+
+// вроде не нужно?!?!?! Можно ли убрать???
+ext{
+    springVersion = '4.3.12.RELEASE'
+    mySqlVersion = '5.1.6'
+    commonsDbcpVersion = '1.4'
+    aspectjVersion = "1.8.2"
+}
+
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile project(':service')
-
+    compile group: 'org.springframework.security', name: 'spring-security-web'
+    compile group: 'org.springframework.security', name: 'spring-security-config'
     testCompile group: 'junit', name: 'junit'
 }

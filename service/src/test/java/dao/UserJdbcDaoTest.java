@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -34,6 +35,7 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
         User read = userJdbcDao.read(user.getId());
 
         assertEquals(user, read);
+
     }
 
     @Test
@@ -89,6 +91,32 @@ public class UserJdbcDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 
         assertTrue(countRowsInTableAfter == countRowsInTableBefore - 1);
 
+    }
+
+    @Test
+    public void getStudentsByCourseId() {
+        List<User> userList = new ArrayList<>();
+
+        User user1 = User.newBuilder()
+                .setId(21)
+                .setFirstName("Anton")
+                .setLastName("Nechiporuk")
+                .build();
+
+        User user2 = User.newBuilder()
+                .setId(35)
+                .setFirstName("Yuirii")
+                .setLastName("Antipenko")
+                .build();
+
+        userList.add(user1);
+        userList.add(user2);
+
+        List<User> userListDownload = userJdbcDao.getStudentsByCourseId(32,1000, 0);
+
+        for (User item : userListDownload) {
+            assertTrue(userList.contains(item));
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package dao;
 
 import epam_team1.service.dao.CourseJdbcDaoImpl;
 import epam_team1.service.logger.ServiceLogger;
+import epam_team1.service.services.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -23,7 +24,7 @@ import javax.sql.DataSource;
 @SpringBootConfiguration
 @TestConfiguration
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses = CourseJdbcDaoImpl.class)
+@ComponentScan(basePackageClasses = {CourseJdbcDaoImpl.class, UserManager.class})
 @EnableAspectJAutoProxy
 public class TestConfig {
 

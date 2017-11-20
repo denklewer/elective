@@ -131,7 +131,7 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
         Date parsingDateStart = ft.parse("2016-02-07");
         Date parsingDateEnd = ft.parse("2016-05-15");
 
-        List<Course> list = courseDao.listByStudentIdExceptMine(1);
+        List<Course> list = courseDao.listByStudentIdExceptMine(1, 1000, 0);
 
 
         List<Course> expectedList = new ArrayList<Course>();
@@ -192,12 +192,55 @@ public class CourseJdbcDaoImplTest extends AbstractTransactionalJUnit4SpringCont
 
         courseList.add(course13);
 
-        List<Course> downloadCourseList = courseDao.listByStudentId(35);
+        List<Course> downloadCourseList = courseDao.listByStudentId(35,1000, 0);
 
         for (Course item: downloadCourseList) {
             assertTrue(courseList.contains(item));
         }
     }
 
+    @Test
+    public void listByInstructorId() throws Exception{
+        List<Course> courseList = new ArrayList<>();
+
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+        Date parsingDateStart127 = ft.parse("2016-09-04");
+        Date parsingDateEnd127 = ft.parse("2017-04-28");
+        Course course127 = Course.newBuilder()
+                .setId(127)
+                .setName("Integrals2")
+                .setStart(parsingDateStart127)
+                .setEnd(parsingDateEnd127)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Igor")
+                        .setLastName("Olemskoi")
+                        .build())
+                .build();
+
+        courseList.add(course127);
+
+        Date parsingDateStart13 = ft.parse("2016-09-04");
+        Date parsingDateEnd13 = ft.parse("2017-04-28");
+        Course course13 = Course.newBuilder()
+                .setId(13)
+                .setName("Integrals")
+                .setStart(parsingDateStart13)
+                .setEnd(parsingDateEnd13)
+
+                .setInstructor(User.newBuilder()
+                        .setFirstName("Igor")
+                        .setLastName("Olemskoi")
+                        .build())
+                .build();
+
+        courseList.add(course13);
+
+        List<Course> downloadCourseList = courseDao.listByInstructorId(65,1000, 0);
+
+        for (Course item: downloadCourseList) {
+            assertTrue(courseList.contains(item));
+        }
+    }
 
 }

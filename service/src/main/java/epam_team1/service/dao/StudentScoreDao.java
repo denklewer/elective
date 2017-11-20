@@ -40,11 +40,22 @@ public interface StudentScoreDao {
     void delete(long userId, long courseId);
 
     /**
-     * Get list of available StudentScore from database.
+     * Get list of student StudentScore by student Id from database.
      *
+     * @param userId user Id
      * @return List of available StudentScore
      */
-    List<StudentScore> list();
+    List<StudentScore> list(long userId, int limit, int offset);
+
+    /**
+     * Get list of student StudentScore by course Id from database.
+     *
+     * @param courseId course Id
+     * @return List of available StudentScore
+     */
+    List<StudentScore> listByCourse(long courseId, int limit, int offset);
+
+
 
 
 }
